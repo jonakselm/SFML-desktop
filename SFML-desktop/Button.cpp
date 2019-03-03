@@ -42,7 +42,7 @@ sf::Vector2f Button::getSize() const
 	return sf::Vector2f(rect.width, rect.height);
 }
 
-const bool Button::contains(double x, double y)
+bool Button::contains(double x, double y) const
 {
 	return getGlobalBounds().contains(x, y);
 }

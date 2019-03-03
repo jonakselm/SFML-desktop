@@ -22,7 +22,7 @@ public:
 	// Usage: auto[width, height] = button.getSize();
 	sf::Vector2f getSize() const;
 
-	const bool contains(double x, double y); 
+	bool contains(double x, double y) const; 
 	sf::FloatRect getGlobalBounds() const;
 
 
