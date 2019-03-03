@@ -22,7 +22,7 @@ public:
 	// Usage: auto[width, height] = button.getSize();
 	sf::Vector2f getSize() const;
 
-	bool contains(double x, double y); 
+	const bool contains(double x, double y); 
 	sf::FloatRect getGlobalBounds() const;
 
 
@@ -62,7 +62,7 @@ public:
 	void deselect();
 
 	// Returns true if selected, false otherwise
-	bool selected();
+	bool selected() const;
 
 ////////////////////////////////////////////////
 	// General

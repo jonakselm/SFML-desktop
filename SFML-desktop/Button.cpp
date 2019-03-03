@@ -42,7 +42,7 @@ sf::Vector2f Button::getSize() const
 	return sf::Vector2f(rect.width, rect.height);
 }
 
-bool Button::contains(double x, double y)
+const bool Button::contains(double x, double y)
 {
 	return getGlobalBounds().contains(x, y);
 }
@@ -166,7 +166,7 @@ void Button::deselect()
 	m_sprite.setColor(m_colourDeselect);
 }
 
-bool Button::selected()
+bool Button::selected() const
 {
 	return m_selected;
 }

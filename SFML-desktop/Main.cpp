@@ -5,8 +5,7 @@
 // Global Variables
 HINSTANCE hInst;
 HWND hMainWnd;
-HWND hExitButton;
-HWND hGameButton;
+HWND hSFMLwnd;
 HWND hView0;
 HWND hView1;
 
@@ -15,7 +14,10 @@ StateHandler stateHandler;
 
 // Forward declarations
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK childProc(HWND, UINT, WPARAM, LPARAM);
+
 ATOM MyRegisterClass(HINSTANCE);
+
 BOOL InitInstance(HINSTANCE, int);
 
 int APIENTRY wWinMain(
@@ -109,6 +111,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW mainWnd;
 
+	ZeroMemory(&mainWnd, sizeof(WNDCLASSEX));
+
     mainWnd.cbSize = sizeof(WNDCLASSEX);
 
     mainWnd.style          = CS_HREDRAW | CS_VREDRAW;
@@ -123,6 +127,37 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     mainWnd.lpszClassName  = L"SFML-class";
     mainWnd.hIconSm        = LoadIcon(mainWnd.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
+	if (!RegisterClassExW(&mainWnd))
+	{
+		MessageBoxW(hMainWnd, L"Registration of 'Main Wndclass' failed", L"Registration failed", MB_ICONERROR);
+		return 0;
+	}
+
+
+	WNDCLASSEXW child;
+
+	ZeroMemory(&child, sizeof(WNDCLASSEX));
+
+	child.cbSize = sizeof(WNDCLASSEX);
+
+	child.style = CS_HREDRAW | CS_VREDRAW;
+	child.lpfnWndProc = childProc;
+	child.cbClsExtra = 0;
+	child.cbWndExtra = 0;
+	child.hInstance = hInstance;
+	child.hIcon = NULL;
+	child.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	child.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 255)));
+	child.lpszMenuName = NULL;
+	child.lpszClassName = L"Child-class";
+	child.hIcon = NULL;
+
+	if (!RegisterClassExW(&child))
+	{
+		MessageBoxW(hMainWnd, L"Registration of 'Child Wndclass' failed", L"Registration failed", MB_ICONERROR);
+		return 0;
+	}
+
     return RegisterClassExW(&mainWnd);
 
 	////
@@ -136,7 +171,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	hMainWnd = CreateWindowW(L"SFML-class", L"SFML", WS_SYSMENU | WS_VISIBLE,
+	hMainWnd = CreateWindowExW(NULL, L"SFML-class", L"SFML", WS_SYSMENU | WS_VISIBLE,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	// Check if main window is created
@@ -155,6 +190,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	enum button { Quit, GameWindow };
+
 	switch (message)
 	{
 	case WM_COMMAND:
@@ -163,22 +200,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Parse menu selections
 		switch (wmId)
 		{
-		case 0:
+		case Quit:
 			PostQuitMessage(0);
 			break;
-		case 1:
+		case GameWindow:
 		{
-			HWND hGameWnd = CreateWindowW(L"SFML-class", L"Game Selection", WS_VISIBLE | WS_BORDER | WS_SYSMENU,
-				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
-			App app;
-			app.run(hGameWnd);
+			HWND hGameWnd = CreateWindowExW(NULL, L"Child-class", L"Game Selection", WS_SYSMENU,
+				CW_USEDEFAULT, 0, 990, 900, hMainWnd, NULL, hInst, NULL);
+			assert(hGameWnd != 0);
+
+			ShowWindow(hGameWnd, SW_SHOWDEFAULT);
+
+			//App app;
+			//app.run(hWnd);
 		}
 			break;
 		case ID_FILE_EXIT:
 			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProcW(hWnd, message, wParam, lParam);
 			break;
 		}
 		break;
@@ -196,17 +234,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Children
 		DWORD childStyle = WS_CHILD | WS_VISIBLE | WS_BORDER;
 
-		hExitButton = CreateWindowW(L"BUTTON", L"Quit", childStyle,
-			1330, 630, 80, 40, hWnd, (HMENU) 0, hInst, NULL);
+		HWND hExitButton = CreateWindowExW(NULL, L"BUTTON", L"Quit", childStyle,
+			1330, 630, 80, 40, hWnd, (HMENU) Quit, hInst, NULL);
 
-		hView0 = CreateWindowW(L"STATIC", NULL, childStyle,
+		hView0 = CreateWindowExW(NULL, L"STATIC", NULL, childStyle,
 			50, 100, 300, 400, hWnd, NULL, hInst, NULL);
 
-		hView1 = CreateWindowW(L"STATIC", NULL, childStyle,
+		hView1 = CreateWindowExW(NULL, L"STATIC", NULL, childStyle,
 			400, 100, 300, 400, hWnd, NULL, hInst, NULL);
 
-		hGameButton = CreateWindowW(L"BUTTON", L"To Game Selection", childStyle,
-			1200, 500, 150, 40, hWnd, (HMENU) 1, hInst, NULL);
+		HWND hGameButton = CreateWindowExW(NULL, L"BUTTON", L"To Game Selection", childStyle,
+			1200, 500, 150, 40, hWnd, (HMENU) GameWindow, hInst, NULL);
 
 		// Check if windows are successfully created
 		assert(hExitButton != 0);
@@ -218,9 +256,53 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-	default:
-		return DefWindowProcW(hWnd, message, wParam, lParam);
+	}
+	return DefWindowProcW(hWnd, message, wParam, lParam);
+}
+
+LRESULT CALLBACK childProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	enum button { Quit, SFML };
+
+	switch (message)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+
+		switch (wmId)
+		{
+		case SFML:
+		{
+			// Don't run this code. It will freeze the buttons,
+			// make the window undraggable and make it impossible to close
+			//  ||
+			//  \/
+			//App app;
+			//app.run(hSFMLwnd);
+		}
+			break;
+		case Quit:
+			DestroyWindow(hWnd);
+			break;
+		}
+	}
+	break;
+	case WM_CREATE:
+	{
+		hSFMLwnd = CreateWindowExW(NULL, L"STATIC", NULL, WS_VISIBLE | WS_CHILD,
+			0, 0, 400, 300, hWnd, NULL, hInst, NULL);
+
+		CreateWindowExW(NULL, L"BUTTON", L"Quit", WS_BORDER | WS_VISIBLE | WS_CHILD,
+			500, 600, 80, 40, hWnd, (HMENU) Quit, hInst, NULL);
+
+		/*CreateWindowExW(NULL, L"BUTTON", L"SFML", WS_BORDER | WS_VISIBLE | WS_CHILD,
+			500, 400, 80, 40, hWnd, (HMENU) SFML, hInst, NULL);*/
+	}
+	break;
+	case WM_DESTROY:
+		DestroyWindow(hWnd);
 		break;
 	}
-	return 0;
+	return DefWindowProcW(hWnd, message, wParam, lParam);
 }
