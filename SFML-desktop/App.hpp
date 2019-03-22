@@ -8,10 +8,10 @@ public:
 	~App();
 
 	void run(HWND hWnd);
-
-private:
 	void init(HWND hWnd);
 	bool frame();
+
+private:
 
 	sf::RenderWindow m_window;
 	sf::Color m_windowColor;

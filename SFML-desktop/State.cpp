@@ -9,9 +9,15 @@ bool State::pollEvent(sf::Window &window)
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			window.close();
 			return false;
-			break;
+
+		case sf::Event::LostFocus:
+			m_respondable = false;
+			return true;
+
+		case sf::Event::GainedFocus:
+			m_respondable = true;
+			return true;
 		}
 	}
 

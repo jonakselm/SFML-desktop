@@ -35,6 +35,9 @@ bool App::frame()
 	if (!state->pollEvent(m_window))
 		return false;
 
+	if (state->isRespondable())
+		state->handleExtraEvents(m_window, m_stateHandler);
+	
 	state->updateModel(m_window, m_stateHandler);
 
 	// Draw

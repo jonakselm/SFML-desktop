@@ -35,17 +35,48 @@ void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 	score.setPosition(10, 5);
 }
 
-void SnakeGame::updateModel(sf::Window & window, StateHandler & stateHandler)
+void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 {
-	keyHandler.handleKeyInput();
-	if (gameOver)
-	buttonHandler.handleInput(window);
-
 	std::stringstream ss;
 	ss << snake.GetScore();
 	score.setString(ss.str());
 
 	float dt = ft.Mark();
+	if (!gameOver)
+	{
+		snakeMoveCounter += dt;
+
+		if (snakeMoveCounter >= snakeMovePeriod)
+		{
+			snakeMoveCounter -= snakeMovePeriod;
+			const Location next = snake.nextHeadLoc(delta_loc);
+
+			if (snake.inTileExceptEnd(next) ||
+				!Board::InsideBoard(next))
+			gameOver = true;
+
+			if (m_apple.getGlobalBounds().intersects(snake.getNextBounds(delta_loc)))
+			{
+				snake.GrowAndMoveBy(delta_loc);
+				m_apple.respawn();
+
+			}
+			else
+			{
+				snake.MoveBy(delta_loc);
+			}
+		}
+
+		snakeMovePeriod = std::max(snakeMovePeriod - dt * snakeSpeedupFactor, snakeMovePeriodMin);
+	}
+}
+
+void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
+{
+	keyHandler.handleKeyInput();
+	if (gameOver)
+		buttonHandler.handleInput(window);
+
 	if (!gameOver)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -75,31 +106,6 @@ void SnakeGame::updateModel(sf::Window & window, StateHandler & stateHandler)
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
-
-		snakeMoveCounter += dt;
-
-		if (snakeMoveCounter >= snakeMovePeriod)
-		{
-			snakeMoveCounter -= snakeMovePeriod;
-			const Location next = snake.nextHeadLoc(delta_loc);
-
-			if (snake.inTileExceptEnd(next) ||
-				!Board::InsideBoard(next))
-			gameOver = true;
-
-			if (m_apple.getGlobalBounds().intersects(snake.getNextBounds(delta_loc)))
-			{
-				snake.GrowAndMoveBy(delta_loc);
-				m_apple.respawn();
-
-			}
-			else
-			{
-				snake.MoveBy(delta_loc);
-			}
-		}
-
-		snakeMovePeriod = std::max(snakeMovePeriod - dt * snakeSpeedupFactor, snakeMovePeriodMin);
 	}
 }
 

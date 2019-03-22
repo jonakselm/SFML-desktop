@@ -26,7 +26,11 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 		});
 }
 
-void MainMenu::updateModel(sf::Window & window, StateHandler &stateHandler)
+void MainMenu::updateModel(sf::Window &window, StateHandler &stateHandler)
+{
+}
+
+void MainMenu::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 {
 	m_buttonHandler.handleInput(window);
 }
