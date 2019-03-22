@@ -27,6 +27,7 @@ private:
 	Apple m_apple;
 	Location delta_loc = { 1,0 };
 	FrameTimer ft;
+	int64_t lastTime;
 	static constexpr float snakeMovePeriodMin = 0.06f;
 	float snakeMovePeriod = 0.4f;
 	float snakeMoveCounter = 0.0f;
