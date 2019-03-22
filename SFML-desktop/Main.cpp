@@ -161,7 +161,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	child.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	child.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 0)));
 	child.lpszMenuName = NULL;
-	child.lpszClassName = L"Child-class";
+	child.lpszClassName = L"Sub-class";
 	child.hIcon = NULL;
 
 	if (!RegisterClassExW(&child))
@@ -217,7 +217,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case GameWindow:
 		{
-			HWND hGameWnd = CreateWindowExW(WS_EX_DLGMODALFRAME, L"Child-class", L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(WS_EX_DLGMODALFRAME, L"Sub-class", L"Game Selection", WS_SYSMENU,
 				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
