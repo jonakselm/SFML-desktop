@@ -25,7 +25,7 @@ public:
 		return m_transition != Transition::None;
 	}
 
-	void PerformTransition(sf::Window &window, StateHandler &stateHandler) 
+	void PerformTransition(sf::Window &window) 
 	{
 		if (m_transition == Transition::Pop)
 			m_stateStack.pop_back();
@@ -35,7 +35,7 @@ public:
 
 		if (m_queuedState)
 		{
-			m_queuedState->init(window, stateHandler);
+			m_queuedState->init(window, *this);
 			m_stateStack.push_back(std::move(m_queuedState));
 		}
 

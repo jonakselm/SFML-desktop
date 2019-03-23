@@ -26,7 +26,7 @@ void App::run(HWND hWnd)
 bool App::frame()
 {
 	if (m_stateHandler.InTransition())
-		m_stateHandler.PerformTransition(m_window, m_stateHandler);
+		m_stateHandler.PerformTransition(m_window);
 
 	auto state = m_stateHandler.GetState();
 	if (!state)
