@@ -11,7 +11,7 @@ HWND hView1;
 
 // Forward declarations
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK childProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK subProc(HWND, UINT, WPARAM, LPARAM);
 
 ATOM MyRegisterClass(HINSTANCE);
 
@@ -146,27 +146,27 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	}
 
 
-	WNDCLASSEXW child;
+	WNDCLASSEXW sub;
 
-	ZeroMemory(&child, sizeof(WNDCLASSEX));
+	ZeroMemory(&sub, sizeof(WNDCLASSEX));
 
-	child.cbSize = sizeof(WNDCLASSEX);
+	sub.cbSize = sizeof(WNDCLASSEX);
 
-	child.style = CS_HREDRAW | CS_VREDRAW;
-	child.lpfnWndProc = DefWindowProc;
-	child.cbClsExtra = 0;
-	child.cbWndExtra = 0;
-	child.hInstance = hInstance;
-	child.hIcon = NULL;
-	child.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	child.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 0)));
-	child.lpszMenuName = NULL;
-	child.lpszClassName = L"Sub-class";
-	child.hIcon = NULL;
+	sub.style = CS_HREDRAW | CS_VREDRAW;
+	sub.lpfnWndProc = subProc;
+	sub.cbClsExtra = 0;
+	sub.cbWndExtra = 0;
+	sub.hInstance = hInstance;
+	sub.hIcon = NULL;
+	sub.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	sub.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 0)));
+	sub.lpszMenuName = MAKEINTRESOURCEW(IDR_GAMEMENU);
+	sub.lpszClassName = L"Sub-class";
+	sub.hIcon = NULL;
 
-	if (!RegisterClassExW(&child))
+	if (!RegisterClassExW(&sub))
 	{
-		MessageBoxW(hMain, L"Registration of 'Child Wndclass' failed", L"Registration failed", MB_ICONERROR);
+		MessageBoxW(hMain, L"Registration of 'Sub Wndclass' failed", L"Registration failed", MB_ICONERROR);
 		return 0;
 	}
 
@@ -191,7 +191,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	if (!hMain)
 	{
-		return FALSE;
+		return FALSE;	
 	}
 
 	ShowWindow(hMain, nCmdShow);
@@ -215,6 +215,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case Quit:
 			PostQuitMessage(0);
 			break;
+		case ID_OPEN_GAMEWINDOW:
 		case GameWindow:
 		{
 			HWND hGameWnd = CreateWindowExW(WS_EX_DLGMODALFRAME, L"Sub-class", L"Game Selection", WS_SYSMENU,
@@ -291,4 +292,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	return DefWindowProcW(hWnd, message, wParam, lParam);
+}
+
+LRESULT CALLBACK subProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	enum Button { Quit };
+	switch (msg)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		
+		switch (wmId)
+		{
+		case ID_GAME_EXIT:
+			DestroyWindow(hWnd);
+			break;
+		}
+	}
+	break;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
