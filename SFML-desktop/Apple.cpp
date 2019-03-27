@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "Apple.h"
-#include "Board.h"
 #include <random>
 
 Apple::Apple() :
-	m_shape(15.f)
+	m_shape(board.getDim().x / 2)
 {
 	m_shape.setFillColor(sf::Color::Red);
 	respawn();
@@ -13,10 +12,10 @@ Apple::Apple() :
 
 void Apple::respawn()
 {
-	Location newLoc;
-	newLoc.x = float(std::rand() % (Board::width - 1));
-	newLoc.y = float(std::rand() % (Board::height - 1));
-	m_shape.setPosition((newLoc.x * Board::dim), (newLoc.y * Board::dim));
+	sf::Vector2f newLoc;
+	newLoc.x = float(std::rand() % (int)(board.getSize().x - 1));
+	newLoc.y = float(std::rand() % (int)(board.getSize().y - 1));
+	m_shape.setPosition((newLoc.x * board.getDim().x + board.getOffset().x), (newLoc.y * board.getDim().y + board.getOffset().y));
 }
 
 void Apple::draw(sf::RenderTarget &target) const

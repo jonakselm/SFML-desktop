@@ -51,10 +51,10 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 		{
 			lastTime += (int64_t)dt;
 			snakeMoveCounter -= snakeMovePeriod;
-			const Location next = snake.nextHeadLoc(delta_loc);
+			const sf::Vector2f next = snake.nextHeadLoc(delta_loc);
 
 			if (snake.inTileExceptEnd(next) ||
-				!Board::InsideBoard(next))
+				!board.InsideBoard(next))
 			gameOver = true;
 
 			if (m_apple.getGlobalBounds().intersects(snake.getNextBounds(delta_loc)))
@@ -84,7 +84,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			const Location new_delta_loc = { 0,-1 };
+			const sf::Vector2f new_delta_loc = { 0,-1 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
@@ -92,7 +92,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			const Location new_delta_loc = { 0,1 };
+			const sf::Vector2f new_delta_loc = { 0,1 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
@@ -100,7 +100,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			const Location new_delta_loc = { -1,0 };
+			const sf::Vector2f new_delta_loc = { -1,0 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
@@ -108,7 +108,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			const Location new_delta_loc = { 1,0 };
+			const sf::Vector2f new_delta_loc = { 1,0 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
@@ -119,6 +119,7 @@ void SnakeGame::draw(sf::RenderTarget & target)
 {
 	if (!gameOver)
 	{
+		board.drawBoard(target);
 		m_apple.draw(target);
 		snake.draw(target);
 	}

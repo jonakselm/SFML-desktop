@@ -2,14 +2,23 @@
 
 #include "Location.h"
 
-namespace Board
+class Board
 {
-	void drawRect(const Location & loc, sf::Color c, sf::RenderTarget &target);
-	void drawCircle(const Location & loc, sf::Color c, sf::RenderTarget & target);
+public:
+	Board();
 
-	bool InsideBoard(const Location &loc);
+	void drawBoard(sf::RenderTarget &target) const;
 
-	static constexpr int dim = 30;
-	static constexpr int width = 33;
-	static constexpr int height = 30;
+	bool InsideBoard(const sf::Vector2f &loc);
+
+	sf::Vector2f getDim() const;
+	sf::Vector2f getOffset() const;
+	sf::Vector2f getSize() const;
+private:
+	const sf::Vector2f offset = { 100, 50 };
+	const sf::Vector2f dim = { 30.f, 30.f };
+	const sf::Vector2f circleDim = { dim.x / 2, 10 };
+	const sf::Vector2f size = { 20, 20 };
+
+	sf::RectangleShape top, bottom, left, right;
 };

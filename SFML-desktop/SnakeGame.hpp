@@ -25,7 +25,8 @@ private:
 	ButtonHandler buttonHandler;
 	Snake snake;
 	Apple m_apple;
-	Location delta_loc = { 1,0 };
+	Board board;
+	sf::Vector2f delta_loc = { 1,0 };
 	FrameTimer ft;
 	int64_t lastTime;
 	static constexpr float snakeMovePeriodMin = 0.06f;
