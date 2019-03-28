@@ -38,9 +38,8 @@ public:
 private:
 	Board board;
 	std::vector<Segment> segments;
-	// Only use even numbers for nBodyColors
-	static const int nBodyColors = 12;
-	sf::Color bodyColors[nBodyColors];
-	void initColors();
+	std::vector<sf::Color>bodyColors;
+	void initColors(int nColors, sf::Color color, int colorInit, int increment);
+	enum colorInit { red = 10'000, green, blue, all };
 	int score;
 };

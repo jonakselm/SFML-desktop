@@ -3,7 +3,8 @@
 
 Snake::Snake(const sf::Vector2f & loc)
 {
-	initColors();
+	// Only use even numbers for nBodyColors, for smooth color transition
+	initColors(30, sf::Color(0, 255, 0), green, 15);
 	segments.emplace_back(loc);
 }
 
@@ -16,7 +17,7 @@ sf::Vector2f Snake::nextHeadLoc(const sf::Vector2f & delta_loc) const
 
 void Snake::GrowAndMoveBy(const sf::Vector2f &delta_loc)
 {
-	segments.emplace_back(bodyColors[segments.size() % nBodyColors]);
+	segments.emplace_back(bodyColors[segments.size() % bodyColors.size()]);
 
 	MoveBy(delta_loc);
 
@@ -139,22 +140,101 @@ sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
 	return sf::FloatRect(nextPos, board.getDim());
 }
 
-void Snake::initColors()
+void Snake::initColors(int nColors, sf::Color color, int colorInit, int increment)
 {
-	// Don't use lower than 210, it will become 255 if it goes past 0
-	sf::Color color(0, 255, 0);
-	for (int i = 0; i < nBodyColors; i++)
+	bodyColors.reserve(nColors);
+
+	bool increase = false, decrease = true;
+
+	int limit = 25;
+
+	switch (colorInit)
 	{
-		if (i <= (nBodyColors / 2))
+	case red:
+	{
+		for (int i = 0; i < nColors; i++)
 		{
-			color.g -= 30;
-			bodyColors[i] = color;
+			while ((color.r - increment) > limit)
+			{
+				if ((color.r - increment) < limit)
+				{
+					color.r = increment + limit;
+				}
+				color.r -= increment;
+				bodyColors.push_back(color);
+			}
+			while ((color.r + increment) < 255)
+			{
+				if ((color.r + increment) > 255)
+				{
+					color.r = 255 - limit - increment;
+					decrease = true;
+					increase = false;
+				}
+				color.r += increment;
+				bodyColors.push_back(color);
+			}
 		}
-		else if (i >= (nBodyColors / 2) + 1)
+	}
+		break;
+	case green:
+	{
+		for (int i = 0; i < nColors; i++)
 		{
-			color.g += 30;
-			bodyColors[i] = color;
+			while ((color.g - increment) > limit)
+			{
+				if ((color.g - increment) < limit)
+				{
+					color.g = increment + limit;
+				}
+				color.g -= increment;
+				bodyColors.push_back(color);
+			}
+			while ((color.g + increment) < 255)
+			{
+				if ((color.g + increment) > 255)
+				{
+					color.g = 255 - limit - increment;
+					decrease = true;
+					increase = false;
+				}
+				color.g += increment;
+				bodyColors.push_back(color);
+			}
 		}
+	}
+	break;
+	case blue:
+	{
+		for (int i = 0; i < nColors; i++)
+		{
+			while ((color.b - increment) > limit)
+			{
+				if ((color.b - increment) < limit)
+				{
+					color.b = increment + limit;
+				}
+				color.b -= increment;
+				bodyColors.push_back(color);
+			}
+			while ((color.b + increment) < 255)
+			{
+				if ((color.b + increment) > 255)
+				{
+					color.b = 255 - limit - increment;
+					decrease = true;
+					increase = false;
+				}
+				color.b += increment;
+				bodyColors.push_back(color);
+			}
+		}
+	}
+	break;
+	case all:
+	{
+	}
+	break;
 	}
 }
 
