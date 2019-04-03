@@ -202,6 +202,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	// No point in using enum class, as the case has to be of type int
 	enum button { Quit, GameWindow, MB };
 
 	switch (message)

@@ -4,7 +4,7 @@
 Snake::Snake(const sf::Vector2f & loc)
 {
 	// Only use even numbers for nBodyColors, for smooth color transition
-	initColors(30, sf::Color(0, 255, 0), green, 15);
+	initColors(30, sf::Color(255, 0, 0), ColorInit::Red, 15);
 	segments.emplace_back(loc);
 }
 
@@ -118,7 +118,7 @@ bool Snake::inTileExceptEnd(const sf::Vector2f & lTarget) const
 
 int Snake::GetLenght()
 {
-	return (int)segments.size();
+	return static_cast<int>(segments.size());
 }
 
 sf::FloatRect Snake::getGlobalBounds() const
@@ -136,11 +136,11 @@ sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
 	sf::Vector2f l(segments[0].GetLocation());
 	l += delta_loc;
 	sf::FloatRect currPos = segments.front().getGlobalBounds();
-	sf::Vector2f nextPos = { currPos.left, currPos.top };
+	sf::Vector2f nextPos = { currPos.left + delta_loc.x * board.getDim().x, currPos.top + delta_loc.y * board.getDim().y };
 	return sf::FloatRect(nextPos, board.getDim());
 }
 
-void Snake::initColors(int nColors, sf::Color color, int colorInit, int increment)
+void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int increment)
 {
 	bodyColors.reserve(nColors);
 
@@ -150,7 +150,7 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 
 	switch (colorInit)
 	{
-	case red:
+	case ColorInit::Red:
 	{
 		for (int i = 0; i < nColors; i++)
 		{
@@ -168,8 +168,6 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 				if ((color.r + increment) > 255)
 				{
 					color.r = 255 - limit - increment;
-					decrease = true;
-					increase = false;
 				}
 				color.r += increment;
 				bodyColors.push_back(color);
@@ -177,7 +175,7 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 		}
 	}
 		break;
-	case green:
+	case ColorInit::Green:
 	{
 		for (int i = 0; i < nColors; i++)
 		{
@@ -195,8 +193,6 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 				if ((color.g + increment) > 255)
 				{
 					color.g = 255 - limit - increment;
-					decrease = true;
-					increase = false;
 				}
 				color.g += increment;
 				bodyColors.push_back(color);
@@ -204,7 +200,7 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 		}
 	}
 	break;
-	case blue:
+	case ColorInit::Blue:
 	{
 		for (int i = 0; i < nColors; i++)
 		{
@@ -222,8 +218,6 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 				if ((color.b + increment) > 255)
 				{
 					color.b = 255 - limit - increment;
-					decrease = true;
-					increase = false;
 				}
 				color.b += increment;
 				bodyColors.push_back(color);
@@ -231,7 +225,7 @@ void Snake::initColors(int nColors, sf::Color color, int colorInit, int incremen
 		}
 	}
 	break;
-	case all:
+	case ColorInit::All:
 	{
 	}
 	break;

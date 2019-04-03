@@ -7,6 +7,7 @@
 class Snake : public Shape
 {
 private:
+	enum class ColorInit { Red, Green, Blue, All };
 	class Segment : public Shape
 	{
 	public:
@@ -39,7 +40,6 @@ private:
 	Board board;
 	std::vector<Segment> segments;
 	std::vector<sf::Color>bodyColors;
-	void initColors(int nColors, sf::Color color, int colorInit, int increment);
-	enum colorInit { red = 10'000, green, blue, all };
+	void initColors(int nColors, sf::Color color, ColorInit colorInit, int increment);
 	int score;
 };

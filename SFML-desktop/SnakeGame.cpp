@@ -120,8 +120,8 @@ void SnakeGame::draw(sf::RenderTarget & target)
 	if (!gameOver)
 	{
 		board.drawBoard(target);
-		m_apple.draw(target);
 		snake.draw(target);
+		m_apple.draw(target);
 	}
 	if (gameOver)
 	{
