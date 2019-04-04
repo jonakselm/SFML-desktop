@@ -4,7 +4,7 @@
 Snake::Snake(const sf::Vector2f & loc)
 {
 	// Only use even numbers for nBodyColors, for smooth color transition
-	initColors(30, sf::Color(255, 0, 0), ColorInit::Red, 15);
+	initColors(30, sf::Color(255, 0, 0), ColorInit::Red, 5);
 	segments.emplace_back(loc);
 }
 

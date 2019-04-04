@@ -16,9 +16,9 @@ public:
 	sf::Vector2f getSize() const;
 private:
 	const sf::Vector2f offset = { 100, 50 };
-	const sf::Vector2f dim = { 30.f, 30.f };
+	const sf::Vector2f dim = { 15, 15 };
 	const sf::Vector2f circleDim = { dim.x / 2, 10 };
-	const sf::Vector2f size = { 20, 20 };
+	const sf::Vector2f size = { 50, 50 };
 
 	sf::RectangleShape top, bottom, left, right;
 };

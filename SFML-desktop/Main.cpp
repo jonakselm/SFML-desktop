@@ -157,12 +157,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	sub.cbClsExtra = 0;
 	sub.cbWndExtra = 0;
 	sub.hInstance = hInstance;
-	sub.hIcon = NULL;
+	sub.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	sub.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	sub.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 0)));
 	sub.lpszMenuName = MAKEINTRESOURCEW(IDR_GAMEMENU);
 	sub.lpszClassName = L"Sub-class";
-	sub.hIcon = NULL;
+	sub.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
 	if (!RegisterClassExW(&sub))
 	{
@@ -219,7 +219,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_OPEN_GAMEWINDOW:
 		case GameWindow:
 		{
-			HWND hGameWnd = CreateWindowExW(WS_EX_DLGMODALFRAME, L"Sub-class", L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(NULL, L"Sub-class", L"Game Selection", WS_SYSMENU,
 				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
@@ -313,5 +313,5 @@ LRESULT CALLBACK subProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+	return DefWindowProcW(hWnd, msg, wParam, lParam);
 }
