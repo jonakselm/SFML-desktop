@@ -312,6 +312,9 @@ LRESULT CALLBACK subProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
+	case WM_DESTROY:
+		DestroyWindow(hWnd);
+		break;
 	}
 	return DefWindowProcW(hWnd, msg, wParam, lParam);
 }
