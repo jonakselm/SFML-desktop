@@ -187,6 +187,7 @@
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
+    <ClInclude Include="Practise.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Snake.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Practise.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SnakeGame.cpp" />
     <ClCompile Include="State.cpp" />

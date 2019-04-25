@@ -75,6 +75,9 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 
 void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 {
+	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Circle))
+		stateHandler.Pop();
+
 	keyHandler.handleKeyInput();
 	if (gameOver)
 		buttonHandler.handleInput(window);
@@ -82,7 +85,8 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 	if (!gameOver)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+			sf::Joystick::isButtonPressed(0, sf::Joystick::Up))
 		{
 			const sf::Vector2f new_delta_loc = { 0,-1 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
@@ -90,7 +94,8 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+			sf::Joystick::isButtonPressed(0, sf::Joystick::Down))
 		{
 			const sf::Vector2f new_delta_loc = { 0,1 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
@@ -98,7 +103,8 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+			sf::Joystick::isButtonPressed(0, sf::Joystick::Left))
 		{
 			const sf::Vector2f new_delta_loc = { -1,0 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
@@ -106,7 +112,8 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+			sf::Joystick::isButtonPressed(0, sf::Joystick::Right))
 		{
 			const sf::Vector2f new_delta_loc = { 1,0 };
 			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)

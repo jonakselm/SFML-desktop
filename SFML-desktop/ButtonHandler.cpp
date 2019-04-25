@@ -69,7 +69,10 @@ bool ButtonHandler::toogleInputMode()
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Up)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Down)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Cross))
 	{
 		m_mouseControl = false;
 	}
@@ -99,7 +102,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 		m_it->select();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Up))
 	{
 		m_it->deselect();
 		if (m_it == m_buttons.begin())
@@ -108,7 +112,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 			m_it--;
 		m_it->select();
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Down))
 	{
 		m_it->deselect();
 		if (m_it == --m_buttons.end())
@@ -117,7 +122,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 			m_it++;
 		m_it->select();
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+		|| sf::Joystick::isButtonPressed(0, sf::Joystick::Cross))
 	{
 		m_it->invoke();
 	}

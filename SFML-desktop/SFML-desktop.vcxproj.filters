@@ -16,6 +16,9 @@
     <Filter Include="SnakeGame">
       <UniqueIdentifier>{06e85d73-19c0-47eb-a1fd-e11a889c82b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Practise">
+      <UniqueIdentifier>{cfcb1b45-836a-4514-8c7e-6650fb6b13a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="Shape.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Practise.hpp">
+      <Filter>Practise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="SnakeGame.cpp">
       <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Practise.cpp">
+      <Filter>Practise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
