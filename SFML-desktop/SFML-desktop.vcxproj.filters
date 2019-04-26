@@ -19,6 +19,9 @@
     <Filter Include="Practise">
       <UniqueIdentifier>{cfcb1b45-836a-4514-8c7e-6650fb6b13a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ControllerShow">
+      <UniqueIdentifier>{538b0f1e-7556-496a-b41e-f67a66e930ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -69,6 +72,9 @@
     <ClInclude Include="Practise.hpp">
       <Filter>Practise</Filter>
     </ClInclude>
+    <ClInclude Include="ControllerShow.hpp">
+      <Filter>ControllerShow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -109,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="Practise.cpp">
       <Filter>Practise</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerShow.cpp">
+      <Filter>ControllerShow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

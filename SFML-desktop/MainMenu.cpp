@@ -3,6 +3,7 @@
 #include "StateHandler.hpp"
 #include "SnakeGame.hpp"
 #include "Practise.hpp"
+#include "ControllerShow.hpp"
 
 MainMenu::MainMenu()
 {
@@ -17,7 +18,7 @@ MainMenu::~MainMenu()
 
 void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 {
-	m_buttonHandler.setDefaultSize(300, 60);
+	m_buttonHandler.setDefaultSize(400, 60);
 	m_buttonHandler.setNextPosition(150, 100);
 	m_buttonHandler.setSpacing(10);
 
@@ -28,6 +29,10 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 	m_buttonHandler.addButton("Practise", [&]
 		{
 			stateHandler.Push<Practise>();
+		});
+	m_buttonHandler.addButton("Show Controller Inputs", [&]
+		{
+			stateHandler.Push<ControllerShow>();
 		});
 }
 

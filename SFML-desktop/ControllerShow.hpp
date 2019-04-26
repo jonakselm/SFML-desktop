@@ -1,13 +1,13 @@
 #pragma once
 #include "State.hpp"
-#include "KeyHandler.hpp"
 #include "ButtonHandler.hpp"
+#include "KeyHandler.hpp"
 
-class Practise : public State
+class ControllerShow : public State
 {
 public:
-	Practise();
-	virtual ~Practise();
+	ControllerShow();
+	virtual ~ControllerShow();
 
 	void init(sf::Window &window, StateHandler &stateHandler);
 	void updateModel(sf::Window &window, StateHandler &stateHandler);
@@ -15,17 +15,13 @@ public:
 	void draw(sf::RenderTarget &target);
 
 private:
+	ButtonHandler m_buttonHandler;
+	KeyHandler m_keyHandler;
+	sf::Font m_font;
+	sf::Text XY_axis;
+	sf::Text ZR_axis;
+	int buttons[sf::Joystick::ButtonCount];
+	sf::Text t_button;
 	double X, Y, Z, R;
-	sf::Vector2f speed;
-	sf::Font font;
-	sf::Text text;
-	sf::Text pauseText;
-	ButtonHandler buttonHandler;
-	KeyHandler keyHandler;
-	sf::CircleShape circle;
-	bool showNumbers = false;
-	bool showable = true;
-	bool pause = false;
-	bool pausable = true;
 };
 
