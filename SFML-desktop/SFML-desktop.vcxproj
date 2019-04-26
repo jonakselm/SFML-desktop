@@ -184,7 +184,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ButtonHandler.hpp" />
-    <ClInclude Include="ControllerShow.hpp" />
+    <ClInclude Include="ControllerStatus.hpp" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
@@ -203,7 +203,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonHandler.cpp" />
-    <ClCompile Include="ControllerShow.cpp" />
+    <ClCompile Include="ControllerStatus.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />

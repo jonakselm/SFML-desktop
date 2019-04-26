@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "ControllerShow.hpp"
+#include "ControllerStatus.hpp"
 #include "StateHandler.hpp"
 #include <sstream>
 
 
-ControllerShow::ControllerShow()
+ControllerStatus::ControllerStatus()
 {
 }
 
 
-ControllerShow::~ControllerShow()
+ControllerStatus::~ControllerStatus()
 {
 }
 
-void ControllerShow::init(sf::Window & window, StateHandler & stateHandler)
+void ControllerStatus::init(sf::Window & window, StateHandler & stateHandler)
 {
 	auto kEsc = m_keyHandler.addKey(sf::Keyboard::Escape, [&]
 		{
@@ -32,10 +32,48 @@ void ControllerShow::init(sf::Window & window, StateHandler & stateHandler)
 
 	t_button.setFont(m_font);
 	t_button.setCharacterSize(20);
-	t_button.setPosition(300, 300); 
+	t_button.setPosition(300, 300);
+
+	for (int i = 0; i < arr_buttons.size(); i++)
+	{
+		if (i == sf::Joystick::Select)
+			arr_buttons[i] = "Select";
+		else if (i == sf::Joystick::L3)
+			arr_buttons[i] = "L3";
+		else if (i == sf::Joystick::R3)
+			arr_buttons[i] = "R3";
+		else if (i == sf::Joystick::Start)
+			arr_buttons[i] = "Start";
+		else if (i == sf::Joystick::Up)
+			arr_buttons[i] = "Up";
+		else if (i == sf::Joystick::Right)
+			arr_buttons[i] = "Right";
+		else if (i == sf::Joystick::Down)
+			arr_buttons[i] = "Down";
+		else if (i == sf::Joystick::Left)
+			arr_buttons[i] = "Left";
+		else if (i == sf::Joystick::L2)
+			arr_buttons[i] = "L2";
+		else if (i == sf::Joystick::R2)
+			arr_buttons[i] = "R2";
+		else if (i == sf::Joystick::L1)
+			arr_buttons[i] = "L1";
+		else if (i == sf::Joystick::R1)
+			arr_buttons[i] = "R1";
+		else if (i == sf::Joystick::Triangle)
+			arr_buttons[i] = "Triangle";
+		else if (i == sf::Joystick::Circle)
+			arr_buttons[i] = "Circle";
+		else if (i == sf::Joystick::Cross)
+			arr_buttons[i] = "Cross";
+		else if (i == sf::Joystick::Square)
+			arr_buttons[i] = "Square";
+		else if (i == sf::Joystick::PS_Btn)
+			arr_buttons[i] = "PS Button";
+	}
 }
 
-void ControllerShow::updateModel(sf::Window & window, StateHandler & stateHandler)
+void ControllerStatus::updateModel(sf::Window & window, StateHandler & stateHandler)
 {
 	std::stringstream ss_XY;
 	ss_XY << "X: " << X << "		Y: " << Y;
@@ -49,49 +87,13 @@ void ControllerShow::updateModel(sf::Window & window, StateHandler & stateHandle
 	ss_button << "Button pressed:	";
 	for (int i = 0; i < sf::Joystick::ButtonCount; i++)
 	{
-		std::string temp;
-		if (i == sf::Joystick::Select)
-			temp = "Select";
-		else if (i == sf::Joystick::L3)
-			temp = "L3";
-		else if (i == sf::Joystick::R3)
-			temp = "R3";
-		else if (i == sf::Joystick::Start)
-			temp = "Start";
-		else if (i == sf::Joystick::Up)
-			temp = "Up";
-		else if (i == sf::Joystick::Right)
-			temp = "Right";
-		else if (i == sf::Joystick::Down)
-			temp = "Down";
-		else if (i == sf::Joystick::Left)
-			temp = "Left";
-		else if (i == sf::Joystick::L2)
-			temp = "L2";
-		else if (i == sf::Joystick::R2)
-			temp = "R2";
-		else if (i == sf::Joystick::L1)
-			temp = "L1";
-		else if (i == sf::Joystick::R1)
-			temp = "R1";
-		else if (i == sf::Joystick::Triangle)
-			temp = "Triangle";
-		else if (i == sf::Joystick::Circle)
-			temp = "Circle";
-		else if (i == sf::Joystick::Cross)
-			temp = "Cross";
-		else if (i == sf::Joystick::Square)
-			temp = "Square";
-		else if (i == sf::Joystick::PS_Btn)
-			temp = "Ps Button";
-
 		if (sf::Joystick::isButtonPressed(0, i))
-			ss_button << temp;
+			ss_button << arr_buttons[i];
 	}
 	t_button.setString(ss_button.str());
 }
 
-void ControllerShow::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
+void ControllerStatus::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
 {
 	m_buttonHandler.handleInput(window);
 	m_keyHandler.handleKeyInput();
@@ -102,7 +104,7 @@ void ControllerShow::handleExtraEvents(sf::Window & window, StateHandler & state
 	R = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 }
 
-void ControllerShow::draw(sf::RenderTarget & target)
+void ControllerStatus::draw(sf::RenderTarget & target)
 {
 	target.draw(XY_axis);
 	target.draw(ZR_axis);

@@ -3,7 +3,7 @@
 #include "StateHandler.hpp"
 #include "SnakeGame.hpp"
 #include "Practise.hpp"
-#include "ControllerShow.hpp"
+#include "ControllerStatus.hpp"
 
 MainMenu::MainMenu()
 {
@@ -32,7 +32,7 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 		});
 	m_buttonHandler.addButton("Show Controller Inputs", [&]
 		{
-			stateHandler.Push<ControllerShow>();
+			stateHandler.Push<ControllerStatus>();
 		});
 }
 

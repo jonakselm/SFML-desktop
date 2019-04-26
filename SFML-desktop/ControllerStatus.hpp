@@ -2,12 +2,13 @@
 #include "State.hpp"
 #include "ButtonHandler.hpp"
 #include "KeyHandler.hpp"
+#include <array>
 
-class ControllerShow : public State
+class ControllerStatus : public State
 {
 public:
-	ControllerShow();
-	virtual ~ControllerShow();
+	ControllerStatus();
+	virtual ~ControllerStatus();
 
 	void init(sf::Window &window, StateHandler &stateHandler);
 	void updateModel(sf::Window &window, StateHandler &stateHandler);
@@ -20,7 +21,7 @@ private:
 	sf::Font m_font;
 	sf::Text XY_axis;
 	sf::Text ZR_axis;
-	int buttons[sf::Joystick::ButtonCount];
+	std::array<std::string, 17> arr_buttons;
 	sf::Text t_button;
 	double X, Y, Z, R;
 };
