@@ -17,6 +17,12 @@ ATOM MyRegisterClass(HINSTANCE);
 
 BOOL InitInstance(HINSTANCE, int);
 
+void updateWindow(HWND &hWnd)
+{
+	RECT clientRect;
+	GetClientRect(hWnd, &clientRect);
+	InvalidateRect(hWnd, &clientRect, TRUE);
+}
 
 std::vector<std::unique_ptr<App>> &apps()
 {
@@ -200,12 +206,19 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	return TRUE;
 }
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	// No point in using enum class, as the case has to be of type int
-	enum button { Quit, GameWindow, MB };
+	enum button { Quit, GameWindow, MB, backgroundButton };
 
-	switch (message)
+	PAINTSTRUCT ps;
+	HDC hDC;
+
+	static RECT rect, testRect;
+
+	static bool changeBackground = false;
+
+	switch (msg)
 	{
 	case WM_COMMAND:
 	{
@@ -234,18 +247,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			int mb = 0;
 			while ((mb = MessageBoxExW(hWnd, L"Noge tull", L"TulleBoks", MB_ABORTRETRYIGNORE | MB_ICONERROR, NULL)) == IDRETRY);
-				
+			
 			switch (mb)
 			{
 			case IDABORT:
+				SetRect(&rect, 500, 0, 600, 50);
+				updateWindow(hWnd);
 				break;
 			case IDIGNORE:
+				SetRect(&testRect, 0, 0, 400, 500);
+				updateWindow(hWnd);
 				break;
 			default:
 				break;
 			}
 		}
 		break;
+		case ID_FILE_BACKGROUNDTODESKTOP:
+		case backgroundButton:
+			changeBackground = !changeBackground;
+			updateWindow(hWnd);
+			break;
 		case ID_FILE_EXIT:
 			DestroyWindow(hWnd);
 			break;
@@ -254,10 +276,51 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: Add any drawing code that uses hdc here
+		hDC = BeginPaint(hWnd, &ps);
+
+		if (changeBackground)
+			PaintDesktop(hDC);
+
+		if (RectVisible(hDC, &rect))
+			FillRect(hDC, &rect, CreateSolidBrush(RGB(0, 0, 0)));
+
+		if (RectVisible(hDC, &testRect))
+			FillRect(hDC, &testRect, CreateSolidBrush(RGB(0, 0, 0)));
+
 		EndPaint(hWnd, &ps);
+	}
+		break;
+	case WM_KEYDOWN:
+	{
+		int keyId = LOWORD(wParam);
+
+		switch (keyId)
+		{
+		case ' ':
+				changeBackground = !changeBackground;
+				updateWindow(hWnd);
+			break;
+		case 'E':
+		case VK_ESCAPE:
+			SetRectEmpty(&rect);
+			SetRectEmpty(&testRect);
+			updateWindow(hWnd);
+			break;
+		case 'R':
+			SetRect(&testRect, 0, 0, 400, 500);
+			SetRect(&rect, 500, 0, 600, 50);
+			updateWindow(hWnd);
+			break;
+		}
+	}
+		break;
+	case WM_KEYUP:
+	{
+		int keyId = LOWORD(wParam);
+
+		switch (keyId)
+		{
+		}
 	}
 		break;
 	case WM_CREATE:
@@ -280,19 +343,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		HWND hMbButton = CreateWindowExW(NULL, L"BUTTON", L"MessageBox", childStyle,
 			0, 0, 110, 40, hWnd, (HMENU)MB, hInst, NULL);
 
+		HWND hBackgroundButton = CreateWindowExW(NULL, L"BUTTON", L"Background to Desktop", childStyle,
+			0, 600, 175, 40, hWnd, (HMENU)backgroundButton, hInst, NULL);
+
 		// Check if windows are successfully created
-		assert(hExitButton != 0);
-		assert(hView0 != 0);
-		assert(hView1 != 0);
-		assert(hGameButton != 0);
-		assert(hMbButton != 0);
 	}
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
 	}
-	return DefWindowProcW(hWnd, message, wParam, lParam);
+	return DefWindowProcW(hWnd, msg, wParam, lParam);
 }
 
 LRESULT CALLBACK subProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
