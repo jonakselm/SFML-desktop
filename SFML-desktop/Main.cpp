@@ -2,6 +2,7 @@
 #include <sdkddkver.h>
 #include "App.hpp"
 #include <vector>
+#include <list>
 
 // Global Variables
 HINSTANCE hInst;
@@ -22,6 +23,21 @@ void updateWindow(HWND &hWnd)
 	RECT clientRect;
 	GetClientRect(hWnd, &clientRect);
 	InvalidateRect(hWnd, &clientRect, TRUE);
+}
+
+void updateWindow(HWND &hWnd, RECT rect)
+{
+	GetClientRect(hWnd, &rect);
+	InvalidateRect(hWnd, &rect, TRUE);
+}
+
+void updateWindow(HWND &hWnd, std::vector<RECT> rect)
+{
+	for (size_t i = 0; i < rect.size(); i++)
+	{
+		GetClientRect(hWnd, &rect[i]);
+		InvalidateRect(hWnd, &rect[i], TRUE);
+	}
 }
 
 std::vector<std::unique_ptr<App>> &apps()
@@ -298,19 +314,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 		case ' ':
 				changeBackground = !changeBackground;
-				updateWindow(hWnd);
+				updateWindow(hWnd, rect);
 			break;
 		case 'E':
 		case VK_ESCAPE:
+		{
 			SetRectEmpty(&rect);
 			SetRectEmpty(&testRect);
-			updateWindow(hWnd);
+			std::vector<RECT> v_rect = { rect, testRect };
+			updateWindow(hWnd, v_rect);
+		}
 			break;
 		case 'R':
+		{
 			SetRect(&testRect, 0, 0, 400, 500);
 			SetRect(&rect, 500, 0, 600, 50);
-			updateWindow(hWnd);
+			std::vector<RECT> v_rect = { rect, testRect };
+			updateWindow(hWnd, v_rect);
 			break;
+		}
 		}
 	}
 		break;
@@ -320,6 +342,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		switch (keyId)
 		{
+		case VK_ESCAPE:
+			break;
+		default:
+			break;
 		}
 	}
 		break;

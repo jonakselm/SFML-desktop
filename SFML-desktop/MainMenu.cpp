@@ -4,6 +4,7 @@
 #include "SnakeGame.hpp"
 #include "Practise.hpp"
 #include "ControllerStatus.hpp"
+#include "SnakeInit.hpp"
 
 MainMenu::MainMenu()
 {
@@ -24,7 +25,11 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 
 	m_buttonHandler.addButton("Snake Game", [&]
 		{
-			stateHandler.Push<SnakeGame>();
+			stateHandler.Push<SnakeGame>(30, sf::Color(255, 0, 0), ColorInit::Red, 5);
+		});
+	m_buttonHandler.addButton("Customizable Snake", [&]
+		{
+			stateHandler.Push<SnakeInit>();
 		});
 	m_buttonHandler.addButton("Practise", [&]
 		{
@@ -45,7 +50,7 @@ void MainMenu::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 	m_buttonHandler.handleInput(window);
 }
 
-void MainMenu::draw(sf::RenderTarget & target)
+void MainMenu::draw(sf::RenderTarget & target) const
 {
 	m_buttonHandler.draw(target);
 }

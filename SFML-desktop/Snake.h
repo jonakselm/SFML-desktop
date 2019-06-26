@@ -4,10 +4,11 @@
 #include <vector>
 #include "Board.h"
 
+enum class ColorInit { Red, Green, Blue, All };
+
 class Snake : public Shape
 {
 private:
-	enum class ColorInit { Red, Green, Blue, All };
 	class Segment : public Shape
 	{
 	public:
@@ -25,7 +26,7 @@ private:
 		sf::Color c;
 	};
 public:
-	Snake(const sf::Vector2f &loc);
+	Snake(const sf::Vector2f &loc, int nColors, sf::Color startColor, ColorInit colorInit, int increment);
 	sf::Vector2f nextHeadLoc(const sf::Vector2f& delta_loc) const;
 	void GrowAndMoveBy(const sf::Vector2f &delta_loc);
 	void draw(sf::RenderTarget &target) const;

@@ -47,7 +47,7 @@ public:
 	{
 		m_transition = Transition::Push;
 		m_queuedState = std::make_unique<T>(
-			std::forward(args)...);
+			std::forward<Args>(args)...);
 		return m_queuedState.get();
 	}
 
@@ -56,7 +56,7 @@ public:
 	{
 		m_transition = Transition::Pop;
 		m_queuedState = std::make_unique<T>(
-			std::forward(args)...);
+			std::forward<Args>(args)...);
 		return m_queuedState.get();
 	}
 
@@ -65,7 +65,7 @@ public:
 	{
 		m_transition = Transition::Reset;
 		m_queuedState = std::make_unique<T>(
-			std::forward(args)...);
+			std::forward<Args>(args)...);
 		return m_queuedState.get();
 	}
 

@@ -193,6 +193,7 @@
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="SnakeGame.hpp" />
+    <ClInclude Include="SnakeInit.hpp" />
     <ClInclude Include="State.hpp" />
     <ClInclude Include="StateHandler.hpp" />
     <ClInclude Include="stdafx.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Practise.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SnakeGame.cpp" />
+    <ClCompile Include="SnakeInit.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

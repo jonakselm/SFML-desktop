@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Snake.h"
 
-Snake::Snake(const sf::Vector2f & loc)
+Snake::Snake(const sf::Vector2f & loc, int nColors, sf::Color startColor, ColorInit colorInit, int increment)
 {
-	// Only use even numbers for nBodyColors, for smooth color transition
-	initColors(30, sf::Color(255, 0, 0), ColorInit::Red, 5);
+	// Use even numbers for nBodyColors for smooth color transition
+	initColors(nColors, startColor, colorInit, increment);
 	segments.emplace_back(loc);
 }
 
@@ -154,7 +154,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 	{
 		for (int i = 0; i < nColors; i++)
 		{
-			while ((color.r - increment) > limit)
+			if ((color.r - increment) > limit)
 			{
 				if ((color.r - increment) < limit)
 				{
@@ -163,7 +163,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 				color.r -= increment;
 				bodyColors.push_back(color);
 			}
-			while ((color.r + increment) < 255)
+			else if ((color.r + increment) < 255)
 			{
 				if ((color.r + increment) > 255)
 				{
@@ -179,7 +179,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 	{
 		for (int i = 0; i < nColors; i++)
 		{
-			while ((color.g - increment) > limit)
+			if ((color.g - increment) > limit)
 			{
 				if ((color.g - increment) < limit)
 				{
@@ -188,7 +188,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 				color.g -= increment;
 				bodyColors.push_back(color);
 			}
-			while ((color.g + increment) < 255)
+			else if ((color.g + increment) < 255)
 			{
 				if ((color.g + increment) > 255)
 				{
@@ -204,7 +204,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 	{
 		for (int i = 0; i < nColors; i++)
 		{
-			while ((color.b - increment) > limit)
+			if ((color.b - increment) > limit)
 			{
 				if ((color.b - increment) < limit)
 				{
@@ -213,7 +213,7 @@ void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int in
 				color.b -= increment;
 				bodyColors.push_back(color);
 			}
-			while ((color.b + increment) < 255)
+			else if ((color.b + increment) < 255)
 			{
 				if ((color.b + increment) > 255)
 				{

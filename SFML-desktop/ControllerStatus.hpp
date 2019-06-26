@@ -13,7 +13,7 @@ public:
 	void init(sf::Window &window, StateHandler &stateHandler);
 	void updateModel(sf::Window &window, StateHandler &stateHandler);
 	void handleExtraEvents(sf::Window &window, StateHandler &stateHandler);
-	void draw(sf::RenderTarget &target);
+	void draw(sf::RenderTarget &target) const;
 
 private:
 	ButtonHandler m_buttonHandler;

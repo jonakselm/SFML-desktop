@@ -3,10 +3,14 @@
 #include "StateHandler.hpp"
 #include <sstream>
 
-SnakeGame::SnakeGame()
+SnakeGame::SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int increment)
 	:
 	lastTime(0),
-	snake ({ 1,1 })
+	nColors(nColors),
+	startColor(startColor),
+	colorInit(colorInit),
+	increment(increment),
+	snake({ 1,1 }, nColors, startColor, colorInit, increment)
 {
 }
 
@@ -29,7 +33,7 @@ void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 
 	auto &bRestart = buttonHandler.addButton("Game Over!\nRestart?", [&]
 		{
-			stateHandler.Switch<SnakeGame>();
+			stateHandler.Switch<SnakeGame>(nColors, startColor, colorInit, increment);
 		});
 
 	score.setFont(font);
@@ -122,7 +126,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 	}
 }
 
-void SnakeGame::draw(sf::RenderTarget & target)
+void SnakeGame::draw(sf::RenderTarget & target) const
 {
 	if (!gameOver)
 	{

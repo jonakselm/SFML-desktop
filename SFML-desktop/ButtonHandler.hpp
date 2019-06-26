@@ -11,6 +11,9 @@ public:
 	void setFont(const sf::Font &font) { m_pFont = &font; }
 	const sf::Font &getFont() const { return *m_pFont; }
 
+	void setTextSize(unsigned int size);
+	unsigned int getTextSize() const;
+
 	void setSpacing(int spacing);
 	int getSpacing() const;
 
@@ -41,6 +44,7 @@ private:
 	int m_defaultWidth = 250, m_defaultHeight = 60;
 	int m_xCurr = 0, m_yCurr = 0;
 	int m_spacing = 10;
+	int m_textSize = 30;
 	std::list<Button> m_buttons;
 	decltype(m_buttons)::iterator m_it;
 	const sf::Font *m_pFont = nullptr;

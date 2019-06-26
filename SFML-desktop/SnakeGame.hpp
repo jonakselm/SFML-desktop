@@ -1,22 +1,22 @@
 #pragma once
 #include "State.hpp"
+#include "ButtonHandler.hpp"
+#include "KeyHandler.hpp"
 #include "Snake.h"
 #include "Location.h"
 #include "FrameTimer.h"
-#include "KeyHandler.hpp"
 #include "Apple.h"
-#include "ButtonHandler.hpp"
 
 class SnakeGame : public State
 {
 public:
-	SnakeGame();
+	SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int increment);
 	virtual ~SnakeGame();
 
 	void init(sf::Window &window, StateHandler &stateHandler);
 	void updateModel(sf::Window &window, StateHandler &stateHandler) override;
 	void handleExtraEvents(sf::Window &window, StateHandler &stateHandler) override;
-	void draw(sf::RenderTarget &target) override;
+	void draw(sf::RenderTarget &target) const override;
 
 private:
 	sf::Font font;
@@ -34,5 +34,10 @@ private:
 	float snakeMoveCounter = 0.0f;
 	static constexpr float snakeSpeedupFactor = 0.005f;
 	bool gameOver = false;
+
+	int nColors;
+	sf::Color startColor;
+	ColorInit colorInit;
+	int increment;
 };
 

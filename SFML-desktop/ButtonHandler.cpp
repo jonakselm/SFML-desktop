@@ -1,6 +1,16 @@
 #include "stdafx.h"
 #include "ButtonHandler.hpp"
 
+void ButtonHandler::setTextSize(unsigned int size)
+{
+	m_textSize = size;
+}
+
+unsigned int ButtonHandler::getTextSize() const
+{
+	return m_textSize;
+}
+
 void ButtonHandler::setSpacing(int spacing)
 {
 	m_spacing = spacing;
@@ -42,6 +52,7 @@ Button &ButtonHandler::addButton(const std::string &text, const std::function<vo
 		m_it = m_buttons.begin();
 	}
 
+	button.setTextSize(m_textSize);
 	button.setSize(m_defaultWidth, m_defaultHeight);
 	button.setPosition(m_xCurr, m_yCurr);
 	button.setText(text);

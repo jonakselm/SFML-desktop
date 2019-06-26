@@ -104,7 +104,7 @@ void ControllerStatus::handleExtraEvents(sf::Window & window, StateHandler & sta
 	R = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 }
 
-void ControllerStatus::draw(sf::RenderTarget & target)
+void ControllerStatus::draw(sf::RenderTarget & target) const
 {
 	target.draw(XY_axis);
 	target.draw(ZR_axis);

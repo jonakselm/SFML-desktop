@@ -90,7 +90,7 @@ void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandle
 	}
 }
 
-void Practise::draw(sf::RenderTarget & target)
+void Practise::draw(sf::RenderTarget & target) const
 {
 	target.draw(circle);
 	target.draw(text);

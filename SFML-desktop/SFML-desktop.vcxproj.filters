@@ -75,6 +75,9 @@
     <ClInclude Include="ControllerStatus.hpp">
       <Filter>ControllerStatus</Filter>
     </ClInclude>
+    <ClInclude Include="SnakeInit.hpp">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="ControllerStatus.cpp">
       <Filter>ControllerStatus</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeInit.cpp">
+      <Filter>SnakeGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
