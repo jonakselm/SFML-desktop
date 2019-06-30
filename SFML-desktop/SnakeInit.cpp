@@ -188,16 +188,10 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 
 void SnakeInit::updateModel(sf::Window & window, StateHandler & stateHandler)
 {
-	std::stringstream nColorsString;
-	std::stringstream incrementString;
-
-	nColorsString << nColors;
-	incrementString << increment;
-
-	nColorsText.setString(nColorsString.str());
+	nColorsText.setString(std::to_string(nColors));
 	startColorText.setString(stringArray[chosenStart]);
 	colorInitText.setString(stringArray[chosenInit]);
-	incrementText.setString(incrementString.str());
+	incrementText.setString(std::to_string(increment));
 }
 
 void SnakeInit::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
