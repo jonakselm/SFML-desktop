@@ -4,7 +4,7 @@
 Snake::Snake(const sf::Vector2f & loc, int nColors, sf::Color startColor, ColorInit colorInit, int increment)
 {
 	// Use even numbers for nBodyColors for smooth color transition
-	initColors(nColors, startColor, colorInit, increment);
+	initSnake(nColors, startColor, colorInit, increment);
 	segments.emplace_back(loc);
 }
 
@@ -140,95 +140,81 @@ sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
 	return sf::FloatRect(nextPos, board.getDim());
 }
 
-void Snake::initColors(int nColors, sf::Color color, ColorInit colorInit, int increment)
+void Snake::initSnake(int nColors, sf::Color color, ColorInit colorInit, int increment)
 {
 	bodyColors.reserve(nColors);
 
-	bool increase = false, decrease = true;
-
-	int limit = 25;
+	bool rIncreasing = false, gIncreasing = false, bIncreasing = false, increasing = false;
 
 	switch (colorInit)
 	{
 	case ColorInit::Red:
-	{
+	case ColorInit::Green:
+	case ColorInit::Blue:
 		for (int i = 0; i < nColors; i++)
 		{
-			if ((color.r - increment) > limit)
-			{
-				if ((color.r - increment) < limit)
-				{
-					color.r = increment + limit;
-				}
-				color.r -= increment;
-				bodyColors.push_back(color);
-			}
-			else if ((color.r + increment) < 255)
-			{
-				if ((color.r + increment) > 255)
-				{
-					color.r = 255 - limit - increment;
-				}
-				color.r += increment;
-				bodyColors.push_back(color);
-			}
+			initColors(colorInit, color, increment, increasing);
+			bodyColors.push_back(color);
 		}
+		break;
+	case ColorInit::All:
+		for (int i = 0; i < nColors; i++)
+		{
+			initColors(ColorInit::Red, color, increment, rIncreasing);
+			initColors(ColorInit::Green, color, increment, gIncreasing);
+			initColors(ColorInit::Blue, color, increment, bIncreasing);
+			bodyColors.push_back(color);
+		}
+		break;
 	}
+}
+
+void Snake::initColors(ColorInit colorInit, sf::Color &color, int increment, bool &increasing)
+{
+	sf::Uint8 tempColor;
+
+	switch (colorInit)
+	{
+	case ColorInit::Red:
+		tempColor = color.r;
 		break;
 	case ColorInit::Green:
-	{
-		for (int i = 0; i < nColors; i++)
-		{
-			if ((color.g - increment) > limit)
-			{
-				if ((color.g - increment) < limit)
-				{
-					color.g = increment + limit;
-				}
-				color.g -= increment;
-				bodyColors.push_back(color);
-			}
-			else if ((color.g + increment) < 255)
-			{
-				if ((color.g + increment) > 255)
-				{
-					color.g = 255 - limit - increment;
-				}
-				color.g += increment;
-				bodyColors.push_back(color);
-			}
-		}
-	}
-	break;
+		tempColor = color.g;
+		break;
 	case ColorInit::Blue:
-	{
-		for (int i = 0; i < nColors; i++)
-		{
-			if ((color.b - increment) > limit)
-			{
-				if ((color.b - increment) < limit)
-				{
-					color.b = increment + limit;
-				}
-				color.b -= increment;
-				bodyColors.push_back(color);
-			}
-			else if ((color.b + increment) < 255)
-			{
-				if ((color.b + increment) > 255)
-				{
-					color.b = 255 - limit - increment;
-				}
-				color.b += increment;
-				bodyColors.push_back(color);
-			}
-		}
+		tempColor = color.b;
+		break;
 	}
-	break;
-	case ColorInit::All:
+
+	if (tempColor - increment < 10)
 	{
+		increasing = true;
 	}
-	break;
+	else if (tempColor + increment > 255)
+	{
+		increasing = false;
+	}
+
+	if (increasing)
+	{
+		tempColor += increment;
+	}
+	else
+	{
+		tempColor -= increment;
+	}
+
+	switch (colorInit)
+	{
+	case ColorInit::Red:
+		color.r = tempColor;
+		break;
+	case ColorInit::Green:
+		color.g = tempColor;
+		break;
+	case ColorInit::Blue:
+		color.b = tempColor;
+		break;
 	}
 }
 

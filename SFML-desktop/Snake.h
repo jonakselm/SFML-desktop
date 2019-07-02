@@ -41,6 +41,7 @@ private:
 	Board board;
 	std::vector<Segment> segments;
 	std::vector<sf::Color>bodyColors;
-	void initColors(int nColors, sf::Color color, ColorInit colorInit, int increment);
+	void initSnake(int nColors, sf::Color color, ColorInit colorInit, int increment);
+	void initColors(ColorInit colorInit, sf::Color &color, int increment, bool &increasing);
 	int score;
 };

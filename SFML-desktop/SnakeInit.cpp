@@ -38,6 +38,9 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 		case 2:
 			stringArray[i] = "Blue";
 			break;
+		case 3:
+			stringArray[i] = "All";
+			break;
 		}
 	}
 
@@ -69,6 +72,9 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 			break;
 		case 2:
 			initArray[i] = ColorInit::Blue;
+			break;
+		case 3:
+			initArray[i] = ColorInit::All;
 			break;
 		}
 	}
@@ -120,7 +126,7 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 			if (chosenStart > 0)
 				chosenStart -= 1;
 			else
-				chosenStart = 2;
+				chosenStart = (int)colorArray.size() - 1;
 
 			startColor = colorArray[chosenStart];
 		});
@@ -129,7 +135,7 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 			if (chosenInit > 0)
 				chosenInit -= 1;
 			else
-				chosenInit = 2;
+				chosenInit = (int)initArray.size() - 1;
 
 			colorInit = initArray[chosenInit];
 		});
@@ -152,7 +158,7 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 		});
 	auto bStartColor1 = buttonHandler.addButton(">", [&]
 		{
-			if (chosenStart < 2)
+			if (chosenStart < (int)colorArray.size() - 1)
 				chosenStart += 1;
 			else
 				chosenStart = 0;
@@ -161,7 +167,7 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 		});
 	auto bColorInit1 = buttonHandler.addButton(">", [&]
 		{
-			if (chosenInit < 2)
+			if (chosenInit < (int)initArray.size() - 1)
 				chosenInit += 1;
 			else
 				chosenInit = 0;

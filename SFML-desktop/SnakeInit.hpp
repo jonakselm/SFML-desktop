@@ -26,8 +26,8 @@ private:
 		nColorInstr, startColorInstr, colorInitInstr, incrementInstr;
 
 	std::array<sf::Color, 3> colorArray;
-	std::array<std::string, 3> stringArray;
-	std::array<ColorInit, 3> initArray;
+	std::array<std::string, 4> stringArray;
+	std::array<ColorInit, 4> initArray;
 	int chosenStart, chosenInit;
 
 	int nColors;
