@@ -9,6 +9,8 @@ HINSTANCE hInst;
 HWND hMain;
 HWND hView0;
 HWND hView1;
+const wchar_t mainClass[] = L"SFML-class";
+const wchar_t subClass[] = L"Sub-class";
 
 // Forward declarations
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -139,6 +141,9 @@ int APIENTRY wWinMain(
 	}
 
 	return (int)msg.wParam;
+
+	UnregisterClassW(mainClass, hInst);
+	UnregisterClassW(subClass, hInst);
 }
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
@@ -158,7 +163,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     mainWnd.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     mainWnd.hbrBackground  = (HBRUSH)(CreateSolidBrush(RGB (0, 255, 0)));
     mainWnd.lpszMenuName   = MAKEINTRESOURCEW(IDR_MAINMENUBAR);
-    mainWnd.lpszClassName  = L"SFML-class";
+    mainWnd.lpszClassName  = mainClass;
     mainWnd.hIconSm        = LoadIcon(mainWnd.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
 	if (!RegisterClassExW(&mainWnd))
@@ -183,7 +188,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	sub.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	sub.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0, 0, 0)));
 	sub.lpszMenuName = MAKEINTRESOURCEW(IDR_GAMEMENU);
-	sub.lpszClassName = L"Sub-class";
+	sub.lpszClassName = subClass;
 	sub.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
 	if (!RegisterClassExW(&sub))
@@ -205,7 +210,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	hMain = CreateWindowExW(NULL, L"SFML-class", L"SFML", WS_SYSMENU | WS_VISIBLE,
+	hMain = CreateWindowExW(NULL, mainClass, L"SFML", WS_SYSMENU | WS_VISIBLE,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	// Check if main window is created
@@ -248,7 +253,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case ID_OPEN_GAMEWINDOW:
 		case GameWindow:
 		{
-			HWND hGameWnd = CreateWindowExW(NULL, L"Sub-class", L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
 				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
