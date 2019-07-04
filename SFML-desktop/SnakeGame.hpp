@@ -21,9 +21,9 @@ public:
 private:
 	sf::Font font;
 	sf::Text score;
-	KeyHandler keyHandler;
+	KeyHandler m_keyHandler;
 	ButtonHandler buttonHandler;
-	Snake snake;
+	Snake m_snake;
 	Apple m_apple;
 	Board board;
 	sf::Vector2f delta_loc = { 1,0 };

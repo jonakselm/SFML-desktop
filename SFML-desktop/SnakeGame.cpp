@@ -10,7 +10,7 @@ SnakeGame::SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int
 	startColor(startColor),
 	colorInit(colorInit),
 	increment(increment),
-	snake({ 1,1 }, nColors, startColor, colorInit, increment)
+	m_snake({ 1,1 }, nColors, startColor, colorInit, increment)
 {
 }
 
@@ -21,7 +21,7 @@ SnakeGame::~SnakeGame()
 
 void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 {
-	auto &kEsc = keyHandler.addKey(sf::Keyboard::Escape, [&]
+	auto &kEsc = m_keyHandler.addKey(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});
@@ -42,9 +42,8 @@ void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 
 void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 {
-	std::stringstream ss;
-	ss << snake.GetScore();
-	score.setString(ss.str());
+	std::string snakeScore = std::to_string(m_snake.getScore());
+	score.setString(snakeScore);
 
 	float dt = ft.Mark();
 	if (!gameOver)
@@ -55,21 +54,21 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 		{
 			lastTime += (int64_t)dt;
 			snakeMoveCounter -= snakeMovePeriod;
-			const sf::Vector2f next = snake.nextHeadLoc(delta_loc);
+			const sf::Vector2f next = m_snake.nextHeadLoc(delta_loc);
 
-			if (snake.inTileExceptEnd(next) ||
+			if (m_snake.inTileExceptEnd(next) ||
 				!board.InsideBoard(next))
 			gameOver = true;
 
-			if (m_apple.getGlobalBounds().intersects(snake.getNextBounds(delta_loc)))
+			if (m_apple.getGlobalBounds().intersects(m_snake.getNextBounds(delta_loc)))
 			{
-				snake.GrowAndMoveBy(delta_loc);
+				m_snake.growAndMoveBy(delta_loc);
 				m_apple.respawn();
 
 			}
 			else
 			{
-				snake.MoveBy(delta_loc);
+				m_snake.moveBy(delta_loc);
 			}
 		}
 
@@ -82,7 +81,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Circle))
 		stateHandler.Pop();
 
-	keyHandler.handleKeyInput();
+	m_keyHandler.handleKeyInput();
 	if (gameOver)
 		buttonHandler.handleInput(window);
 
@@ -93,7 +92,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sf::Joystick::Up))
 		{
 			const sf::Vector2f new_delta_loc = { 0,-1 };
-			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -102,7 +101,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sf::Joystick::Down))
 		{
 			const sf::Vector2f new_delta_loc = { 0,1 };
-			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -111,7 +110,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sf::Joystick::Left))
 		{
 			const sf::Vector2f new_delta_loc = { -1,0 };
-			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -120,7 +119,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sf::Joystick::Right))
 		{
 			const sf::Vector2f new_delta_loc = { 1,0 };
-			if (delta_loc != -new_delta_loc || snake.GetLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
 				delta_loc = new_delta_loc;
 		}
 	}
@@ -131,7 +130,7 @@ void SnakeGame::draw(sf::RenderTarget & target) const
 	if (!gameOver)
 	{
 		board.drawBoard(target);
-		snake.draw(target);
+		m_snake.draw(target);
 		m_apple.draw(target);
 	}
 	if (gameOver)

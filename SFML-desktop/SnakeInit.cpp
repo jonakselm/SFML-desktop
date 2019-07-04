@@ -4,12 +4,15 @@
 
 SnakeInit::SnakeInit()
 	:
-	nColors(1),
-	startColor(sf::Color::Red),
-	colorInit(ColorInit::Red),
-	increment(0),
+	m_nColors(1),
+	m_startColor(sf::Color::Red),
+	m_colorInit(ColorInit::Red),
+	m_increment(0),
 	chosenStart(0),
-	chosenInit(0)
+	chosenInit(0),
+	m_colorArray{ sf::Color::Red, sf::Color::Green, sf::Color::Blue },
+	m_stringArray{ "Red", "Green", "Blue", "All" },
+	m_initArray{ ColorInit::Red, ColorInit::Green, ColorInit::Blue, ColorInit::All }
 {
 }
 
@@ -20,64 +23,10 @@ SnakeInit::~SnakeInit()
 
 void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 {
-	keyHandler.addKey(sf::Keyboard::Escape, [&]
+	m_keyHandler.addKey(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});
-
-	for (int i = 0; i < stringArray.size(); i++)
-	{
-		switch (i)
-		{
-		case 0:
-			stringArray[i] = "Red";
-			break;
-		case 1:
-			stringArray[i] = "Green";
-			break;
-		case 2:
-			stringArray[i] = "Blue";
-			break;
-		case 3:
-			stringArray[i] = "All";
-			break;
-		}
-	}
-
-	for (int i = 0; i < colorArray.size(); i++)
-	{
-		switch (i)
-		{
-		case 0:
-			colorArray[i] = sf::Color::Red;
-			break;
-		case 1:
-			colorArray[i] = sf::Color::Green;
-			break;
-		case 2:
-			colorArray[i] = sf::Color::Blue;
-			break;
-		}
-	}
-
-	for (int i = 0; i < initArray.size(); i++)
-	{
-		switch (i)
-		{
-		case 0:
-			initArray[i] = ColorInit::Red;
-			break;
-		case 1:
-			initArray[i] = ColorInit::Green;
-			break;
-		case 2:
-			initArray[i] = ColorInit::Blue;
-			break;
-		case 3:
-			initArray[i] = ColorInit::All;
-			break;
-		}
-	}
 
 	font.loadFromFile("data/fonts/Georgia.ttf");
 
@@ -108,107 +57,107 @@ void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 	incrementInstr.setString("How much the colors will increment or decrement");
 
 
-	buttonHandler.setFont(font);
-	buttonHandler.setDefaultSize(40, 40);
-	buttonHandler.setTextSize(40);
-	buttonHandler.setNextPosition(250, 210);
-	buttonHandler.setSpacing(70);
+	m_buttonHandler.setFont(font);
+	m_buttonHandler.setDefaultSize(40, 40);
+	m_buttonHandler.setTextSize(40);
+	m_buttonHandler.setNextPosition(250, 210);
+	m_buttonHandler.setSpacing(70);
 
-	auto bNColors0 = buttonHandler.addButton("<", [&]
+	auto bNColors0 = m_buttonHandler.addButton("<", [this]
 		{
-			if (nColors > 1)
-				nColors -= 1;
+			if (m_nColors > 1)
+				m_nColors -= 1;
 			else
-				nColors = 30;
+				m_nColors = 30;
 		});
-	auto bStartColor0 = buttonHandler.addButton("<", [&]
+	auto bStartColor0 = m_buttonHandler.addButton("<", [this]
 		{
 			if (chosenStart > 0)
 				chosenStart -= 1;
 			else
-				chosenStart = (int)colorArray.size() - 1;
+				chosenStart = (int)m_colorArray.size() - 1;
 
-			startColor = colorArray[chosenStart];
+			m_startColor = m_colorArray[chosenStart];
 		});
-	auto bColorInit0 = buttonHandler.addButton("<", [&]
+	auto bColorInit0 = m_buttonHandler.addButton("<", [this]
 		{
 			if (chosenInit > 0)
 				chosenInit -= 1;
 			else
-				chosenInit = (int)initArray.size() - 1;
+				chosenInit = (int)m_initArray.size() - 1;
 
-			colorInit = initArray[chosenInit];
+			m_colorInit = m_initArray[chosenInit];
 		});
-	auto bIncrement0 = buttonHandler.addButton("<", [&]
+	auto bIncrement0 = m_buttonHandler.addButton("<", [this]
 		{
-			if (increment > 1)
-				increment -= 1;
+			if (m_increment > 1)
+				m_increment -= 1;
 			else
-				increment = 250;
+				m_increment = 250;
 		});
 
-	buttonHandler.setNextPosition(700, 210);
+	m_buttonHandler.setNextPosition(700, 210);
 
-	auto bNColors1 = buttonHandler.addButton(">", [&]
+	auto bNColors1 = m_buttonHandler.addButton(">", [this]
 		{
-			if (nColors < 30)
-				nColors += 1;
+			if (m_nColors < 30)
+				m_nColors += 1;
 			else
-				nColors = 1;
+				m_nColors = 1;
 		});
-	auto bStartColor1 = buttonHandler.addButton(">", [&]
+	auto bStartColor1 = m_buttonHandler.addButton(">", [this]
 		{
-			if (chosenStart < (int)colorArray.size() - 1)
+			if (chosenStart < (int)m_colorArray.size() - 1)
 				chosenStart += 1;
 			else
 				chosenStart = 0;
 
-			startColor = colorArray[chosenStart];
+			m_startColor = m_colorArray[chosenStart];
 		});
-	auto bColorInit1 = buttonHandler.addButton(">", [&]
+	auto bColorInit1 = m_buttonHandler.addButton(">", [this]
 		{
-			if (chosenInit < (int)initArray.size() - 1)
+			if (chosenInit < (int)m_initArray.size() - 1)
 				chosenInit += 1;
 			else
 				chosenInit = 0;
 
-			colorInit = initArray[chosenInit];
+			m_colorInit = m_initArray[chosenInit];
 		});
-	auto bIncrement1 = buttonHandler.addButton(">", [&]
+	auto bIncrement1 = m_buttonHandler.addButton(">", [this]
 		{
-			if (increment < 250)
-				increment += 1;
+			if (m_increment < 250)
+				m_increment += 1;
 			else
-				increment = 1;
+				m_increment = 1;
 		});
 
-	buttonHandler.setNextPosition(400, 650);
-	buttonHandler.setDefaultSize(200, 50);
-	buttonHandler.setTextSize(30);
+	m_buttonHandler.setNextPosition(400, 650);
+	m_buttonHandler.setDefaultSize(200, 50);
+	m_buttonHandler.setTextSize(30);
 
-	auto bStart = buttonHandler.addButton("Start Game", [&]
+	auto bStart = m_buttonHandler.addButton("Start Game", [&]
 		{
-				stateHandler.Push<SnakeGame>(nColors, startColor, colorInit, increment);
+				stateHandler.Push<SnakeGame>(m_nColors, m_startColor, m_colorInit, m_increment);
 		});
 }
 
 void SnakeInit::updateModel(sf::Window & window, StateHandler & stateHandler)
 {
-	nColorsText.setString(std::to_string(nColors));
-	startColorText.setString(stringArray[chosenStart]);
-	colorInitText.setString(stringArray[chosenInit]);
-	incrementText.setString(std::to_string(increment));
+	nColorsText.setString(std::to_string(m_nColors));
+	startColorText.setString(m_stringArray[chosenStart]);
+	colorInitText.setString(m_stringArray[chosenInit]);
+	incrementText.setString(std::to_string(m_increment));
 }
 
 void SnakeInit::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
 {
-	buttonHandler.handleInput(window);
-	keyHandler.handleKeyInput();
+	m_buttonHandler.handleInput(window);
+	m_keyHandler.handleKeyInput();
 }
 
 void SnakeInit::draw(sf::RenderTarget & target) const
 {
-	buttonHandler.draw(target);
+	m_buttonHandler.draw(target);
 
 	target.draw(nColorsText);
 	target.draw(startColorText);

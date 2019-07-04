@@ -3,7 +3,6 @@
 #include "ButtonHandler.hpp"
 #include "KeyHandler.hpp"
 #include "SnakeGame.hpp"
-#include <sstream>
 #include <array>
 
 class SnakeInit : public State
@@ -18,21 +17,21 @@ public:
 	void draw(sf::RenderTarget& target) const;
 
 private:
-	ButtonHandler buttonHandler;
-	KeyHandler keyHandler;
+	ButtonHandler m_buttonHandler;
+	KeyHandler m_keyHandler;
 
 	sf::Font font;
 	sf::Text nColorsText, startColorText, colorInitText, incrementText,
 		nColorInstr, startColorInstr, colorInitInstr, incrementInstr;
 
-	std::array<sf::Color, 3> colorArray;
-	std::array<std::string, 4> stringArray;
-	std::array<ColorInit, 4> initArray;
+	std::array<sf::Color, 3> m_colorArray;
+	std::array<std::string, 4> m_stringArray;
+	std::array<ColorInit, 4> m_initArray;
 	int chosenStart, chosenInit;
 
-	int nColors;
-	sf::Color startColor;
-	ColorInit colorInit;
-	int increment;
+	int m_nColors;
+	sf::Color m_startColor;
+	ColorInit m_colorInit;
+	int m_increment;
 };
 
