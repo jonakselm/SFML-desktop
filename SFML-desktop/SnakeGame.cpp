@@ -2,6 +2,7 @@
 #include "SnakeGame.hpp"
 #include "StateHandler.hpp"
 #include <sstream>
+#include "SFML-ext.hpp"
 
 SnakeGame::SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int increment)
 	:
@@ -78,7 +79,7 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 
 void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 {
-	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Circle))
+	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Circle))
 		stateHandler.Pop();
 
 	m_keyHandler.handleKeyInput();
@@ -89,7 +90,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-			sf::Joystick::isButtonPressed(0, sf::Joystick::Up))
+			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
 		{
 			const sf::Vector2f new_delta_loc = { 0,-1 };
 			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
@@ -98,7 +99,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-			sf::Joystick::isButtonPressed(0, sf::Joystick::Down))
+			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
 		{
 			const sf::Vector2f new_delta_loc = { 0,1 };
 			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
@@ -107,7 +108,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-			sf::Joystick::isButtonPressed(0, sf::Joystick::Left))
+			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Left))
 		{
 			const sf::Vector2f new_delta_loc = { -1,0 };
 			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
@@ -116,7 +117,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-			sf::Joystick::isButtonPressed(0, sf::Joystick::Right))
+			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Right))
 		{
 			const sf::Vector2f new_delta_loc = { 1,0 };
 			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)

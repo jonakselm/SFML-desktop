@@ -190,6 +190,7 @@
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Practise.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SFML-ext.hpp" />
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="SnakeGame.hpp" />

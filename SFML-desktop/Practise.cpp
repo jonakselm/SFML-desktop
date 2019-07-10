@@ -2,6 +2,7 @@
 #include "Practise.hpp"
 #include "StateHandler.hpp"
 #include <sstream>
+#include "SFML-ext.hpp"
 
 Practise::Practise()
 	:
@@ -42,23 +43,23 @@ void Practise::updateModel(sf::Window & window, StateHandler & stateHandler)
 
 void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
 {
-	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Circle))
+	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Circle))
 		stateHandler.Pop();
 
-	if (showable && sf::Joystick::isButtonPressed(0, sf::Joystick::Triangle))
+	if (showable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Select))
 		showNumbers = true;
 	else if (showNumbers)
 		showable = false;
-	if (!showable && sf::Joystick::isButtonPressed(0, sf::Joystick::Triangle))
+	if (!showable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Select))
 		showNumbers = false;
 	else if (!showNumbers)
 		showable = true;
 
-	if (pausable && sf::Joystick::isButtonPressed(0, sf::Joystick::Start))
+	if (pausable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Start))
 		pause = true;
 	else if (pause)
 		pausable = false;
-	if (!pausable && sf::Joystick::isButtonPressed(0, sf::Joystick::Start))
+	if (!pausable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Start))
 		pause = false;
 	else if (!pause)
 		pausable = true;
@@ -72,7 +73,7 @@ void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandle
 
 	speed = sf::Vector2f(float(X * 0.01), float(Y * 0.01));
 
-	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Square))
+	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Square))
 	{
 		speed.x *= 2;
 		speed.y *= 2;

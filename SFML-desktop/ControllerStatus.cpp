@@ -2,9 +2,13 @@
 #include "ControllerStatus.hpp"
 #include "StateHandler.hpp"
 #include <sstream>
+#include "SFML-ext.hpp"
 
 
 ControllerStatus::ControllerStatus()
+	:
+	arr_buttonText{ "Select ", "L3 ", "R3 ", "Start ", "Up ", "Right ", "Down ", "Left ",
+		"L2 ", "R2 ", "L1 ", "R1 ", "Triangle ", "Circle ", "Cross ", "Square ", "PS Button " }
 {
 }
 
@@ -30,47 +34,9 @@ void ControllerStatus::init(sf::Window & window, StateHandler & stateHandler)
 	ZR_axis.setCharacterSize(20);
 	ZR_axis.setPosition(600, 0);
 
-	t_button.setFont(m_font);
-	t_button.setCharacterSize(20);
-	t_button.setPosition(300, 300);
-
-	for (int i = 0; i < arr_buttons.size(); i++)
-	{
-		if (i == sf::Joystick::Select)
-			arr_buttons[i] = "Select";
-		else if (i == sf::Joystick::L3)
-			arr_buttons[i] = "L3";
-		else if (i == sf::Joystick::R3)
-			arr_buttons[i] = "R3";
-		else if (i == sf::Joystick::Start)
-			arr_buttons[i] = "Start";
-		else if (i == sf::Joystick::Up)
-			arr_buttons[i] = "Up";
-		else if (i == sf::Joystick::Right)
-			arr_buttons[i] = "Right";
-		else if (i == sf::Joystick::Down)
-			arr_buttons[i] = "Down";
-		else if (i == sf::Joystick::Left)
-			arr_buttons[i] = "Left";
-		else if (i == sf::Joystick::L2)
-			arr_buttons[i] = "L2";
-		else if (i == sf::Joystick::R2)
-			arr_buttons[i] = "R2";
-		else if (i == sf::Joystick::L1)
-			arr_buttons[i] = "L1";
-		else if (i == sf::Joystick::R1)
-			arr_buttons[i] = "R1";
-		else if (i == sf::Joystick::Triangle)
-			arr_buttons[i] = "Triangle";
-		else if (i == sf::Joystick::Circle)
-			arr_buttons[i] = "Circle";
-		else if (i == sf::Joystick::Cross)
-			arr_buttons[i] = "Cross";
-		else if (i == sf::Joystick::Square)
-			arr_buttons[i] = "Square";
-		else if (i == sf::Joystick::PS_Btn)
-			arr_buttons[i] = "PS Button";
-	}
+	m_buttonText.setFont(m_font);
+	m_buttonText.setCharacterSize(20);
+	m_buttonText.setPosition(300, 300);
 }
 
 void ControllerStatus::updateModel(sf::Window & window, StateHandler & stateHandler)
@@ -88,9 +54,9 @@ void ControllerStatus::updateModel(sf::Window & window, StateHandler & stateHand
 	for (int i = 0; i < sf::Joystick::ButtonCount; i++)
 	{
 		if (sf::Joystick::isButtonPressed(0, i))
-			ss_button << arr_buttons[i];
+			ss_button << arr_buttonText[i];
 	}
-	t_button.setString(ss_button.str());
+	m_buttonText.setString(ss_button.str());
 }
 
 void ControllerStatus::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
@@ -108,5 +74,5 @@ void ControllerStatus::draw(sf::RenderTarget & target) const
 {
 	target.draw(XY_axis);
 	target.draw(ZR_axis);
-	target.draw(t_button);
+	target.draw(m_buttonText);
 }
