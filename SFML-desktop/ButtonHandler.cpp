@@ -59,7 +59,7 @@ Button &ButtonHandler::addButton(const std::string &text, const std::function<vo
 	button.setActionHandler(func);
 
 	auto bounds = button.getGlobalBounds();
-	m_yCurr = bounds.top + bounds.height + m_spacing;
+	m_yCurr = int(bounds.top + bounds.height + m_spacing);
 
 	return button;
 }

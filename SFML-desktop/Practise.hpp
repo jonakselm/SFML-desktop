@@ -15,7 +15,7 @@ public:
 	void draw(sf::RenderTarget &target) const;
 
 private:
-	double X, Y, Z, R;
+	float X, Y, Z, R;
 	sf::Vector2f speed;
 	sf::Font font;
 	sf::Text text;

@@ -70,7 +70,7 @@ void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandle
 	Z = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
 	R = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 
-	speed = sf::Vector2f(X * 0.01, Y * 0.01);
+	speed = sf::Vector2f(float(X * 0.01), float(Y * 0.01));
 
 	if (sf::Joystick::isButtonPressed(0, sf::Joystick::Square))
 	{
