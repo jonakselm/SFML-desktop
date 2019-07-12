@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Location.h"
-
 class Board
 {
 public:
@@ -9,7 +7,7 @@ public:
 
 	void drawBoard(sf::RenderTarget &target) const;
 
-	bool InsideBoard(const sf::Vector2f &loc);
+	bool insideBoard(const sf::Vector2f &loc);
 
 	sf::Vector2f getDim() const;
 	sf::Vector2f getOffset() const;

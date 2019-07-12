@@ -22,7 +22,7 @@ void Board::drawBoard(sf::RenderTarget & target) const
 	target.draw(right);
 }
 
-bool Board::InsideBoard(const sf::Vector2f &loc)
+bool Board::insideBoard(const sf::Vector2f &loc)
 {
 	return loc.x >= 0 && loc.y >= 0 &&
 		loc.x <= (size.x - 1) && loc.y <= (size.y - 1);
