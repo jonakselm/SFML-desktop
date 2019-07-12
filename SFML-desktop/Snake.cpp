@@ -8,7 +8,7 @@ Snake::Snake(const sf::Vector2f & loc, int nColors, sf::Color startColor, ColorI
 	m_segments.emplace_back(loc);
 }
 
-sf::Vector2f Snake::nextHeadLoc(const sf::Vector2f & delta_loc) const
+sf::Vector2f Snake::getNextLoc(const sf::Vector2f & delta_loc) const
 {
 	sf::Vector2f l(m_segments[0].getLocation());
 	l += delta_loc;
@@ -20,59 +20,57 @@ void Snake::growAndMoveBy(const sf::Vector2f &delta_loc)
 	m_segments.emplace_back(m_bodyColors[m_segments.size() % m_bodyColors.size()]);
 
 	moveBy(delta_loc);
-
-	m_score++;
 }
 
 Snake::Segment::Segment(const sf::Vector2f & in_loc)
 	:
-	body(board.getDim())
+	m_body(m_board.getDim())
 {
-	loc = in_loc;
-	body.setFillColor(sf::Color(100, 255, 0));
-	body.setOutlineThickness(-1.5);
-	body.setOutlineColor(sf::Color::Black);
-	body.setPosition(loc.x * board.getDim() + board.getOffset());
+	m_loc = in_loc;
+	m_body.setFillColor(sf::Color(100, 255, 0));
+	m_body.setOutlineThickness(-1.5);
+	m_body.setOutlineColor(sf::Color::Black);
+	m_body.setPosition(m_loc.x * m_board.getDim() + m_board.getOffset());
 }
 
 Snake::Segment::Segment(sf::Color c_in)
 	:
-	body(board.getDim())
+	m_body(m_board.getDim())
 {
-	c = c_in;
-	body.setOutlineThickness(-1.5);
-	body.setOutlineColor(sf::Color::Black);
-	body.setFillColor(c);
+	m_c = c_in;
+	m_body.setOutlineThickness(-1.5);
+	m_body.setOutlineColor(sf::Color::Black);
+	m_body.setFillColor(m_c);
 }
 
 void Snake::Segment::draw(sf::RenderTarget &target) const
 {
-	target.draw(body);
+	target.draw(m_body);
 }
 
 void Snake::Segment::follow(const Segment & next)
 {
-	loc = next.loc;
-	body.setPosition(next.getLocation().x * board.getDim().x + board.getOffset().x, next.getLocation().y * board.getDim().y + board.getOffset().y);
+	m_loc = next.m_loc;
+	m_body.setPosition(next.getLocation().x * m_board.getDim().x + m_board.getOffset().x, next.getLocation().y * m_board.getDim().y + m_board.getOffset().y);
 }
 
 void Snake::Segment::moveBy(const sf::Vector2f & delta_loc)
 {
-	loc += delta_loc;
+	m_loc += delta_loc;
 
-	sf::Vector2f delta(delta_loc.x * board.getDim().x, delta_loc.y * board.getDim().y);
-	auto prev = body.getPosition();
-	body.setPosition(sf::Vector2f(prev + delta));
+	sf::Vector2f delta(delta_loc.x * m_board.getDim().x, delta_loc.y * m_board.getDim().y);
+	auto prev = m_body.getPosition();
+	m_body.setPosition(sf::Vector2f(prev + delta));
 }
 
 const sf::Vector2f & Snake::Segment::getLocation() const
 {
-	return loc;
+	return m_loc;
 }
 
 sf::FloatRect Snake::Segment::getGlobalBounds() const
 {
-	return body.getGlobalBounds();
+	return m_body.getGlobalBounds();
 }
 
 void Snake::draw(sf::RenderTarget &target) const
@@ -116,19 +114,19 @@ bool Snake::inTileExceptEnd(const sf::Vector2f & lTarget) const
 	return false;
 }
 
-int Snake::getLenght()
+int Snake::getLength() const
 {
 	return static_cast<int>(m_segments.size());
+}
+
+int Snake::getScore() const
+{
+	return getLength() - 1;
 }
 
 sf::FloatRect Snake::getGlobalBounds() const
 {
 	return m_segments.front().getGlobalBounds();
-}
-
-int Snake::getScore()
-{
-	return m_score;
 }
 
 sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
@@ -138,6 +136,11 @@ sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
 	sf::FloatRect currPos = m_segments.front().getGlobalBounds();
 	sf::Vector2f nextPos = { currPos.left + delta_loc.x * m_board.getDim().x, currPos.top + delta_loc.y * m_board.getDim().y };
 	return sf::FloatRect(nextPos, m_board.getDim());
+}
+
+sf::Vector2f Snake::getHeadLoc() const
+{
+	return m_segments.front().getLocation();
 }
 
 void Snake::initSnake(int nColors, sf::Color color, ColorInit colorInit, int increment)
@@ -186,7 +189,7 @@ void Snake::initColors(ColorInit colorInit, sf::Color &color, int increment, boo
 		break;
 	}
 
-	if (tempColor - increment < 10)
+	if (tempColor - increment < 25)
 	{
 		increasing = true;
 	}

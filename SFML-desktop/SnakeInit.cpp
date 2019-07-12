@@ -6,13 +6,13 @@ SnakeInit::SnakeInit()
 	:
 	m_nColors(1),
 	m_startColor(sf::Color::Red),
-	m_colorInit(ColorInit::Red),
+	m_colorInit(Snake::ColorInit::Red),
 	m_increment(0),
 	chosenStart(0),
 	chosenInit(0),
 	m_colorArray{ sf::Color::Red, sf::Color::Green, sf::Color::Blue },
 	m_stringArray{ "Red", "Green", "Blue", "All" },
-	m_initArray{ ColorInit::Red, ColorInit::Green, ColorInit::Blue, ColorInit::All }
+	m_initArray{ Snake::ColorInit::Red, Snake::ColorInit::Green, Snake::ColorInit::Blue, Snake::ColorInit::All }
 {
 }
 

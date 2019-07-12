@@ -4,14 +4,15 @@
 #include <sstream>
 #include "SFML-ext.hpp"
 
-SnakeGame::SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int increment)
+SnakeGame::SnakeGame(int nColors, sf::Color startColor, Snake::ColorInit colorInit, int increment)
 	:
-	lastTime(0),
 	nColors(nColors),
 	startColor(startColor),
 	colorInit(colorInit),
 	increment(increment),
-	m_snake({ 1,1 }, nColors, startColor, colorInit, increment)
+	m_snake({ 1,1 }, nColors, startColor, colorInit, increment),
+	m_snakeBot(m_board.getSize() - sf::Vector2f(2, 2), nColors, startColor, colorInit, increment),
+	m_apple(m_snake, m_snakeBot)
 {
 }
 
@@ -37,39 +38,56 @@ void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 			stateHandler.Switch<SnakeGame>(nColors, startColor, colorInit, increment);
 		});
 
-	score.setFont(font);
-	score.setPosition(10, 5);
+	userScore.setFont(font);
+	userScore.setPosition(10, 5);
+
+	botScore.setFont(font);
+	botScore.setPosition(940, 5);
 }
 
 void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 {
 	std::string snakeScore = std::to_string(m_snake.getScore());
-	score.setString(snakeScore);
+	userScore.setString(snakeScore);
+
+	std::string botSnakeScore = std::to_string(m_snakeBot.getScore());
+	botScore.setString(botSnakeScore);
 
 	float dt = ft.Mark();
-	if (!gameOver)
+	if (!gameOver || !m_snakeBot.isDead())
 	{
 		snakeMoveCounter += dt;
-		int64_t time = 200'000;
-		if (snakeMoveCounter >= (snakeMovePeriod + lastTime))
+
+		if (snakeMoveCounter >= snakeMovePeriod)
 		{
-			lastTime += (int64_t)dt;
 			snakeMoveCounter -= snakeMovePeriod;
-			const sf::Vector2f next = m_snake.nextHeadLoc(delta_loc);
+			const sf::Vector2f next = m_snake.getNextLoc(delta_loc);
 
 			if (m_snake.inTileExceptEnd(next) ||
-				!board.InsideBoard(next))
+				!m_board.insideBoard(next))
 			gameOver = true;
 
 			if (m_apple.getGlobalBounds().intersects(m_snake.getNextBounds(delta_loc)))
 			{
 				m_snake.growAndMoveBy(delta_loc);
-				m_apple.respawn();
-
+				m_apple.respawn(m_snake, m_snakeBot);
 			}
 			else
 			{
 				m_snake.moveBy(delta_loc);
+			}
+
+			if (!m_snakeBot.isDead())
+			{
+				if (m_apple.getGlobalBounds().intersects(m_snakeBot.getNextBounds(m_snake, m_apple)))
+				{
+					m_snakeBot.growAndMoveBy(m_snake, m_apple);
+					m_apple.respawn(m_snake, m_snakeBot);
+				}
+				else
+				{
+					m_snakeBot.update(m_snake, m_apple);
+				}
 			}
 		}
 
@@ -93,7 +111,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
 		{
 			const sf::Vector2f new_delta_loc = { 0,-1 };
-			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -102,7 +120,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
 		{
 			const sf::Vector2f new_delta_loc = { 0,1 };
-			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -111,7 +129,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Left))
 		{
 			const sf::Vector2f new_delta_loc = { -1,0 };
-			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
 				delta_loc = new_delta_loc;
 		}
 
@@ -120,7 +138,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Right))
 		{
 			const sf::Vector2f new_delta_loc = { 1,0 };
-			if (delta_loc != -new_delta_loc || m_snake.getLenght() <= 2)
+			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
 				delta_loc = new_delta_loc;
 		}
 	}
@@ -128,15 +146,24 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 void SnakeGame::draw(sf::RenderTarget & target) const
 {
-	if (!gameOver)
+	if (!gameOver || !m_snakeBot.isDead())
 	{
-		board.drawBoard(target);
-		m_snake.draw(target);
+		m_board.drawBoard(target);
 		m_apple.draw(target);
 	}
-	if (gameOver)
+	else if (gameOver && m_snakeBot.isDead())
 	{
 		buttonHandler.draw(target);
 	}
-	target.draw(score);
+	if (!m_snakeBot.isDead())
+	{
+		m_snakeBot.draw(target);
+	}
+	if (!gameOver)
+	{
+		m_snake.draw(target);
+	}
+
+	target.draw(userScore);
+	target.draw(botScore);
 }

@@ -25,7 +25,7 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 
 	m_buttonHandler.addButton("Snake Game", [&]
 		{
-			stateHandler.Push<SnakeGame>(30, sf::Color(255, 0, 0), ColorInit::Red, 15);
+			stateHandler.Push<SnakeGame>(30, sf::Color(255, 0, 0), Snake::ColorInit::Red, 15);
 		});
 	m_buttonHandler.addButton("Customizable Snake", [&]
 		{

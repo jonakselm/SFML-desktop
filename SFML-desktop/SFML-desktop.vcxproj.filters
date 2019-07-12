@@ -81,6 +81,9 @@
     <ClInclude Include="SFML-ext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SnakeBot.hpp">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -126,6 +129,9 @@
       <Filter>ControllerStatus</Filter>
     </ClCompile>
     <ClCompile Include="SnakeInit.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeBot.cpp">
       <Filter>SnakeGame</Filter>
     </ClCompile>
   </ItemGroup>

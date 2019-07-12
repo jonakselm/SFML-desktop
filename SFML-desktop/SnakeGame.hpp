@@ -6,11 +6,12 @@
 #include "Location.h"
 #include "FrameTimer.h"
 #include "Apple.h"
+#include "SnakeBot.hpp"
 
 class SnakeGame : public State
 {
 public:
-	SnakeGame(int nColors, sf::Color startColor, ColorInit colorInit, int increment);
+	SnakeGame(int nColors, sf::Color startColor, Snake::ColorInit colorInit, int increment);
 	virtual ~SnakeGame();
 
 	void init(sf::Window &window, StateHandler &stateHandler);
@@ -20,15 +21,15 @@ public:
 
 private:
 	sf::Font font;
-	sf::Text score;
+	sf::Text userScore, botScore;
 	KeyHandler m_keyHandler;
 	ButtonHandler buttonHandler;
+	Board m_board;
 	Snake m_snake;
+	SnakeBot m_snakeBot;
 	Apple m_apple;
-	Board board;
 	sf::Vector2f delta_loc = { 1,0 };
 	FrameTimer ft;
-	int64_t lastTime;
 	static constexpr float snakeMovePeriodMin = 0.06f;
 	float snakeMovePeriod = 0.4f;
 	float snakeMoveCounter = 0.0f;
@@ -37,7 +38,7 @@ private:
 
 	int nColors;
 	sf::Color startColor;
-	ColorInit colorInit;
+	Snake::ColorInit colorInit;
 	int increment;
 };
 

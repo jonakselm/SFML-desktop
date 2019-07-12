@@ -26,12 +26,12 @@ private:
 
 	std::array<sf::Color, 3> m_colorArray;
 	std::array<std::string, 4> m_stringArray;
-	std::array<ColorInit, 4> m_initArray;
+	std::array<Snake::ColorInit, 4> m_initArray;
 	int chosenStart, chosenInit;
 
 	int m_nColors;
 	sf::Color m_startColor;
-	ColorInit m_colorInit;
+	Snake::ColorInit m_colorInit;
 	int m_increment;
 };
 

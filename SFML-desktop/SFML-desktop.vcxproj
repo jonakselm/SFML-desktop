@@ -193,6 +193,7 @@
     <ClInclude Include="SFML-ext.hpp" />
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Snake.h" />
+    <ClInclude Include="SnakeBot.hpp" />
     <ClInclude Include="SnakeGame.hpp" />
     <ClInclude Include="SnakeInit.hpp" />
     <ClInclude Include="State.hpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Practise.cpp" />
     <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="SnakeBot.cpp" />
     <ClCompile Include="SnakeGame.cpp" />
     <ClCompile Include="SnakeInit.cpp" />
     <ClCompile Include="State.cpp" />
