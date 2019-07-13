@@ -46,6 +46,15 @@ void SnakeBot::growAndMoveBy(Snake & otherSnake, Apple & apple)
 sf::Vector2f SnakeBot::getDeltaLoc(Snake & otherSnake, Apple & apple)
 {
 	sf::Vector2f delta_loc;
+
+	// First line of the if/else statements test if the location is safe,
+	// and if the apple's location is higher or lower than the snake's location.
+	// It tests the x axis for left and right, and y axis for up and down.
+	//
+	// The second line tests if the apple is in a location where the 
+	// snake can't go directly to the apple and has to take a u-turn.
+	// If the apple is upwards and the snake's body is directly upwards,
+	// the snake tries to find a way around its body instead of commiting suicide.
 	
 	if (isSafe(otherSnake, left) && ((apple.getLocation().x < m_snake.getHeadLoc().x) ||
 		(apple.getLocation().y < m_snake.getHeadLoc().y && !isSafe(otherSnake, up))))
