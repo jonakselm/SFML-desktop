@@ -30,7 +30,7 @@ Snake::Segment::Segment(const sf::Vector2f & in_loc)
 	m_body.setFillColor(sf::Color(100, 255, 0));
 	m_body.setOutlineThickness(-1.5);
 	m_body.setOutlineColor(sf::Color::Black);
-	m_body.setPosition(m_loc.x * m_board.getDim() + m_board.getOffset());
+	m_body.setPosition({ m_loc.x * m_board.getDim().x + m_board.getOffset().x, m_loc.y * m_board.getDim().y + m_board.getOffset().y });
 }
 
 Snake::Segment::Segment(sf::Color c_in)
@@ -59,8 +59,7 @@ void Snake::Segment::moveBy(const sf::Vector2f & delta_loc)
 	m_loc += delta_loc;
 
 	sf::Vector2f delta(delta_loc.x * m_board.getDim().x, delta_loc.y * m_board.getDim().y);
-	auto prev = m_body.getPosition();
-	m_body.setPosition(sf::Vector2f(prev + delta));
+	m_body.move(delta);
 }
 
 const sf::Vector2f & Snake::Segment::getLocation() const
