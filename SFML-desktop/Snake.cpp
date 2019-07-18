@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Snake.h"
 
-Snake::Snake(const sf::Vector2f & loc, int nColors, sf::Color startColor, ColorInit colorInit, int increment)
+Snake::Snake(const sf::Vector2f & loc, int nColors, const sf::Color &startColor, const ColorInit colorInit, int increment)
 {
 	// Use even numbers for nBodyColors for smooth color transition
 	initSnake(nColors, startColor, colorInit, increment);
@@ -37,10 +37,10 @@ Snake::Segment::Segment(sf::Color c_in)
 	:
 	m_body(m_board.getDim())
 {
-	m_c = c_in;
+	m_color = c_in;
 	m_body.setOutlineThickness(-1.5);
 	m_body.setOutlineColor(sf::Color::Black);
-	m_body.setFillColor(m_c);
+	m_body.setFillColor(m_color);
 }
 
 void Snake::Segment::draw(sf::RenderTarget &target) const
@@ -60,6 +60,12 @@ void Snake::Segment::moveBy(const sf::Vector2f & delta_loc)
 
 	sf::Vector2f delta(delta_loc.x * m_board.getDim().x, delta_loc.y * m_board.getDim().y);
 	m_body.move(delta);
+}
+
+void Snake::Segment::setColor(const sf::Color & color)
+{
+	m_color = color;
+	m_body.setFillColor(color);
 }
 
 const sf::Vector2f & Snake::Segment::getLocation() const
@@ -87,6 +93,11 @@ void Snake::moveBy(const sf::Vector2f & delta_loc)
 		m_segments[i].follow(m_segments[i - 1]);
 	}
 	m_segments.front().moveBy(delta_loc);
+}
+
+void Snake::setHeadColor(const sf::Color & headColor)
+{
+	m_segments.front().setColor(headColor);
 }
 
 bool Snake::inTile(const sf::Vector2f & lTarget) const

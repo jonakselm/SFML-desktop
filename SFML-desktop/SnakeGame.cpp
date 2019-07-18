@@ -4,16 +4,17 @@
 #include <sstream>
 #include "SFML-ext.hpp"
 
-SnakeGame::SnakeGame(int nColors, sf::Color startColor, Snake::ColorInit colorInit, int increment)
+SnakeGame::SnakeGame(int nColors, const sf::Color &startColor, const Snake::ColorInit colorInit, int increment)
 	:
 	nColors(nColors),
 	startColor(startColor),
 	colorInit(colorInit),
 	increment(increment),
 	m_snake({ 1,1 }, nColors, startColor, colorInit, increment),
-	m_snakeBot(m_board.getSize() - sf::Vector2f(2, 2), nColors, startColor, colorInit, increment),
+	m_snakeBot(m_board.getSize() - sf::Vector2f(2, 2), nColors, sf::Color::Blue, Snake::ColorInit::Blue, increment),
 	m_apple(m_snake, m_snakeBot)
 {
+	m_snakeBot.setHeadColor(sf::Color(0, 100, 255));
 }
 
 
@@ -42,7 +43,7 @@ void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 	userScore.setPosition(10, 5);
 
 	botScore.setFont(font);
-	botScore.setPosition(940, 5);
+	botScore.setPosition(935, 5);
 }
 
 void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
@@ -81,7 +82,7 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 			{
 				if (m_apple.getGlobalBounds().intersects(m_snakeBot.getNextBounds(m_snake, m_apple)))
 				{
-					m_snakeBot.growAndMoveBy(m_snake, m_apple);
+					m_snakeBot.growAndUpdate(m_snake, m_apple);
 					m_apple.respawn(m_snake, m_snakeBot);
 				}
 				else

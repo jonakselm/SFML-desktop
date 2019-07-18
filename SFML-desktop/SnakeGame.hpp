@@ -11,7 +11,7 @@
 class SnakeGame : public State
 {
 public:
-	SnakeGame(int nColors, sf::Color startColor, Snake::ColorInit colorInit, int increment);
+	SnakeGame(int nColors, const sf::Color &startColor, const Snake::ColorInit colorInit, int increment);
 	virtual ~SnakeGame();
 
 	void init(sf::Window &window, StateHandler &stateHandler);
@@ -36,9 +36,9 @@ private:
 	static constexpr float snakeSpeedupFactor = 0.005f;
 	bool gameOver = false;
 
-	int nColors;
-	sf::Color startColor;
-	Snake::ColorInit colorInit;
-	int increment;
+	const int nColors;
+	const sf::Color &startColor;
+	const Snake::ColorInit &colorInit;
+	const int increment;
 };
 

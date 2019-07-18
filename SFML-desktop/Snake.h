@@ -14,9 +14,13 @@ private:
 	public:
 		Segment(const sf::Vector2f &in_loc);
 		Segment(sf::Color c_in);
+
 		void draw(sf::RenderTarget &target) const;
+
 		void follow(const Segment &next);
 		void moveBy(const sf::Vector2f &delta_loc);
+		void setColor(const sf::Color &color);
+
 		const sf::Vector2f &getLocation() const;
 		sf::FloatRect getGlobalBounds() const;
 
@@ -24,20 +28,26 @@ private:
 		Board m_board;
 		sf::RectangleShape m_body;
 		sf::Vector2f m_loc;
-		sf::Color m_c;
+		sf::Color m_color;
 	};
 public:
-	Snake(const sf::Vector2f &loc, int nColors, sf::Color startColor, ColorInit colorInit, int increment);
+	Snake(const sf::Vector2f & loc, int nColors, const sf::Color &startColor, const ColorInit colorInit, int increment);
+
 	sf::Vector2f getNextLoc(const sf::Vector2f& delta_loc) const;
 	sf::Vector2f getHeadLoc() const;
 	sf::FloatRect getGlobalBounds() const;
 	sf::FloatRect getNextBounds(sf::Vector2f &delta_loc) const;
+
 	void growAndMoveBy(const sf::Vector2f &delta_loc);
 	void moveBy(const sf::Vector2f &delta_loc);
+	void setHeadColor(const sf::Color &headColor);
+
 	bool inTile(const sf::Vector2f &lTarget) const;
 	bool inTileExceptEnd(const sf::Vector2f& lTarget) const;
+
 	int getLength() const;
 	int getScore() const;
+
 	void draw(sf::RenderTarget &target) const;
 
 private:
