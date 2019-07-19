@@ -11,7 +11,8 @@ SnakeGame::SnakeGame(int nColors, const sf::Color &startColor, const Snake::Colo
 	colorInit(colorInit),
 	increment(increment),
 	m_snake({ 1,1 }, nColors, startColor, colorInit, increment),
-	m_snakeBot(m_board.getSize() - sf::Vector2f(2, 2), nColors, sf::Color::Blue, Snake::ColorInit::Blue, increment),
+	m_snakeBot(sf::Vector2f(std::rand() % (int)m_board.getSize().x, std::rand() % (int)m_board.getSize().y), 
+		nColors, sf::Color::Blue, Snake::ColorInit::Blue, increment),
 	m_apple(m_snake, m_snakeBot)
 {
 	m_snakeBot.setHeadColor(sf::Color(0, 100, 255));
