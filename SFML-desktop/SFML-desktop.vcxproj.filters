@@ -22,6 +22,9 @@
     <Filter Include="ControllerStatus">
       <UniqueIdentifier>{538b0f1e-7556-496a-b41e-f67a66e930ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platformer">
+      <UniqueIdentifier>{423f653b-5fb0-4a14-b42e-d1005a143219}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -84,6 +87,9 @@
     <ClInclude Include="SnakeBot.hpp">
       <Filter>SnakeGame</Filter>
     </ClInclude>
+    <ClInclude Include="Platformer.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -133,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="SnakeBot.cpp">
       <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer.cpp">
+      <Filter>Platformer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
