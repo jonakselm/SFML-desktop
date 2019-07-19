@@ -10,6 +10,8 @@ MainMenu::MainMenu()
 {
 	m_font.loadFromFile("data/fonts/Georgia.ttf");
 	m_buttonHandler.setFont(m_font);
+
+	srand(time(0));
 }
 
 
