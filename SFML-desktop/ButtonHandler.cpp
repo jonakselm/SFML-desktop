@@ -54,9 +54,9 @@ Button &ButtonHandler::addButton(const std::string &text, const std::function<vo
 	}
 
 	button.setTextSize(m_textSize);
+	button.setText(text);
 	button.setSize(m_defaultWidth, m_defaultHeight);
 	button.setPosition(m_xCurr, m_yCurr);
-	button.setText(text);
 	button.setActionHandler(func);
 
 	auto bounds = button.getGlobalBounds();
@@ -105,10 +105,10 @@ void ButtonHandler::draw(sf::RenderTarget &target) const
 
 void ButtonHandler::handleKeyEvents(sf::Window &window)
 {
-	time = clock.getElapsedTime();
+	m_time = m_clock.getElapsedTime();
 
-	if (time.asMilliseconds() >= updatePeriod)
-		updatable = true;
+	if (m_time.asMilliseconds() >= m_updatePeriod)
+		m_updatable = true;
 
 	if (m_buttons.empty())
 		return;
@@ -121,10 +121,10 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
-		&& updatable)
+		&& m_updatable)
 	{
-		updatable = false;
-		clock.restart();
+		m_updatable = false;
+		m_clock.restart();
 
 		m_it->deselect();
 		if (m_it == m_buttons.begin())
@@ -135,10 +135,10 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 	}
 	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
-		&& updatable)
+		&& m_updatable)
 	{
-		updatable = false;
-		clock.restart();
+		m_updatable = false;
+		m_clock.restart();
 
 		m_it->deselect();
 		if (m_it == --m_buttons.end())
@@ -149,10 +149,10 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 	}
 	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Cross))
-		&& updatable)
+		&& m_updatable)
 	{
-		updatable = false;
-		clock.restart();
+		m_updatable = false;
+		m_clock.restart();
 
 		m_it->invoke();
 	}
@@ -176,10 +176,10 @@ void ButtonHandler::handleMouseEvents(sf::Window &window)
 	}
 
 	if (m_it._Ptr && sf::Mouse::isButtonPressed(sf::Mouse::Left)
-		&& updatable)
+		&& m_updatable)
 	{
-		updatable = false;
-		clock.restart();
+		m_updatable = false;
+		m_clock.restart();
 
 		m_it->invoke();
 	}
