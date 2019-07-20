@@ -12,7 +12,7 @@ MainMenu::MainMenu()
 	m_font.loadFromFile("data/fonts/Georgia.ttf");
 	m_buttonHandler.setFont(m_font);
 
-	srand(time(0));
+	std::srand(static_cast<unsigned>(std::time(0)));
 }
 
 
