@@ -105,6 +105,11 @@ void ButtonHandler::draw(sf::RenderTarget &target) const
 
 void ButtonHandler::handleKeyEvents(sf::Window &window)
 {
+	time = clock.getElapsedTime();
+
+	if (time.asMilliseconds() >= updatePeriod)
+		updatable = true;
+
 	if (m_buttons.empty())
 		return;
 
@@ -114,9 +119,13 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 		m_it->select();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
+		&& updatable)
 	{
+		updatable = false;
+		clock.restart();
+
 		m_it->deselect();
 		if (m_it == m_buttons.begin())
 			m_it = --m_buttons.end();
@@ -124,9 +133,13 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 			m_it--;
 		m_it->select();
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
+		&& updatable)
 	{
+		updatable = false;
+		clock.restart();
+
 		m_it->deselect();
 		if (m_it == --m_buttons.end())
 			m_it = m_buttons.begin();
@@ -134,9 +147,13 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 			m_it++;
 		m_it->select();
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
 		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Cross))
+		&& updatable)
 	{
+		updatable = false;
+		clock.restart();
+
 		m_it->invoke();
 	}
 }
@@ -158,6 +175,12 @@ void ButtonHandler::handleMouseEvents(sf::Window &window)
 		}
 	}
 
-	if (m_it._Ptr && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (m_it._Ptr && sf::Mouse::isButtonPressed(sf::Mouse::Left)
+		&& updatable)
+	{
+		updatable = false;
+		clock.restart();
+
 		m_it->invoke();
+	}
 }

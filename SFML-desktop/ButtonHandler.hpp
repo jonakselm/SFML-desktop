@@ -48,5 +48,10 @@ private:
 	std::list<Button> m_buttons;
 	decltype(m_buttons)::iterator m_it;
 	const sf::Font *m_pFont = nullptr;
+
+	bool updatable = true;
+	const sf::Int32 updatePeriod = 100;
+	sf::Clock clock;
+	sf::Time time;
 };
 
