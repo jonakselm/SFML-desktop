@@ -92,5 +92,6 @@ private:
 	sf::Sprite m_sprite;
 	sf::Texture m_texture;
 	std::function<void()> m_func;
+	int m_lines;
 };
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Button.hpp"
 
-Button::Button(const sf::Font &font) : m_pFont(&font)
+Button::Button(const sf::Font &font) : m_pFont(&font), m_lines(1)
 {
 	m_text.setFont(font);
 	m_sprite.setTexture(m_texture);
@@ -99,8 +99,16 @@ void Button::centralizeText(sf::IntRect bounds)
 {
 	auto textHeight = getTextSize();
 
+	std::string str = m_text.getString();
+
+	for (int i = 0; i < str.size(); i++)
+	{
+		if (str[i] == '\n')
+			m_lines++;
+	}
+
 	auto newX = bounds.left + 0.1 * double(bounds.width);
-	auto newY = bounds.top + double(bounds.height) / 2.0 - double(textHeight) / 2.0;
+	auto newY = bounds.top + double(bounds.height) / 2.0 - double(textHeight * m_lines) / 2.0;
 	m_text.setPosition((float)newX, (float)newY);
 }
 
