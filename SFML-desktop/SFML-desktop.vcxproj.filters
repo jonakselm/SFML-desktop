@@ -90,6 +90,9 @@
     <ClInclude Include="Platformer.hpp">
       <Filter>Platformer</Filter>
     </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -141,6 +144,9 @@
       <Filter>SnakeGame</Filter>
     </ClCompile>
     <ClCompile Include="Platformer.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Platformer</Filter>
     </ClCompile>
   </ItemGroup>

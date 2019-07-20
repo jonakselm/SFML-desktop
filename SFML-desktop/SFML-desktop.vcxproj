@@ -189,6 +189,7 @@
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Platformer.hpp" />
+    <ClInclude Include="Player.hpp" />
     <ClInclude Include="Practise.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SFML-ext.hpp" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Platformer.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Practise.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SnakeBot.cpp" />

@@ -5,6 +5,7 @@
 #include "Practise.hpp"
 #include "ControllerStatus.hpp"
 #include "SnakeInit.hpp"
+#include "Platformer.hpp"
 
 MainMenu::MainMenu()
 {
@@ -40,6 +41,10 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 	m_buttonHandler.addButton("Show Controller Inputs", [&]
 		{
 			stateHandler.Push<ControllerStatus>();
+		});
+	m_buttonHandler.addButton("Platformer", [&]
+		{
+			stateHandler.Push<Platformer>();
 		});
 }
 
