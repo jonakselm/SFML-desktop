@@ -34,7 +34,7 @@ private:
 	float snakeMovePeriod = 0.4f;
 	float snakeMoveCounter = 0.0f;
 	static constexpr float snakeSpeedupFactor = 0.005f;
-	bool gameOver = false;
+	bool snakeDead = false, botDead = false;
 
 	const int nColors;
 	const sf::Color &startColor;

@@ -11,10 +11,10 @@ public:
 	~SnakeBot();
 
 	void update(Snake& otherSnake, class Apple& apple);
-	bool isDead() const;
 	void growAndUpdate(Snake& otherSnake, Apple& apple);
 
 	sf::FloatRect getNextBounds(Snake& otherSnake, Apple& apple);
+	sf::Vector2f getNextLoc(Snake& otherSnake, Apple& apple);
 
 private:
 	bool isSafe(const Snake& otherSnake, const sf::Vector2f& delta_loc);
@@ -26,7 +26,5 @@ private:
 	sf::Vector2f prevLoc;
 
 	const sf::Vector2f left = { -1,0 }, right = { 1,0 }, up = { 0,-1 }, down = { 0,1 };
-
-	bool dead = false;
 };
 

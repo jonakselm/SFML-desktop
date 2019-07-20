@@ -18,16 +18,7 @@ void SnakeBot::update(Snake & otherSnake, Apple & apple)
 	sf::Vector2f delta_loc = getDeltaLoc(otherSnake, apple);
 	prevLoc = delta_loc;
 
-	if (Snake::inTileExceptEnd(Snake::getNextLoc(delta_loc)) ||
-		!m_board.insideBoard(Snake::getNextLoc(delta_loc)))
-		dead = true;
-
 	Snake::moveBy(delta_loc);
-}
-
-bool SnakeBot::isDead() const
-{
-	return dead;
 }
 
 void SnakeBot::growAndUpdate(Snake & otherSnake, Apple & apple)
@@ -74,6 +65,11 @@ sf::FloatRect SnakeBot::getNextBounds(Snake& otherSnake, Apple& apple)
 	sf::Vector2f delta_loc = getDeltaLoc(otherSnake, apple);
 
 	return Snake::getNextBounds(delta_loc);
+}
+
+sf::Vector2f SnakeBot::getNextLoc(Snake & otherSnake, Apple & apple)
+{
+	return Snake::getNextLoc(getDeltaLoc(otherSnake, apple));
 }
 
 bool SnakeBot::isSafe(const Snake& otherSnake, const sf::Vector2f& delta_loc)
