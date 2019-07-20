@@ -102,6 +102,7 @@ void Snake::setHeadColor(const sf::Color & headColor)
 
 bool Snake::inTile(const sf::Vector2f & lTarget) const
 {
+	// Checks if lTarget is in the same location as any of the segments
 	for (const auto s : m_segments)
 	{
 		if (s.getLocation() == lTarget)
@@ -114,6 +115,7 @@ bool Snake::inTile(const sf::Vector2f & lTarget) const
 
 bool Snake::inTileExceptEnd(const sf::Vector2f & lTarget) const
 {
+	// Checks if lTarget is in the same location as any of the segments except the end segment
 	for (size_t i = 0; i < m_segments.size() - 1; i++)
 	{
 		if (m_segments[i].getLocation() == lTarget)
