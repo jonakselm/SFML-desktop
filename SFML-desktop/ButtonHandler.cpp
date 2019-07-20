@@ -107,7 +107,7 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 {
 	m_time = m_clock.getElapsedTime();
 
-	if (m_time.asMilliseconds() >= m_updatePeriod)
+	if (m_time >= m_updatePeriod)
 		m_updatable = true;
 
 	if (m_buttons.empty())
@@ -160,6 +160,11 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 
 void ButtonHandler::handleMouseEvents(sf::Window &window)
 {
+	m_time = m_clock.getElapsedTime();
+
+	if (m_time >= m_updatePeriod)
+		m_updatable = true;
+
 	m_it._Ptr = nullptr;
 	auto pos = sf::Mouse::getPosition(window);
 	for (auto it = m_buttons.begin(); it != m_buttons.end(); ++it)
