@@ -41,9 +41,11 @@ public:
 	void growAndMoveBy(const sf::Vector2f &delta_loc);
 	void moveBy(const sf::Vector2f &delta_loc);
 	void setHeadColor(const sf::Color &headColor);
+	void setDead();
 
 	bool inTile(const sf::Vector2f &lTarget) const;
 	bool inTileExceptEnd(const sf::Vector2f& lTarget) const;
+	bool isDead() const;
 
 	int getLength() const;
 	int getScore() const;
@@ -58,4 +60,5 @@ private:
 	Board m_board;
 	std::vector<Segment> m_segments;
 	std::vector<sf::Color> m_bodyColors;
+	bool dead = false;
 };

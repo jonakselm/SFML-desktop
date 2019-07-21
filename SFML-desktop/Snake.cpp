@@ -100,6 +100,11 @@ void Snake::setHeadColor(const sf::Color & headColor)
 	m_segments.front().setColor(headColor);
 }
 
+void Snake::setDead()
+{
+	dead = true;
+}
+
 bool Snake::inTile(const sf::Vector2f & lTarget) const
 {
 	// Checks if lTarget is in the same location as any of the segments
@@ -124,6 +129,11 @@ bool Snake::inTileExceptEnd(const sf::Vector2f & lTarget) const
 		}
 	}
 	return false;
+}
+
+bool Snake::isDead() const
+{
+	return dead;
 }
 
 int Snake::getLength() const
