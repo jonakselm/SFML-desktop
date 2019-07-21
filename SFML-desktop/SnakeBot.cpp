@@ -78,7 +78,7 @@ bool SnakeBot::isSafe(const Snake& otherSnake, const sf::Vector2f& delta_loc)
 
 	if (!Snake::inTileExceptEnd(next) &&
 		m_board.insideBoard(next) &&
-		!otherSnake.inTileExceptEnd(next))
+		(!otherSnake.inTileExceptEnd(next) || otherSnake.isDead()))
 	{
 		return true;
 	}
