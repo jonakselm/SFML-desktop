@@ -250,7 +250,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case Quit:
 			PostQuitMessage(0);
 			break;
-		case ID_OPEN_GAMEWINDOW:
+		case ID_GAMEWINDOW_BIGSCREEN:
 		case GameWindow:
 		{
 			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
@@ -264,6 +264,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			newGame->init(hGameWnd);
 		}
 			break;
+		case ID_GAMEWINDOW_SMALLSCREEN:
+		{
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
+				CW_USEDEFAULT, 0, 990, 650, hWnd, NULL, hInst, NULL);
+			assert(hGameWnd != 0);
+
+			ShowWindow(hGameWnd, SW_SHOWDEFAULT);
+
+			auto &newGame = apps().emplace_back();
+			newGame = std::make_unique<App>();
+			newGame->init(hGameWnd);
+		}
+		break;
+		case ID_GAMEWINDOW_DEFAULTSIZE:
+		{
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
+				CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, hWnd, NULL, hInst, NULL);
+			assert(hGameWnd != 0);
+
+			ShowWindow(hGameWnd, SW_SHOWDEFAULT);
+
+			auto &newGame = apps().emplace_back();
+			newGame = std::make_unique<App>();
+			newGame->init(hGameWnd);
+		}
+		break;
 		case MB:
 		{
 			int mb = 0;
