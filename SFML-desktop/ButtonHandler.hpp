@@ -50,7 +50,7 @@ private:
 	const sf::Font *m_pFont = nullptr;
 
 	bool m_updatable = true;
-	const sf::Time m_updatePeriod = sf::milliseconds(100);
+	const sf::Time m_updatePeriod = sf::milliseconds(150);
 	sf::Clock m_clock;
 	sf::Time m_time;
 };
