@@ -93,6 +93,15 @@
     <ClInclude Include="Player.hpp">
       <Filter>Platformer</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformHandler.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraControl.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -147,6 +156,15 @@
       <Filter>Platformer</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformHandler.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraControl.cpp">
       <Filter>Platformer</Filter>
     </ClCompile>
   </ItemGroup>

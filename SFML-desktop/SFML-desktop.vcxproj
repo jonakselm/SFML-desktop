@@ -93,6 +93,8 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)..\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -115,6 +117,8 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)..\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -184,8 +188,11 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ButtonHandler.hpp" />
+    <ClInclude Include="CameraControl.hpp" />
     <ClInclude Include="ControllerStatus.hpp" />
     <ClInclude Include="FrameTimer.h" />
+    <ClInclude Include="Platform.hpp" />
+    <ClInclude Include="PlatformHandler.hpp" />
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Platformer.hpp" />
@@ -208,8 +215,11 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonHandler.cpp" />
+    <ClCompile Include="CameraControl.cpp" />
     <ClCompile Include="ControllerStatus.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="PlatformHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Platformer.cpp" />
