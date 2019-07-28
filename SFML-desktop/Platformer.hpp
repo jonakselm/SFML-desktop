@@ -25,17 +25,23 @@ public:
 private:
 	sf::Clock m_clock;
 	sf::Font m_font;
-	sf::Text m_currText, m_prevText;
+	sf::Text m_currText, m_prevText, m_indexText;
 	std::array<std::string, 3> m_stringArr;
 	std::array<sf::Text, 3> m_currArr;
 	std::array<sf::Text, 3> m_prevArr;
 	LastDir m_lastDir = LastDir::None;
-	CameraControl m_cameraControl;
 	ButtonHandler m_buttonHandler;
 	KeyHandler m_keyHandler;
 	PlatformHandler m_platformHandler;
+
 	Player m_player;
-	bool m_jumpable = true;
 	const float m_speed = 0.4f, m_gravity = 0.35f;
+	bool m_jumpable = true;
+
+	int m_dt = 0;
+
+	CameraControl m_cameraControl;
+	mutable sf::RenderTexture m_renderTexture;
+	sf::Sprite m_renderSprite;
 };
 

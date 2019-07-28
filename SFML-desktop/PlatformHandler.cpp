@@ -1,58 +1,6 @@
 #include "stdafx.h"
 #include "PlatformHandler.hpp"
 
-
-PlatformHandler::PlatformHandler()
-{
-}
-
-
-PlatformHandler::~PlatformHandler()
-{
-}
-
-void PlatformHandler::setSpacing(unsigned int spacing)
-{
-	m_spacing = spacing;
-}
-
-void PlatformHandler::setDefaultSize(int width, int height)
-{
-	m_width = width;
-	m_height = height;
-}
-
-void PlatformHandler::setNextPos(int x, int y)
-{
-	m_xCurr = x;
-	m_yCurr = y;
-}
-
-void PlatformHandler::setDefaultColor(const sf::Color & color)
-{
-	m_defaultColor = color;
-}
-
-unsigned int PlatformHandler::getSpacing() const
-{
-	return m_spacing;
-}
-
-sf::Vector2i PlatformHandler::getSize() const
-{
-	return sf::Vector2i(m_width, m_height);
-}
-
-sf::Vector2i PlatformHandler::getNextPos() const
-{
-	return sf::Vector2i(m_xCurr, m_yCurr);
-}
-
-sf::Color PlatformHandler::getDefaultColor() const
-{
-	return m_defaultColor;
-}
-
 Platform &PlatformHandler::addPlatform()
 {
 	auto &platform = m_platforms.emplace_back();
@@ -72,16 +20,17 @@ Platform &PlatformHandler::addPlatform()
 	return platform;
 }
 
-unsigned int PlatformHandler::getIndex(const Player & player)
+unsigned int PlatformHandler::getIndex() const
 {
-	for (int i = 0; i < m_platforms.size(); i++)
-	{
-		if (player.getPosition().x + player.getSize().x > m_platforms[i].getPosition().x &&
-			player.getPosition().x < m_platforms[i].getPosition().x + m_platforms[i].getSize().x)
-			prevIndex = i;
-	}
+	return m_currIndex;
+}
 
-	return prevIndex;
+bool PlatformHandler::insideBounds(const Player & player, unsigned int index) const
+{
+	if (m_platforms[index].xColliding(player) && m_platforms[index].yColliding(player))
+		return true;
+
+	return false;
 }
 
 bool PlatformHandler::insideX(const Player & player, unsigned int index) const
@@ -110,7 +59,7 @@ bool PlatformHandler::fullyInsideY(const Player & player, unsigned int index) co
 	return false;
 }
 
-bool PlatformHandler::onGround(const Player & player, unsigned int index) const
+bool PlatformHandler::onGround(const Player &player, unsigned int index) const
 {
 	if (player.getCalculatedY() == m_platforms[index].getPosition().y)
 		return true;
@@ -118,15 +67,7 @@ bool PlatformHandler::onGround(const Player & player, unsigned int index) const
 	return false;
 }
 
-void PlatformHandler::moveAll(float x, float y)
-{
-	for (auto &it : m_platforms)
-	{
-		it.move(x, y);
-	}
-}
-
-void PlatformHandler::draw(sf::RenderTarget & target) const
+void PlatformHandler::draw(sf::RenderTarget &target) const
 {
 	for (auto &platform : m_platforms)
 	{
@@ -137,19 +78,20 @@ void PlatformHandler::draw(sf::RenderTarget & target) const
 
 PlatformHandler::Zone PlatformHandler::findZone(const Player & player) const
 {
-	for (auto &it : m_platforms)
+	for (auto &platform : m_platforms)
 	{
-		if (it.xColliding(player) && it.yColliding(player))
+		if (platform.xColliding(player) && platform.yColliding(player))
 			return Zone::Unmovable;
 
-		else if (it.xColliding(player) &&
-			player.getPosition().y < it.getPosition().y)
+		else if (platform.xColliding(player) &&
+			player.getPosition().y < platform.getPosition().y)
 			return Zone::Jumpable;
 	}
+
 	return Zone::Gap;
 }
 
-bool PlatformHandler::inFocus(const Platform & platform, sf::RenderTarget &target) const
+bool PlatformHandler::inFocus(const Platform &platform, sf::RenderTarget &target) const
 {
 	if (platform.getPosition().x + platform.getSize().x >= 0 &&
 		platform.getPosition().x <= target.getSize().x &&
@@ -160,12 +102,27 @@ bool PlatformHandler::inFocus(const Platform & platform, sf::RenderTarget &targe
 	return false;
 }
 
-PlatformHandler::Zone PlatformHandler::getZone(const Player & player) const
+void PlatformHandler::update(const Player &player)
 {
+	// Update zones
 	if (m_currZone != findZone(player))
 		m_prevZone = m_currZone;
 	m_currZone = findZone(player);
 
+	// Find current index
+	for (int i = 0; i < m_platforms.size(); i++)
+	{
+		if (m_platforms[i].xColliding(player))
+			m_currIndex = i;
+	}
+
+	// Always generate new platforms
+	while (m_currIndex + 10 > m_platforms.size())
+		addPlatform();
+}
+
+PlatformHandler::Zone PlatformHandler::getCurrZone() const
+{
 	return m_currZone;
 }
 

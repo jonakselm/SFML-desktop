@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Shape.hpp"
+#include "CameraControl.hpp"
 
 class Player : public Shape
 {
 public:
-	Player(float x, float y, sf::Color color);
+	Player(float x, float y, sf::Color color, CameraControl &cameraControl);
 	virtual ~Player();
 
 	void update(float dt);
@@ -13,7 +14,6 @@ public:
 	void jump(float jumpHeight, float startY);
 	void setPosition(float x, float y);
 	void setCalculatedY(float y);
-	void incrementStartY(float increment);
 
 	sf::FloatRect getGlobalBounds() const;
 	sf::Vector2f getPosition() const;
@@ -28,6 +28,7 @@ private:
 	bool inFocus(sf::RenderTarget &target) const;
 
 private:
+	CameraControl &m_cameraControl;
 	sf::RectangleShape m_player;
 	sf::Texture m_leftTexture, m_rightTexture;
 	bool m_jumping = false;

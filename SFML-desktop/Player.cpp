@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Player.hpp"
 
-
-Player::Player(float x, float y, sf::Color color)
+Player::Player(float x, float y, sf::Color color, CameraControl &cameraControl)
 	:
-	m_player(sf::Vector2f(x, y))
+	m_player(sf::Vector2f(x, y)),
+	m_cameraControl(cameraControl)
 {
 	m_player.setFillColor(color);
 	//m_rightTexture.loadFromFile("data/images/rightpac.png");
@@ -26,6 +26,8 @@ void Player::update(float dt)
 		else
 			m_jumping = false;
 	}
+
+	m_cameraControl.growIfNeeded();
 }
 
 void Player::move(float x, float y)
@@ -54,11 +56,6 @@ void Player::setPosition(float x, float y)
 void Player::setCalculatedY(float y)
 {
 	m_player.setPosition(m_player.getPosition().x, y - m_player.getSize().y);
-}
-
-void Player::incrementStartY(float increment)
-{
-	m_startY += increment;
 }
 
 sf::FloatRect Player::getGlobalBounds() const

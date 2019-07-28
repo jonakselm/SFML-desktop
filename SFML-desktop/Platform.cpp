@@ -26,11 +26,6 @@ void Platform::setColor(const sf::Color &color)
 	m_platform.setFillColor(color);
 }
 
-void Platform::move(float x, float y)
-{
-	m_platform.move(x, y);
-}
-
 sf::FloatRect Platform::getGlobalBounds() const
 {
 	return m_platform.getGlobalBounds();
