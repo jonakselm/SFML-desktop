@@ -21,7 +21,7 @@ private:
 	sf::Font m_font;
 	sf::Text XY_axis;
 	sf::Text ZR_axis;
-	std::array<std::string, sf::Joystick::ButtonCount> arr_buttonText;
+	std::array<std::string, sf::Joystick::ButtonCount> m_ps3Arr, m_gcArr;
 	sf::Text m_buttonText;
 	double X, Y, Z, R;
 };

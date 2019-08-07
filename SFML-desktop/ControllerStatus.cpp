@@ -7,8 +7,9 @@
 
 ControllerStatus::ControllerStatus()
 	:
-	arr_buttonText{ "Select ", "L3 ", "R3 ", "Start ", "Up ", "Right ", "Down ", "Left ",
-		"L2 ", "R2 ", "L1 ", "R1 ", "Triangle ", "Circle ", "Cross ", "Square ", "PS Button " }
+	m_ps3Arr{ "Select ", "L3 ", "R3 ", "Start ", "Up ", "Right ", "Down ", "Left ",
+		"L2 ", "R2 ", "L1 ", "R1 ", "Triangle ", "Circle ", "Cross ", "Square ", "PS Button " },
+	m_gcArr{ "X", "A", "B", "Y", "L", "R", "", "Z", "", "Start", "", "", "Up", "Right", "Down", "Left" }
 {
 }
 
@@ -49,13 +50,28 @@ void ControllerStatus::updateModel(sf::Window & window, StateHandler & stateHand
 	ss_ZR << "Z: " << Z << "		R: " << R;
 	ZR_axis.setString(ss_ZR.str());
 
+	std::array<std::string, sf::Joystick::ButtonCount> *id = nullptr;
+
+	if (sf::Joystick::getIdentification(0).productId == sfExt::Ps3::getProductId())
+	{
+		id = &m_ps3Arr;
+	}
+	else if (sf::Joystick::getIdentification(0).productId == sfExt::GameCube::getProductId())
+	{
+		id = &m_gcArr;
+	}
+
 	std::stringstream ss_button;
 	ss_button << "Button pressed:	";
 	for (int i = 0; i < sf::Joystick::ButtonCount; i++)
 	{
 		if (sf::Joystick::isButtonPressed(0, i))
-			ss_button << arr_buttonText[i];
+			ss_button << (*id)[i];
 	}
+
+	id = nullptr;
+	delete id;
+
 	m_buttonText.setString(ss_button.str());
 }
 
