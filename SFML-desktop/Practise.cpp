@@ -6,9 +6,8 @@
 
 Practise::Practise()
 	:
-	circle(30.f)
+	m_spawned{ false }
 {
-	circle.setFillColor(sf::Color::Green);
 }
 
 
@@ -35,51 +34,98 @@ void Practise::init(sf::Window & window, StateHandler & stateHandler)
 
 void Practise::updateModel(sf::Window & window, StateHandler & stateHandler)
 {
-	if (!pause)
-	{
-		circle.move(speed);
-	}
 }
 
 void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandler)
 {
-	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Circle))
-		stateHandler.Pop();
-
-	if (showable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Select))
-		showNumbers = true;
-	else if (showNumbers)
-		showable = false;
-	if (!showable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Select))
-		showNumbers = false;
-	else if (!showNumbers)
-		showable = true;
-
-	if (pausable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Start))
-		pause = true;
-	else if (pause)
-		pausable = false;
-	if (!pausable && sf::Joystick::isButtonPressed(0, sfExt::Joystick::Start))
-		pause = false;
-	else if (!pause)
-		pausable = true;
-
 	keyHandler.handleKeyInput();
 
+	for (int index = 0; index < sf::Joystick::Count; index++)
+	{
+		if (sf::Joystick::isConnected(index))
+		{
+			unsigned int id = sf::Joystick::getIdentification(index).productId;
+
+			if (!m_spawned[index] && ((sfExt::GameCube::isButtonPressed(index, sfExt::GameCube::L) &&
+				sfExt::GameCube::isButtonPressed(index, sfExt::GameCube::R)) ||
+				sfExt::Ps3::isButtonPressed(index, sfExt::Ps3::PS_Btn)))
+			{
+				auto &player = m_players[index];
+				player.setRadius(30.f);
+				player.setFillColor(sf::Color(std::rand() % 200 + 50, std::rand() % 200 + 50, std::rand() % 200 + 50));
+				m_spawned[index] = true;
+			}
+
+			if (!m_pause && m_spawned[index])
+			{
+				sf::Vector2f speed;
+
+				if (sf::Joystick::getAxisPosition(index, sf::Joystick::X) > 60)
+					speed.x = 2;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::X) < 60 &&
+					sf::Joystick::getAxisPosition(index, sf::Joystick::X) > 20)
+					speed.x = 1;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::X) < -60)
+					speed.x = -2;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::X) > -60 &&
+					sf::Joystick::getAxisPosition(index, sf::Joystick::X) < -20)
+					speed.x = -1;
+				else
+					speed.x = 0;
+
+				if (sf::Joystick::getAxisPosition(index, sf::Joystick::Y) > 60)
+					speed.y = 2;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::Y) < 60 &&
+					sf::Joystick::getAxisPosition(index, sf::Joystick::Y) > 20)
+					speed.y = 1;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::Y) < -60)
+					speed.y = -2;
+				else if (sf::Joystick::getAxisPosition(index, sf::Joystick::Y) > -60 &&
+					sf::Joystick::getAxisPosition(index, sf::Joystick::Y) < -20)
+					speed.y = -1;
+				else
+					speed.y = 0;
+				
+				m_players[index].move(speed);
+			}
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+	// TODO: Make showNumbers and pause available for all players
+	if (m_showable && (sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Select) ||
+		sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Z)))
+		m_showNumbers = true;
+	else if (m_showNumbers)
+		m_showable = false;
+	if (!m_showable && (sf::Joystick::isButtonPressed(0, sfExt::Ps3::Select) ||
+		sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Z)))
+		m_showNumbers = false;
+	else if (!m_showNumbers)
+		m_showable = true;
+
+	if (m_pausable && (sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Start) ||
+		sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Start)))
+		m_pause = true;
+	else if (m_pause)
+		m_pausable = false;
+	if (!m_pausable && (sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Start) ||
+		sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Start)))
+		m_pause = false;
+	else if (!m_pause)
+		m_pausable = true;
+	///////////////////////////////////////////////////////////////////////////////////
+
+	if (sf::Joystick::isButtonPressed(0, sfExt::Ps3::Circle) ||
+		sf::Joystick::isButtonPressed(0, sfExt::GameCube::B))
+		stateHandler.Pop();
+
 	X = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-	Y =	sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+	Y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 	Z = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
 	R = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 
-	speed = sf::Vector2f(float(X * 0.01), float(Y * 0.01));
-
-	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Square))
-	{
-		speed.x *= 2;
-		speed.y *= 2;
-	}
-
-	if (showNumbers)
+	if (m_showNumbers)
 	{
 		std::stringstream ss;
 		ss << "X: " << X << "		Y: " << Y << "		Z: " << Z << "		R: " << R;
@@ -93,8 +139,12 @@ void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandle
 
 void Practise::draw(sf::RenderTarget & target) const
 {
-	target.draw(circle);
+	for (int i = 0; i < m_players.size(); i++)
+	{
+		target.draw(m_players[i]);
+	}
+
 	target.draw(text);
-	if (pause)
+	if (m_pause)
 		target.draw(pauseText);
 }

@@ -2,6 +2,7 @@
 #include "State.hpp"
 #include "KeyHandler.hpp"
 #include "ButtonHandler.hpp"
+#include <array>
 
 class Practise : public State
 {
@@ -16,16 +17,15 @@ public:
 
 private:
 	float X, Y, Z, R;
-	sf::Vector2f speed;
 	sf::Font font;
-	sf::Text text;
-	sf::Text pauseText;
+	sf::Text text, pauseText;
 	ButtonHandler buttonHandler;
 	KeyHandler keyHandler;
-	sf::CircleShape circle;
-	bool showNumbers = false;
-	bool showable = true;
-	bool pause = false;
-	bool pausable = true;
+	std::array<sf::CircleShape, sf::Joystick::Count> m_players;
+	std::array<bool, sf::Joystick::Count> m_spawned;
+	bool m_showNumbers = false;
+	bool m_showable = true;
+	bool m_pause = false;
+	bool m_pausable = true;
 };
 
