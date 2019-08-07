@@ -82,9 +82,12 @@ bool ButtonHandler::toogleInputMode()
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Cross))
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Up)
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Down)
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Cross)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Up)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Down)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::A))
 	{
 		m_mouseControl = false;
 	}
@@ -120,7 +123,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 	}
 
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Up)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Up))
 		&& m_updatable)
 	{
 		m_updatable = false;
@@ -134,7 +138,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 		m_it->select();
 	}
 	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Down)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::Down))
 		&& m_updatable)
 	{
 		m_updatable = false;
@@ -148,7 +153,8 @@ void ButtonHandler::handleKeyEvents(sf::Window &window)
 		m_it->select();
 	}
 	else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-		|| sf::Joystick::isButtonPressed(0, sfExt::Joystick::Cross))
+		|| sfExt::Ps3::isButtonPressed(0, sfExt::Ps3::Cross)
+		|| sfExt::GameCube::isButtonPressed(0, sfExt::GameCube::A))
 		&& m_updatable)
 	{
 		m_updatable = false;
