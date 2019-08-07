@@ -25,7 +25,7 @@ unsigned int PlatformHandler::getIndex() const
 	return m_currIndex;
 }
 
-bool PlatformHandler::insideBounds(const Player & player, unsigned int index) const
+bool PlatformHandler::insideBounds(const PlatformPlayer & player, unsigned int index) const
 {
 	if (m_platforms[index].xColliding(player) && m_platforms[index].yColliding(player))
 		return true;
@@ -33,7 +33,7 @@ bool PlatformHandler::insideBounds(const Player & player, unsigned int index) co
 	return false;
 }
 
-bool PlatformHandler::insideX(const Player & player, unsigned int index) const
+bool PlatformHandler::insideX(const PlatformPlayer & player, unsigned int index) const
 {
 	if (m_platforms[index].xColliding(player))
 		return true;
@@ -41,7 +41,7 @@ bool PlatformHandler::insideX(const Player & player, unsigned int index) const
 	return false;
 }
 
-bool PlatformHandler::fullyInsideX(const Player & player, unsigned int index) const
+bool PlatformHandler::fullyInsideX(const PlatformPlayer & player, unsigned int index) const
 {
 	if (player.getPosition().x > m_platforms[index].getPosition().x &&
 		player.getPosition().x + player.getSize().x < m_platforms[index].getPosition().x + m_platforms[index].getSize().x)
@@ -50,7 +50,7 @@ bool PlatformHandler::fullyInsideX(const Player & player, unsigned int index) co
 	return false;
 }
 
-bool PlatformHandler::fullyInsideY(const Player & player, unsigned int index) const
+bool PlatformHandler::fullyInsideY(const PlatformPlayer & player, unsigned int index) const
 {
 	if (player.getPosition().y > m_platforms[index].getPosition().y &&
 		player.getPosition().y + player.getSize().y < m_platforms[index].getPosition().y + m_platforms[index].getSize().y)
@@ -59,7 +59,7 @@ bool PlatformHandler::fullyInsideY(const Player & player, unsigned int index) co
 	return false;
 }
 
-bool PlatformHandler::onGround(const Player &player, unsigned int index) const
+bool PlatformHandler::onGround(const PlatformPlayer &player, unsigned int index) const
 {
 	if (player.getCalculatedY() == m_platforms[index].getPosition().y)
 		return true;
@@ -76,7 +76,7 @@ void PlatformHandler::draw(sf::RenderTarget &target) const
 	}
 }
 
-PlatformHandler::Zone PlatformHandler::findZone(const Player & player) const
+PlatformHandler::Zone PlatformHandler::findZone(const PlatformPlayer & player) const
 {
 	for (auto &platform : m_platforms)
 	{
@@ -102,7 +102,7 @@ bool PlatformHandler::inFocus(const Platform &platform, sf::RenderTarget &target
 	return false;
 }
 
-void PlatformHandler::update(const Player &player)
+void PlatformHandler::update(const PlatformPlayer &player)
 {
 	// Update zones
 	if (m_currZone != findZone(player))

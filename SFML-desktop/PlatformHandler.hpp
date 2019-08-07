@@ -2,7 +2,7 @@
 
 #include "Platform.hpp"
 #include <vector>
-#include "Player.hpp"
+#include "PlatformPlayer.hpp"
 
 class PlatformHandler
 {
@@ -12,13 +12,13 @@ public:
 public:
 	Platform &addPlatform();
 
-	bool insideBounds(const Player &player, unsigned int index) const;
-	bool insideX(const Player &player, unsigned int index) const;
-	bool fullyInsideX(const Player &player, unsigned int index) const;
-	bool fullyInsideY(const Player &player, unsigned int index) const;
-	bool onGround(const Player &player, unsigned int index) const;
+	bool insideBounds(const PlatformPlayer &player, unsigned int index) const;
+	bool insideX(const PlatformPlayer &player, unsigned int index) const;
+	bool fullyInsideX(const PlatformPlayer &player, unsigned int index) const;
+	bool fullyInsideY(const PlatformPlayer &player, unsigned int index) const;
+	bool onGround(const PlatformPlayer &player, unsigned int index) const;
 
-	void update(const Player &player);
+	void update(const PlatformPlayer &player);
 	Zone getCurrZone() const;
 	Zone getPrevZone() const;
 	unsigned int getIndex() const;
@@ -29,7 +29,7 @@ public:
 	void draw(sf::RenderTarget &target) const;
 
 private:
-	Zone findZone(const Player &player) const;
+	Zone findZone(const PlatformPlayer &player) const;
 	bool inFocus(const Platform &platform, sf::RenderTarget &target) const;
 
 private:

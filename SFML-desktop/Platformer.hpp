@@ -4,7 +4,7 @@
 #include "ButtonHandler.hpp"
 #include "KeyHandler.hpp"
 #include "PlatformHandler.hpp"
-#include "Player.hpp"
+#include "PlatformPlayer.hpp"
 #include <array>
 #include "CameraControl.hpp"
 
@@ -34,7 +34,7 @@ private:
 	KeyHandler m_keyHandler;
 	PlatformHandler m_platformHandler;
 
-	Player m_player;
+	PlatformPlayer m_player;
 	const float m_speed = 0.4f, m_gravity = 0.35f;
 	bool m_jumpable = true;
 

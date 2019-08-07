@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Player.hpp"
+#include "PlatformPlayer.hpp"
 
-Player::Player(float x, float y, sf::Color color, CameraControl &cameraControl)
+PlatformPlayer::PlatformPlayer(float x, float y, sf::Color color, CameraControl &cameraControl)
 	:
 	m_player(sf::Vector2f(x, y)),
 	m_cameraControl(cameraControl)
@@ -13,11 +13,11 @@ Player::Player(float x, float y, sf::Color color, CameraControl &cameraControl)
 }
 
 
-Player::~Player()
+PlatformPlayer::~PlatformPlayer()
 {
 }
 
-void Player::update(float dt)
+void PlatformPlayer::update(float dt)
 {
 	if (m_jumping)
 	{
@@ -30,7 +30,7 @@ void Player::update(float dt)
 	m_cameraControl.growIfNeeded();
 }
 
-void Player::move(float x, float y)
+void PlatformPlayer::move(float x, float y)
 {
 	auto old = m_player.getPosition();
 	m_player.move(x, y);
@@ -41,55 +41,55 @@ void Player::move(float x, float y)
 		m_player.setTexture(&m_leftTexture);
 }
 
-void Player::jump(float jumpHeight, float startY)
+void PlatformPlayer::jump(float jumpHeight, float startY)
 {
 	m_startY = startY;
 	m_jumpHeight = jumpHeight;
 	m_jumping = true;
 }
 
-void Player::setPosition(float x, float y)
+void PlatformPlayer::setPosition(float x, float y)
 {
 	m_player.setPosition(x, y);
 }
 
-void Player::setCalculatedY(float y)
+void PlatformPlayer::setCalculatedY(float y)
 {
 	m_player.setPosition(m_player.getPosition().x, y - m_player.getSize().y);
 }
 
-sf::FloatRect Player::getGlobalBounds() const
+sf::FloatRect PlatformPlayer::getGlobalBounds() const
 {
 	return m_player.getGlobalBounds();
 }
 
-sf::Vector2f Player::getPosition() const
+sf::Vector2f PlatformPlayer::getPosition() const
 {
 	return m_player.getPosition();
 }
 
-float Player::getCalculatedY() const
+float PlatformPlayer::getCalculatedY() const
 {
 	return m_player.getPosition().y + m_player.getSize().y;
 }
 
-sf::Vector2f Player::getSize() const
+sf::Vector2f PlatformPlayer::getSize() const
 {
 	return m_player.getSize();
 }
 
-bool Player::isJumping() const
+bool PlatformPlayer::isJumping() const
 {
 	return m_jumping;
 }
 
-void Player::draw(sf::RenderTarget & target) const
+void PlatformPlayer::draw(sf::RenderTarget & target) const
 {
 	if (inFocus(target))
 		target.draw(m_player);
 }
 
-bool Player::inFocus(sf::RenderTarget & target) const
+bool PlatformPlayer::inFocus(sf::RenderTarget & target) const
 {
 	if (m_player.getPosition().x + m_player.getSize().x >= 0 &&
 		m_player.getPosition().x <= target.getSize().x &&

@@ -3,11 +3,11 @@
 #include "Shape.hpp"
 #include "CameraControl.hpp"
 
-class Player : public Shape
+class PlatformPlayer : public Shape
 {
 public:
-	Player(float x, float y, sf::Color color, CameraControl &cameraControl);
-	virtual ~Player();
+	PlatformPlayer(float x, float y, sf::Color color, CameraControl &cameraControl);
+	virtual ~PlatformPlayer();
 
 	void update(float dt);
 	void move(float x, float y);

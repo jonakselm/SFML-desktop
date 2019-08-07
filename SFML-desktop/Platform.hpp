@@ -17,8 +17,8 @@ public:
 	sf::Vector2f getPosition() const;
 	sf::Vector2f getSize() const;
 
-	bool xColliding(const class Player &player) const;
-	bool yColliding(const class Player &player) const;
+	bool xColliding(const class PlatformPlayer &player) const;
+	bool yColliding(const class PlatformPlayer &player) const;
 
 	void draw(sf::RenderTarget &target) const;
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Platform.hpp"
-#include "Player.hpp"
+#include "PlatformPlayer.hpp"
 
 Platform::Platform()
 {
@@ -41,13 +41,13 @@ sf::Vector2f Platform::getSize() const
 	return m_platform.getSize();
 }
 
-bool Platform::xColliding(const Player & player) const
+bool Platform::xColliding(const PlatformPlayer & player) const
 {
 	return player.getPosition().x + player.getSize().x > m_platform.getPosition().x &&
 		player.getPosition().x < m_platform.getPosition().x + m_platform.getSize().x;
 }
 
-bool Platform::yColliding(const Player & player) const
+bool Platform::yColliding(const PlatformPlayer & player) const
 {
 	return player.getPosition().y + player.getSize().y > m_platform.getPosition().y &&
 		player.getPosition().y < m_platform.getPosition().y + m_platform.getSize().y;
