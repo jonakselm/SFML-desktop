@@ -15,8 +15,8 @@ public:
 
 private:
 
-	sf::Sprite *m_pSprite{ nullptr };
-	sf::RenderTexture *m_pTexture{ nullptr };
-	sf::Vector2i m_windowSize{ 0, 0 };
+	sf::Sprite *m_pSprite = nullptr;
+	sf::RenderTexture *m_pTexture = nullptr;
+	sf::Vector2i m_windowSize = { 0, 0 };
 };
 
