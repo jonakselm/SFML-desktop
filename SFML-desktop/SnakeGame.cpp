@@ -56,7 +56,7 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 	botScore.setString(botSnakeScore);
 
 	float dt = ft.Mark();
-	if (!m_snake.isDead() || !m_snakeBot.isDead())
+	if ((!m_snake.isDead() || !m_snakeBot.isDead())  && !m_pause)
 	{
 		snakeMoveCounter += dt;
 
@@ -108,18 +108,27 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 
 void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 {
-	if (sf::Joystick::isButtonPressed(0, sfExt::Joystick::Circle))
+	if (sf::Joystick::isButtonPressed(0, sfExt::Ps3::Circle))
 		stateHandler.Pop();
+
+	if (m_pausable && sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+		m_pause = true;
+	else if (m_pause)
+		m_pausable = false;
+	if (!m_pausable && sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+		m_pause = false;
+	else if (!m_pause)
+		m_pausable = true;
 
 	m_keyHandler.handleKeyInput();
 	if (m_snake.isDead() && m_snakeBot.isDead())
 		buttonHandler.handleInput(window);
 
-	if (!m_snake.isDead())
+	if (!m_snake.isDead() && !m_pause)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Up))
+			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Up))
 		{
 			const sf::Vector2f new_delta_loc = { 0,-1 };
 			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
@@ -128,7 +137,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Down))
+			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Down))
 		{
 			const sf::Vector2f new_delta_loc = { 0,1 };
 			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
@@ -137,7 +146,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Left))
+			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Left))
 		{
 			const sf::Vector2f new_delta_loc = { -1,0 };
 			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
@@ -146,7 +155,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-			sf::Joystick::isButtonPressed(0, sfExt::Joystick::Right))
+			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Right))
 		{
 			const sf::Vector2f new_delta_loc = { 1,0 };
 			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)

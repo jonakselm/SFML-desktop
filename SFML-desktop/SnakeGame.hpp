@@ -30,6 +30,10 @@ private:
 	Apple m_apple;
 	sf::Vector2f delta_loc = { 1,0 };
 	FrameTimer ft;
+
+	bool m_pause = false;
+	bool m_pausable = true;
+
 	static constexpr float snakeMovePeriodMin = 0.06f;
 	float snakeMovePeriod = 0.4f;
 	float snakeMoveCounter = 0.0f;
