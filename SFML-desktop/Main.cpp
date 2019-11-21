@@ -210,7 +210,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	hMain = CreateWindowExW(NULL, mainClass, L"SFML", WS_SYSMENU | WS_VISIBLE,
+	hMain = CreateWindowExW(NULL, mainClass, L"SFML", WS_SYSMENU | WS_VSCROLL | WS_HSCROLL | WS_MINIMIZEBOX,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	// Check if main window is created
@@ -239,6 +239,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	static bool changeBackground = false;
 
+	SCROLLINFO si;
+
 	switch (msg)
 	{
 	case WM_COMMAND:
@@ -253,7 +255,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case ID_GAMEWINDOW_BIGSCREEN:
 		case GameWindow:
 		{
-			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU | WS_MINIMIZEBOX,
 				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
@@ -266,7 +268,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_GAMEWINDOW_SMALLSCREEN:
 		{
-			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU | WS_MINIMIZEBOX,
 				CW_USEDEFAULT, 0, 990, 650, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
@@ -279,7 +281,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 		case ID_GAMEWINDOW_DEFAULTSIZE:
 		{
-			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU,
+			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU | WS_MINIMIZEBOX,
 				CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
 
@@ -380,8 +382,100 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 		break;
+	case WM_HSCROLL:
+	{
+		si.cbSize = sizeof(si);
+		si.fMask = SIF_ALL;
+
+		GetScrollInfo(hWnd, SB_HORZ, &si);
+		int xPos = si.nPos;
+
+		int scrollbar = LOWORD(wParam);
+		switch (scrollbar)
+		{
+		case SB_LINELEFT:
+			si.nPos -= 1;
+			break;
+		case SB_LINERIGHT:
+			si.nPos += 1;
+			break;
+		case SB_PAGELEFT:
+			si.nPos -= si.nPage;
+			break;
+		case SB_PAGERIGHT:
+			si.nPos += si.nPage;
+			break;
+		case SB_THUMBTRACK:
+			si.nPos = si.nTrackPos;
+			break;
+		}
+
+		SetScrollInfo(hWnd, SB_HORZ, &si, TRUE);
+		GetScrollInfo(hWnd, SB_HORZ, &si);
+
+		// If scrollbar position changed, update the window
+		if (si.nPos != xPos)
+		{
+			ScrollWindow(hWnd, 20 * (xPos - si.nPos), 0, NULL, NULL);
+		}
+	}
+		break;
+	case WM_VSCROLL:
+	{
+		si.cbSize = sizeof(si);
+		si.fMask = SIF_ALL;
+
+		GetScrollInfo(hWnd, SB_VERT, &si);
+		int yPos = si.nPos;
+
+		int scrollbar = LOWORD(wParam);
+		switch (scrollbar)
+		{
+		case SB_LINEUP:
+			si.nPos -= 1;
+			break;
+		case SB_LINEDOWN:
+			si.nPos += 1;
+			break;
+		case SB_PAGEUP:
+			si.nPos -= si.nPage;
+			break;
+		case SB_PAGEDOWN:
+			si.nPos += si.nPage;
+			break;
+		case SB_THUMBTRACK:
+			si.nPos = si.nTrackPos;
+		}
+		
+		SetScrollInfo(hWnd, SB_VERT, &si, TRUE);
+		GetScrollInfo(hWnd, SB_VERT, &si);
+
+		// If scrollbar position changed, update the window
+		if (si.nPos != yPos)
+		{
+			ScrollWindow(hWnd, 0, 20 * (yPos - si.nPos), NULL, NULL);
+		}
+	}
+	break;
 	case WM_CREATE:
 	{
+		// Scrollbars
+		si.cbSize = sizeof(SCROLLINFO);
+		si.fMask = SIF_ALL;
+		si.nMin = 0;
+		si.nMax = 15;
+		si.nPage = 5;
+		si.nPos = 0;
+		si.nTrackPos = 0;
+
+		SetScrollInfo(hWnd, SB_VERT, &si, TRUE);
+
+		si.nMin = 0;
+		si.nMax = 25;
+		si.nPage = 5;
+
+		SetScrollInfo(hWnd, SB_HORZ, &si, TRUE);
+
 		// Children
 		DWORD childStyle = WS_CHILD | WS_VISIBLE | WS_BORDER;
 
@@ -402,8 +496,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		HWND hBackgroundButton = CreateWindowExW(NULL, L"BUTTON", L"Background to Desktop", childStyle,
 			0, 600, 175, 40, hWnd, (HMENU)backgroundButton, hInst, NULL);
-
-		// Check if windows are successfully created
 	}
 		break;
 	case WM_DESTROY:
