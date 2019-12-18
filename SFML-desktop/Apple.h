@@ -12,11 +12,10 @@ public:
 
 	void draw(sf::RenderTarget &target) const override;
 	sf::FloatRect getGlobalBounds() const override;
-	sf::Vector2f getLocation() const;
 
 private:
 	Board m_board;
 	sf::CircleShape m_shape;
 
-	sf::Vector2f loc;
+	sf::FloatRect bounds;
 };

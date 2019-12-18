@@ -43,5 +43,6 @@ private:
 	const sf::Color m_startColor;
 	const Snake::ColorInit m_colorInit;
 	const int m_increment;
+	const SnakeBot::botState m_botState;
 };
 

@@ -12,16 +12,24 @@ Apple::Apple(Snake& snake, SnakeBot &snakeBot) :
 
 void Apple::respawn(Snake& snake, SnakeBot &snakeBot)
 {
-	sf::Vector2f newLoc;
+	sf::FloatRect newBounds;
 	do
 	{
-		newLoc.x = float(std::rand() % (int)(m_board.getSize().x - 1));
-		newLoc.y = float(std::rand() % (int)(m_board.getSize().y - 1));
-	} while (snake.inTile(newLoc) || snakeBot.inTile(newLoc));
+		sf::Vector2f newPos;
+		newPos.x = float(std::rand() % (int)(m_board.getSize().x - 1));
+		newPos.y = float(std::rand() % (int)(m_board.getSize().y - 1));
 
-	loc = newLoc;
+		newPos.x *= m_board.getDim().x;
+		newPos.y *= m_board.getDim().y;
 
-	m_shape.setPosition((loc.x * m_board.getDim().x + m_board.getOffset().x), (loc.y * m_board.getDim().y + m_board.getOffset().y));
+		newPos += m_board.getOffset();
+
+		newBounds = sf::FloatRect(newPos, sf::Vector2f(m_board.getDim()));
+	} while (snake.inTile(newBounds) || snakeBot.inTile(newBounds));
+
+	bounds = newBounds;
+
+	m_shape.setPosition(bounds.left, bounds.top);
 }
 
 void Apple::draw(sf::RenderTarget &target) const
@@ -32,9 +40,4 @@ void Apple::draw(sf::RenderTarget &target) const
 sf::FloatRect Apple::getGlobalBounds() const
 {
 	return m_shape.getGlobalBounds();
-}
-
-sf::Vector2f Apple::getLocation() const
-{
-	return loc;
 }

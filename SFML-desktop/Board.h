@@ -7,7 +7,7 @@ public:
 
 	void drawBoard(sf::RenderTarget &target) const;
 
-	bool insideBoard(const sf::Vector2f &loc);
+	bool insideBoard(const sf::FloatRect &target);
 
 	sf::Vector2f getDim() const;
 	sf::Vector2f getOffset() const;

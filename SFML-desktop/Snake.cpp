@@ -10,9 +10,8 @@ Snake::Snake(const sf::Vector2f & loc, int nColors, const sf::Color &startColor,
 
 sf::Vector2f Snake::getNextLoc(const sf::Vector2f & delta_loc) const
 {
-	sf::Vector2f l(m_segments[0].getLocation());
-	l += delta_loc;
-	return l;
+	sf::Vector2f nextLoc = m_headLoc + delta_loc;
+	return nextLoc;
 }
 
 void Snake::growAndMoveBy(const sf::Vector2f &delta_loc)
@@ -26,11 +25,11 @@ Snake::Segment::Segment(const sf::Vector2f & in_loc)
 	:
 	m_body(m_board.getDim())
 {
-	m_loc = in_loc;
 	m_body.setFillColor(sf::Color(100, 255, 0));
 	m_body.setOutlineThickness(-1.5);
 	m_body.setOutlineColor(sf::Color::Black);
-	m_body.setPosition({ m_loc.x * m_board.getDim().x + m_board.getOffset().x, m_loc.y * m_board.getDim().y + m_board.getOffset().y });
+	sf::Vector2f loc = sf::Vector2f(in_loc.x * m_board.getDim().x + m_board.getOffset().x, in_loc.y * m_board.getDim().y + m_board.getOffset().y);
+	m_body.setPosition(loc);
 }
 
 Snake::Segment::Segment(sf::Color c_in)
@@ -50,16 +49,12 @@ void Snake::Segment::draw(sf::RenderTarget &target) const
 
 void Snake::Segment::follow(const Segment & next)
 {
-	m_loc = next.m_loc;
-	m_body.setPosition(next.getLocation().x * m_board.getDim().x + m_board.getOffset().x, next.getLocation().y * m_board.getDim().y + m_board.getOffset().y);
+	m_body.setPosition(next.getPosition().x, next.getPosition().y);
 }
 
 void Snake::Segment::moveBy(const sf::Vector2f & delta_loc)
 {
-	m_loc += delta_loc;
-
-	sf::Vector2f delta(delta_loc.x * m_board.getDim().x, delta_loc.y * m_board.getDim().y);
-	m_body.move(delta);
+	m_body.move(delta_loc);
 }
 
 void Snake::Segment::setColor(const sf::Color & color)
@@ -68,14 +63,14 @@ void Snake::Segment::setColor(const sf::Color & color)
 	m_body.setFillColor(color);
 }
 
-const sf::Vector2f & Snake::Segment::getLocation() const
-{
-	return m_loc;
-}
-
 sf::FloatRect Snake::Segment::getGlobalBounds() const
 {
 	return m_body.getGlobalBounds();
+}
+
+sf::Vector2f Snake::Segment::getPosition() const
+{
+	return m_body.getPosition();
 }
 
 void Snake::draw(sf::RenderTarget &target) const
@@ -88,11 +83,18 @@ void Snake::draw(sf::RenderTarget &target) const
 
 void Snake::moveBy(const sf::Vector2f & delta_loc)
 {
+	sf::Vector2f delta = delta_loc;
+
+	delta.x *= m_board.getDim().x;
+	delta.y *= m_board.getDim().y;
+
 	for (size_t i = m_segments.size() - 1; i > 0; i--)
 	{
 		m_segments[i].follow(m_segments[i - 1]);
 	}
-	m_segments.front().moveBy(delta_loc);
+	m_segments.front().moveBy(delta);
+
+	m_headLoc += delta_loc;
 }
 
 void Snake::setHeadColor(const sf::Color & headColor)
@@ -105,12 +107,12 @@ void Snake::setDead()
 	dead = true;
 }
 
-bool Snake::inTile(const sf::Vector2f & lTarget) const
+bool Snake::inTile(const sf::FloatRect &targetRect) const
 {
-	// Checks if lTarget is in the same location as any of the segments
+	// Checks if the target is in the same location as any of the segments
 	for (const auto s : m_segments)
 	{
-		if (s.getLocation() == lTarget)
+		if (s.getGlobalBounds().intersects(targetRect))
 		{
 			return true;
 		}
@@ -118,12 +120,12 @@ bool Snake::inTile(const sf::Vector2f & lTarget) const
 	return false;
 }
 
-bool Snake::inTileExceptEnd(const sf::Vector2f & lTarget) const
+bool Snake::inTileExceptEnd(const sf::FloatRect &targetRect) const
 {
-	// Checks if lTarget is in the same location as any of the segments except the end segment
+	// Checks if the target is in the same location as any of the segments except the end segment
 	for (size_t i = 0; i < m_segments.size() - 1; i++)
 	{
-		if (m_segments[i].getLocation() == lTarget)
+		if (m_segments[i].getGlobalBounds().intersects(targetRect))
 		{
 			return true;
 		}
@@ -153,16 +155,16 @@ sf::FloatRect Snake::getGlobalBounds() const
 
 sf::FloatRect Snake::getNextBounds(sf::Vector2f &delta_loc) const
 {
-	sf::Vector2f l(m_segments[0].getLocation());
-	l += delta_loc;
-	sf::FloatRect currPos = m_segments.front().getGlobalBounds();
-	sf::Vector2f nextPos = { currPos.left + delta_loc.x * m_board.getDim().x, currPos.top + delta_loc.y * m_board.getDim().y };
+	sf::Vector2f loc = m_headLoc;
+	loc += delta_loc;
+	sf::Vector2f currPos = m_segments.front().getPosition();
+	sf::Vector2f nextPos = { currPos.x + delta_loc.x * m_board.getDim().x, currPos.y + delta_loc.y * m_board.getDim().y };
 	return sf::FloatRect(nextPos, m_board.getDim());
 }
 
 sf::Vector2f Snake::getHeadLoc() const
 {
-	return m_segments.front().getLocation();
+	return m_headLoc;
 }
 
 void Snake::initSnake(int nColors, sf::Color color, ColorInit colorInit, int increment)

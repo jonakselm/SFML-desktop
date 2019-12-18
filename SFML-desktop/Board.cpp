@@ -22,10 +22,12 @@ void Board::drawBoard(sf::RenderTarget & target) const
 	target.draw(right);
 }
 
-bool Board::insideBoard(const sf::Vector2f &loc)
+bool Board::insideBoard(const sf::FloatRect &target)
 {
-	return loc.x >= 0 && loc.y >= 0 &&
-		loc.x <= (size.x - 1) && loc.y <= (size.y - 1);
+	return target.left >= left.getPosition().x + left.getSize().x &&
+		target.top >= top.getPosition().y + top.getSize().y &&
+		target.left + target.width <= right.getGlobalBounds().left &&
+		target.top + target.height <= bottom.getGlobalBounds().top;
 }
 
 sf::Vector2f Board::getDim() const

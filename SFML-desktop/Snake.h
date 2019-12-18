@@ -21,13 +21,12 @@ private:
 		void moveBy(const sf::Vector2f &delta_loc);
 		void setColor(const sf::Color &color);
 
-		const sf::Vector2f &getLocation() const;
 		sf::FloatRect getGlobalBounds() const;
+		sf::Vector2f getPosition() const;
 
 	private:
 		Board m_board;
 		sf::RectangleShape m_body;
-		sf::Vector2f m_loc;
 		sf::Color m_color;
 	};
 public:
@@ -43,8 +42,8 @@ public:
 	void setHeadColor(const sf::Color &headColor);
 	void setDead();
 
-	bool inTile(const sf::Vector2f &lTarget) const;
-	bool inTileExceptEnd(const sf::Vector2f& lTarget) const;
+	bool inTile(const sf::FloatRect &targetRect) const;
+	bool inTileExceptEnd(const sf::FloatRect &targetRect) const;
 	bool isDead() const;
 
 	int getLength() const;
@@ -60,5 +59,6 @@ private:
 	Board m_board;
 	std::vector<Segment> m_segments;
 	std::vector<sf::Color> m_bodyColors;
+	sf::Vector2f m_headLoc;
 	bool dead = false;
 };

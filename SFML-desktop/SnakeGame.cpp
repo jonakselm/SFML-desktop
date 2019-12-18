@@ -11,6 +11,7 @@ SnakeGame::SnakeGame(int nColors, const sf::Color &startColor, const Snake::Colo
 	m_colorInit(colorInit),
 	m_increment(increment),
 	m_snake({ 1,1 }, nColors, startColor, colorInit, increment),
+	m_botState(SnakeBot::botState::smart),
 	m_snakeBot(sf::Vector2f(float(std::rand() % (int)m_board.getSize().x), float(std::rand() % (int)m_board.getSize().y)), 
 		nColors, sf::Color::Blue, Snake::ColorInit::Blue, increment),
 	m_apple(m_snake, m_snakeBot)
@@ -63,16 +64,18 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 		if (snakeMoveCounter >= snakeMovePeriod)
 		{
 			snakeMoveCounter -= snakeMovePeriod;
-			const sf::Vector2f next = m_snake.getNextLoc(delta_loc);
+			const sf::FloatRect nextSnakeBounds = m_snake.getNextBounds(delta_loc);
 
-			if (m_snake.inTileExceptEnd(next) ||
-				!m_board.insideBoard(next) ||
-				(m_snakeBot.inTileExceptEnd(next) && !m_snakeBot.isDead()))
+			if (m_snake.inTileExceptEnd(nextSnakeBounds) ||
+				!m_board.insideBoard(nextSnakeBounds) ||
+				(m_snakeBot.inTileExceptEnd(nextSnakeBounds) && !m_snakeBot.isDead()))
 			m_snake.setDead();
 
-			if (m_snakeBot.inTileExceptEnd(m_snakeBot.getNextLoc(m_snake, m_apple)) ||
-				!m_board.insideBoard(m_snakeBot.getNextLoc(m_snake, m_apple)) ||
-				(m_snake.inTileExceptEnd(m_snakeBot.getNextLoc(m_snake, m_apple)) && !m_snake.isDead()))
+			const sf::FloatRect nextBotBounds = m_snakeBot.getNextBounds(m_snake, m_apple, m_botState);
+
+			if (m_snakeBot.inTileExceptEnd(nextBotBounds) ||
+				!m_board.insideBoard(nextBotBounds) ||
+				(m_snake.inTileExceptEnd(nextBotBounds) && !m_snake.isDead()))
 				m_snakeBot.setDead();
 
 			if (!m_snake.isDead())
@@ -90,14 +93,14 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 
 			if (!m_snakeBot.isDead())
 			{
-				if (m_apple.getGlobalBounds().intersects(m_snakeBot.getNextBounds(m_snake, m_apple)))
+				if (m_apple.getGlobalBounds().intersects(m_snakeBot.getNextBounds(m_snake, m_apple, m_botState)))
 				{
-					m_snakeBot.growAndUpdate(m_snake, m_apple);
+					m_snakeBot.growAndUpdate(m_snake, m_apple, m_botState);
 					m_apple.respawn(m_snake, m_snakeBot);
 				}
 				else
 				{
-					m_snakeBot.update(m_snake, m_apple);
+					m_snakeBot.update(m_snake, m_apple, m_botState);
 				}
 			}
 		}
