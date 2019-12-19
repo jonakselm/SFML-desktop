@@ -63,6 +63,24 @@ void SnakeGame::updateModel(sf::Window &window, StateHandler &stateHandler)
 
 		if (snakeMoveCounter >= snakeMovePeriod)
 		{
+			sf::Vector2f delta_loc;
+			switch (currDir)
+			{
+			case Dir::Up:
+				delta_loc = { 0, -1 };
+				break;
+			case Dir::Down:
+				delta_loc = { 0, 1 };
+				break;
+			case Dir::Left:
+				delta_loc = { -1, 0 };
+				break;
+			case Dir::Right:
+				delta_loc = { 1, 0 };
+				break;
+			}
+			prevDir = currDir;
+
 			snakeMoveCounter -= snakeMovePeriod;
 			const sf::FloatRect nextSnakeBounds = m_snake.getNextBounds(delta_loc);
 
@@ -133,36 +151,32 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
 			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Up))
 		{
-			const sf::Vector2f new_delta_loc = { 0,-1 };
-			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
-				delta_loc = new_delta_loc;
+			if (prevDir != Dir::Down || m_snake.getLength() <= 2)
+				currDir = Dir::Up;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
 			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Down))
 		{
-			const sf::Vector2f new_delta_loc = { 0,1 };
-			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
-				delta_loc = new_delta_loc;
+			if (prevDir != Dir::Up || m_snake.getLength() <= 2)
+				currDir = Dir::Down;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
 			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Left))
 		{
-			const sf::Vector2f new_delta_loc = { -1,0 };
-			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
-				delta_loc = new_delta_loc;
+			if (prevDir != Dir::Right || m_snake.getLength() <= 2)
+				currDir = Dir::Left;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 			sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
 			sf::Joystick::isButtonPressed(0, sfExt::Ps3::Right))
 		{
-			const sf::Vector2f new_delta_loc = { 1,0 };
-			if (delta_loc != -new_delta_loc || m_snake.getLength() <= 2)
-				delta_loc = new_delta_loc;
+			if (prevDir != Dir::Left || m_snake.getLength() <= 2)
+				currDir = Dir::Right;
 		}
 	}
 }

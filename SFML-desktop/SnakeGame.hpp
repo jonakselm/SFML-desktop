@@ -10,6 +10,8 @@
 
 class SnakeGame : public State
 {
+private:
+	enum class Dir { Up, Down, Left, Right };
 public:
 	SnakeGame(int nColors, const sf::Color &startColor, const Snake::ColorInit colorInit, int increment);
 	virtual ~SnakeGame();
@@ -28,7 +30,6 @@ private:
 	Snake m_snake;
 	SnakeBot m_snakeBot;
 	Apple m_apple;
-	sf::Vector2f delta_loc = { 1,0 };
 	FrameTimer ft;
 
 	bool m_pause = false;
@@ -38,6 +39,9 @@ private:
 	float snakeMovePeriod = 0.4f;
 	float snakeMoveCounter = 0.0f;
 	static constexpr float snakeSpeedupFactor = 0.005f;
+
+	Dir currDir = Dir::Right;
+	Dir prevDir;
 
 	const int m_nColors;
 	const sf::Color m_startColor;
