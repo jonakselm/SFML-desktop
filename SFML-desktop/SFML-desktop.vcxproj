@@ -193,6 +193,9 @@
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Platform.hpp" />
     <ClInclude Include="PlatformHandler.hpp" />
+    <ClInclude Include="Minesweeper\Minesweeper.hpp" />
+    <ClInclude Include="Minesweeper\MinesweeperBoard.hpp" />
+    <ClInclude Include="Minesweeper\MinesweeperCell.hpp" />
     <ClInclude Include="MouseHandler.hpp" />
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
@@ -222,6 +225,8 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlatformHandler.cpp" />
     <ClCompile Include="KeyHandler.cpp" />
+    <ClCompile Include="Minesweeper\Minesweeper.cpp" />
+    <ClCompile Include="Minesweeper\MinesweeperBoard.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
