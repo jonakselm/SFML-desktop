@@ -1,8 +1,8 @@
 #pragma once
-#include "State.hpp"
-#include "ButtonHandler.hpp"
-#include "KeyHandler.hpp"
-#include <array>
+#include "../State.hpp"
+#include "../ButtonHandler.hpp"
+#include "../MouseHandler.hpp"
+#include "../KeyHandler.hpp"
 
 class ControllerStatus : public State
 {
@@ -16,6 +16,8 @@ public:
 	void draw(sf::RenderTarget &target) const;
 
 private:
+
+	MouseButtonHandler m_mouseHandler;
 	ButtonHandler m_buttonHandler;
 	KeyHandler m_keyHandler;
 	sf::Font m_font;

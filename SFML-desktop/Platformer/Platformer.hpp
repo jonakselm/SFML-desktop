@@ -1,11 +1,10 @@
 #pragma once
 
-#include "State.hpp"
-#include "ButtonHandler.hpp"
-#include "KeyHandler.hpp"
+#include "../State.hpp"
+#include "../ButtonHandler.hpp"
+#include "../KeyHandler.hpp"
 #include "PlatformHandler.hpp"
 #include "PlatformPlayer.hpp"
-#include <array>
 #include "CameraControl.hpp"
 
 class Platformer : public State

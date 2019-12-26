@@ -1,10 +1,9 @@
 #pragma once
-#include "State.hpp"
-#include "ButtonHandler.hpp"
-#include "KeyHandler.hpp"
+#include "../State.hpp"
+#include "../ButtonHandler.hpp"
+#include "../KeyHandler.hpp"
 #include "Snake.h"
-#include "Location.h"
-#include "FrameTimer.h"
+#include "../FrameTimer.h"
 #include "Apple.h"
 #include "SnakeBot.hpp"
 
@@ -26,7 +25,7 @@ private:
 	sf::Text userScore, botScore;
 	KeyHandler m_keyHandler;
 	ButtonHandler buttonHandler;
-	Board m_board;
+	SnakeBoard m_board;
 	Snake m_snake;
 	SnakeBot m_snakeBot;
 	Apple m_apple;

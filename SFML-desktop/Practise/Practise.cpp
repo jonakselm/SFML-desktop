@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Practise.hpp"
-#include "StateHandler.hpp"
+#include "../StateHandler.hpp"
 #include <sstream>
-#include "SFML-ext.hpp"
+#include "../SFML-ext.hpp"
 
 Practise::Practise()
 	:
@@ -17,7 +17,7 @@ Practise::~Practise()
 
 void Practise::init(sf::Window & window, StateHandler & stateHandler)
 {
-	auto kEsc = keyHandler.addKey(sf::Keyboard::Escape, [&]
+	keyHandler.onKeyPressed(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});

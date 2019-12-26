@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Platformer.hpp"
-#include "StateHandler.hpp"
+#include "../StateHandler.hpp"
 
 Platformer::Platformer() 
 	:
@@ -20,7 +20,7 @@ void Platformer::init(sf::Window &window, StateHandler &stateHandler)
 	m_renderTexture.create(windowSize.x, windowSize.y+1000);
 	m_renderSprite.setTexture(m_renderTexture.getTexture());
 
-	m_keyHandler.addKey(sf::Keyboard::Escape, [&]
+	m_keyHandler.onKeyPressed(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});

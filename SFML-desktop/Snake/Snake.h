@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Shape.hpp"
-#include <vector>
-#include "Board.h"
+#include "../Shape.hpp"
+#include "SnakeBoard.h"
 
 class Snake : public Shape
 {
@@ -25,7 +24,7 @@ private:
 		sf::Vector2f getPosition() const;
 
 	private:
-		Board m_board;
+		SnakeBoard m_board;
 		sf::RectangleShape m_body;
 		sf::Color m_color;
 	};
@@ -56,7 +55,7 @@ private:
 	void initColors(ColorInit colorInit, sf::Color &color, int increment, bool &increasing);
 
 private:
-	Board m_board;
+	SnakeBoard m_board;
 	std::vector<Segment> m_segments;
 	std::vector<sf::Color> m_bodyColors;
 	sf::Vector2f m_headLoc;

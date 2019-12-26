@@ -1,8 +1,7 @@
 #pragma once
-#include "State.hpp"
-#include "KeyHandler.hpp"
-#include "ButtonHandler.hpp"
-#include <array>
+#include "../State.hpp"
+#include "../KeyHandler.hpp"
+#include "../ButtonHandler.hpp"
 
 class Practise : public State
 {

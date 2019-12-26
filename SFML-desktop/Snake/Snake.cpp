@@ -25,10 +25,13 @@ Snake::Segment::Segment(const sf::Vector2f & in_loc)
 	:
 	m_body(m_board.getDim())
 {
+	auto dim = m_board.getDim();
+	auto offset = m_board.getOffset();
+
 	m_body.setFillColor(sf::Color(100, 255, 0));
 	m_body.setOutlineThickness(-1.5);
 	m_body.setOutlineColor(sf::Color::Black);
-	sf::Vector2f loc = sf::Vector2f(in_loc.x * m_board.getDim().x + m_board.getOffset().x, in_loc.y * m_board.getDim().y + m_board.getOffset().y);
+	sf::Vector2f loc = sf::Vector2f(in_loc.x * dim.x + offset.x, in_loc.y * dim.y + offset.y);
 	m_body.setPosition(loc);
 }
 

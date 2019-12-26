@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Shape.hpp"
+#include "../Shape.hpp"
 #include "Snake.h"
-#include "Board.h"
+#include "SnakeBoard.h"
 
 class SnakeBot : public Snake
 {
@@ -23,7 +23,7 @@ private:
 	sf::Vector2f getDeltaLoc(Snake& otherSnake, Apple& apple, botState state);
 
 private:
-	Board m_board;
+	SnakeBoard m_board;
 
 	sf::Vector2f prevLoc;
 

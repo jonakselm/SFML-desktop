@@ -75,12 +75,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,10 +117,11 @@
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)..\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FunctionLevelLinking>
       </FunctionLevelLinking>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,6 +132,10 @@
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\SFML\lib\$(Configuration)\*.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -167,8 +174,9 @@
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)..\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -181,64 +189,71 @@
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\SFML\lib\$(Configuration)\*.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
-    <ClInclude Include="Apple.h" />
-    <ClInclude Include="Board.h" />
+    <ClInclude Include="Snake\Apple.h" />
+    <ClInclude Include="Snake\SnakeBoard.h" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ButtonHandler.hpp" />
-    <ClInclude Include="CameraControl.hpp" />
-    <ClInclude Include="ControllerStatus.hpp" />
+    <ClInclude Include="Platformer\CameraControl.hpp" />
+    <ClInclude Include="ControllerStatus\ControllerStatus.hpp" />
     <ClInclude Include="FrameTimer.h" />
-    <ClInclude Include="Platform.hpp" />
-    <ClInclude Include="PlatformHandler.hpp" />
     <ClInclude Include="Minesweeper\Minesweeper.hpp" />
     <ClInclude Include="Minesweeper\MinesweeperBoard.hpp" />
     <ClInclude Include="Minesweeper\MinesweeperCell.hpp" />
     <ClInclude Include="MouseHandler.hpp" />
+    <ClInclude Include="Platformer\Platform.hpp" />
+    <ClInclude Include="Platformer\PlatformHandler.hpp" />
     <ClInclude Include="KeyHandler.hpp" />
     <ClInclude Include="MainMenu.hpp" />
-    <ClInclude Include="Platformer.hpp" />
-    <ClInclude Include="PlatformPlayer.hpp" />
-    <ClInclude Include="Practise.hpp" />
+    <ClInclude Include="Platformer\Platformer.hpp" />
+    <ClInclude Include="Platformer\PlatformPlayer.hpp" />
+    <ClInclude Include="Practise\Practise.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SFML-ext.hpp" />
     <ClInclude Include="Shape.hpp" />
-    <ClInclude Include="Snake.h" />
-    <ClInclude Include="SnakeBot.hpp" />
-    <ClInclude Include="SnakeGame.hpp" />
-    <ClInclude Include="SnakeInit.hpp" />
+    <ClInclude Include="Snake\Snake.h" />
+    <ClInclude Include="Snake\SnakeBot.hpp" />
+    <ClInclude Include="Snake\SnakeGame.hpp" />
+    <ClInclude Include="Snake\SnakeInit.hpp" />
     <ClInclude Include="State.hpp" />
     <ClInclude Include="StateHandler.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Apple.cpp" />
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Snake\Apple.cpp" />
+    <ClCompile Include="Snake\SnakeBoard.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonHandler.cpp" />
-    <ClCompile Include="CameraControl.cpp" />
-    <ClCompile Include="ControllerStatus.cpp" />
+    <ClCompile Include="Platformer\CameraControl.cpp" />
+    <ClCompile Include="ControllerStatus\ControllerStatus.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
-    <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="PlatformHandler.cpp" />
     <ClCompile Include="KeyHandler.cpp" />
     <ClCompile Include="Minesweeper\Minesweeper.cpp" />
     <ClCompile Include="Minesweeper\MinesweeperBoard.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="Platformer\Platform.cpp" />
+    <ClCompile Include="Platformer\PlatformHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Platformer.cpp" />
-    <ClCompile Include="PlatformPlayer.cpp" />
-    <ClCompile Include="Practise.cpp" />
-    <ClCompile Include="Snake.cpp" />
-    <ClCompile Include="SnakeBot.cpp" />
-    <ClCompile Include="SnakeGame.cpp" />
-    <ClCompile Include="SnakeInit.cpp" />
+    <ClCompile Include="Platformer\Platformer.cpp" />
+    <ClCompile Include="Platformer\PlatformPlayer.cpp" />
+    <ClCompile Include="Practise\Practise.cpp" />
+    <ClCompile Include="Snake\Snake.cpp" />
+    <ClCompile Include="Snake\SnakeBot.cpp" />
+    <ClCompile Include="Snake\SnakeGame.cpp" />
+    <ClCompile Include="Snake\SnakeInit.cpp" />
     <ClCompile Include="State.cpp" />
-    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SFML-desktop.rc" />

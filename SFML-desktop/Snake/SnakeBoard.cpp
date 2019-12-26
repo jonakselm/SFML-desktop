@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Board.h"
+#include "SnakeBoard.h"
 
-Board::Board()
+SnakeBoard::SnakeBoard()
 	:
 	top(sf::Vector2f(dim.x * size.x, dim.y / 2)),
 	bottom(sf::Vector2f(dim.x * size.x, dim.y / 2)),
@@ -14,7 +14,7 @@ Board::Board()
 	right.setPosition(offset.x + size.x * dim.x, offset.y - dim.y / 2);
 }
 
-void Board::drawBoard(sf::RenderTarget & target) const
+void SnakeBoard::drawBoard(sf::RenderTarget & target) const
 {
 	target.draw(top);
 	target.draw(bottom);
@@ -22,7 +22,7 @@ void Board::drawBoard(sf::RenderTarget & target) const
 	target.draw(right);
 }
 
-bool Board::insideBoard(const sf::FloatRect &target)
+bool SnakeBoard::insideBoard(const sf::FloatRect &target)
 {
 	return target.left >= left.getPosition().x + left.getSize().x &&
 		target.top >= top.getPosition().y + top.getSize().y &&
@@ -30,17 +30,17 @@ bool Board::insideBoard(const sf::FloatRect &target)
 		target.top + target.height <= bottom.getGlobalBounds().top;
 }
 
-sf::Vector2f Board::getDim() const
+sf::Vector2f SnakeBoard::getDim() const
 {
 	return dim;
 }
 
-sf::Vector2f Board::getOffset() const
+sf::Vector2f SnakeBoard::getOffset() const
 {
 	return offset;
 }
 
-sf::Vector2f Board::getSize() const
+sf::Vector2f SnakeBoard::getSize() const
 {
 	return size;
 }

@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "ControllerStatus.hpp"
-#include "StateHandler.hpp"
+#include "../StateHandler.hpp"
 #include <sstream>
-#include "SFML-ext.hpp"
-
+#include "../SFML-ext.hpp"
 
 ControllerStatus::ControllerStatus()
 	:
@@ -20,9 +19,14 @@ ControllerStatus::~ControllerStatus()
 
 void ControllerStatus::init(sf::Window & window, StateHandler & stateHandler)
 {
-	auto kEsc = m_keyHandler.addKey(sf::Keyboard::Escape, [&]
+	m_keyHandler.onKeyPressed(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
+		});
+
+	m_mouseHandler.onButtonPressed(sf::Mouse::Left, [&](MouseButtonEvent e)
+		{
+			e.pos;
 		});
 
 	m_font.loadFromFile("data/fonts/Georgia.ttf");

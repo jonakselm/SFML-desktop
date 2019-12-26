@@ -12,6 +12,10 @@
 
 #include "resource.h"
 
+// Standard Library
+#include <vector>
+#include <array>
+
 // SFML
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>

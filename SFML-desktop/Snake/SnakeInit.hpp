@@ -1,9 +1,8 @@
 #pragma once
-#include "State.hpp"
-#include "ButtonHandler.hpp"
-#include "KeyHandler.hpp"
+#include "../State.hpp"
+#include "../ButtonHandler.hpp"
+#include "../KeyHandler.hpp"
 #include "SnakeGame.hpp"
-#include <array>
 
 class SnakeInit : public State
 {

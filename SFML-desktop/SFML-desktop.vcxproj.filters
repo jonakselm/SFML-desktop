@@ -25,6 +25,9 @@
     <Filter Include="Platformer">
       <UniqueIdentifier>{423f653b-5fb0-4a14-b42e-d1005a143219}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Minesweeper">
+      <UniqueIdentifier>{84c897c8-9720-4736-852f-fcc64f461477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -45,62 +48,74 @@
     <ClInclude Include="KeyHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="State.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StateHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Apple.h">
-      <Filter>SnakeGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>SnakeGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Snake.h">
-      <Filter>SnakeGame</Filter>
-    </ClInclude>
-    <ClInclude Include="SnakeGame.hpp">
-      <Filter>SnakeGame</Filter>
-    </ClInclude>
     <ClInclude Include="Shape.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Practise.hpp">
-      <Filter>Practise</Filter>
-    </ClInclude>
-    <ClInclude Include="ControllerStatus.hpp">
-      <Filter>ControllerStatus</Filter>
-    </ClInclude>
-    <ClInclude Include="SnakeInit.hpp">
-      <Filter>SnakeGame</Filter>
     </ClInclude>
     <ClInclude Include="SFML-ext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SnakeBot.hpp">
-      <Filter>SnakeGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Platformer.hpp">
-      <Filter>Platformer</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.hpp">
-      <Filter>Platformer</Filter>
-    </ClInclude>
-    <ClInclude Include="PlatformHandler.hpp">
-      <Filter>Platformer</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraControl.hpp">
-      <Filter>Platformer</Filter>
-    </ClInclude>
-    <ClInclude Include="PlatformPlayer.hpp">
-      <Filter>Platformer</Filter>
-    </ClInclude>
     <ClInclude Include="FrameTimer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\SnakeBoard.h">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\SnakeInit.hpp">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\Snake.h">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\SnakeBot.hpp">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\SnakeGame.hpp">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\Apple.h">
+      <Filter>SnakeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerStatus\ControllerStatus.hpp">
+      <Filter>ControllerStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="Minesweeper\Minesweeper.hpp">
+      <Filter>Minesweeper</Filter>
+    </ClInclude>
+    <ClInclude Include="Minesweeper\MinesweeperBoard.hpp">
+      <Filter>Minesweeper</Filter>
+    </ClInclude>
+    <ClInclude Include="Minesweeper\MinesweeperCell.hpp">
+      <Filter>Minesweeper</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\CameraControl.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\Platform.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\Platformer.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\PlatformHandler.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\PlatformPlayer.hpp">
+      <Filter>Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Practise\Practise.hpp">
+      <Filter>Practise</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,47 +140,59 @@
     <ClCompile Include="State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Apple.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Snake.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="SnakeGame.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Practise.cpp">
-      <Filter>Practise</Filter>
-    </ClCompile>
-    <ClCompile Include="ControllerStatus.cpp">
-      <Filter>ControllerStatus</Filter>
-    </ClCompile>
-    <ClCompile Include="SnakeInit.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="SnakeBot.cpp">
-      <Filter>SnakeGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Platformer.cpp">
-      <Filter>Platformer</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Platformer</Filter>
-    </ClCompile>
-    <ClCompile Include="PlatformHandler.cpp">
-      <Filter>Platformer</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraControl.cpp">
-      <Filter>Platformer</Filter>
-    </ClCompile>
-    <ClCompile Include="PlatformPlayer.cpp">
-      <Filter>Platformer</Filter>
-    </ClCompile>
     <ClCompile Include="FrameTimer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\SnakeBoard.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\SnakeInit.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\Snake.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\SnakeBot.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\SnakeGame.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake\Apple.cpp">
+      <Filter>SnakeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\Platform.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\Platformer.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\PlatformHandler.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\PlatformPlayer.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\CameraControl.cpp">
+      <Filter>Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Minesweeper\MinesweeperBoard.cpp">
+      <Filter>Minesweeper</Filter>
+    </ClCompile>
+    <ClCompile Include="Minesweeper\Minesweeper.cpp">
+      <Filter>Minesweeper</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerStatus\ControllerStatus.cpp">
+      <Filter>ControllerStatus</Filter>
+    </ClCompile>
+    <ClCompile Include="Practise\Practise.cpp">
+      <Filter>Practise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

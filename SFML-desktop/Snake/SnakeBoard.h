@@ -1,9 +1,9 @@
 #pragma once
 
-class Board
+class SnakeBoard
 {
 public:
-	Board();
+	SnakeBoard();
 
 	void drawBoard(sf::RenderTarget &target) const;
 

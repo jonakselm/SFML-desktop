@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shape.hpp"
+#include "../Shape.hpp"
 #include "CameraControl.hpp"
 
 class PlatformPlayer : public Shape

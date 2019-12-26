@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SnakeInit.hpp"
-#include "StateHandler.hpp"
+#include "../StateHandler.hpp"
 
 SnakeInit::SnakeInit()
 	:
@@ -23,7 +23,7 @@ SnakeInit::~SnakeInit()
 
 void SnakeInit::init(sf::Window & window, StateHandler & stateHandler)
 {
-	m_keyHandler.addKey(sf::Keyboard::Escape, [&]
+	m_keyHandler.onKeyPressed(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});

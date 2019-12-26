@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "MainMenu.hpp"
 #include "StateHandler.hpp"
-#include "SnakeGame.hpp"
-#include "Practise.hpp"
-#include "ControllerStatus.hpp"
-#include "SnakeInit.hpp"
-#include "Platformer.hpp"
+#include "Snake/SnakeGame.hpp"
+#include "Practise/Practise.hpp"
+#include "ControllerStatus/ControllerStatus.hpp"
+#include "Snake/SnakeInit.hpp"
+#include "Platformer/Platformer.hpp"
 
 MainMenu::MainMenu()
 {

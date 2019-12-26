@@ -1,6 +1,6 @@
 #pragma once
-#include "Shape.hpp"
-#include "Board.h"
+#include "../Shape.hpp"
+#include "SnakeBoard.h"
 #include "Snake.h"
 #include "SnakeBot.hpp"
 
@@ -14,7 +14,7 @@ public:
 	sf::FloatRect getGlobalBounds() const override;
 
 private:
-	Board m_board;
+	SnakeBoard m_board;
 	sf::CircleShape m_shape;
 
 	sf::FloatRect bounds;

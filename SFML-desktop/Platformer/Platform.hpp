@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shape.hpp"
+#include "../Shape.hpp"
 
 class Platform : public Shape
 {

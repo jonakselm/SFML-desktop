@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SnakeGame.hpp"
-#include "StateHandler.hpp"
+#include "../StateHandler.hpp"
 #include <sstream>
-#include "SFML-ext.hpp"
+#include "../SFML-ext.hpp"
 
 SnakeGame::SnakeGame(int nColors, const sf::Color &startColor, const Snake::ColorInit colorInit, int increment)
 	:
@@ -26,7 +26,7 @@ SnakeGame::~SnakeGame()
 
 void SnakeGame::init(sf::Window & window, StateHandler & stateHandler)
 {
-	auto &kEsc = m_keyHandler.addKey(sf::Keyboard::Escape, [&]
+	m_keyHandler.onKeyPressed(sf::Keyboard::Escape, [&]
 		{
 			stateHandler.Pop();
 		});
