@@ -6,6 +6,7 @@
 #include "ControllerStatus/ControllerStatus.hpp"
 #include "Snake/SnakeInit.hpp"
 #include "Platformer/Platformer.hpp"
+#include "Minesweeper/Minesweeper.hpp"
 
 MainMenu::MainMenu()
 {
@@ -46,6 +47,10 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 		{
 			stateHandler.Push<Platformer>();
 		});
+	m_buttonHandler.addButton("Minesweeper", [&]
+		{
+			stateHandler.Push<Minesweeper>();
+		});
 }
 
 void MainMenu::updateModel(sf::Window &window, StateHandler &stateHandler)
@@ -57,7 +62,7 @@ void MainMenu::handleExtraEvents(sf::Window &window, StateHandler &stateHandler)
 	m_buttonHandler.handleInput(window);
 }
 
-void MainMenu::draw(sf::RenderTarget & target) const
+void MainMenu::draw(sf::RenderTarget & target)
 {
 	m_buttonHandler.draw(target);
 }

@@ -155,7 +155,7 @@ void SnakeInit::handleExtraEvents(sf::Window & window, StateHandler & stateHandl
 	m_keyHandler.handleKeyInput();
 }
 
-void SnakeInit::draw(sf::RenderTarget & target) const
+void SnakeInit::draw(sf::RenderTarget & target)
 {
 	m_buttonHandler.draw(target);
 

@@ -181,7 +181,7 @@ void SnakeGame::handleExtraEvents(sf::Window &window, StateHandler &stateHandler
 	}
 }
 
-void SnakeGame::draw(sf::RenderTarget & target) const
+void SnakeGame::draw(sf::RenderTarget & target)
 {
 	if (!m_snake.isDead() || !m_snakeBot.isDead())
 	{

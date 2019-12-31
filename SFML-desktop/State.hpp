@@ -11,7 +11,7 @@ public:
 	virtual void init(sf::Window &window, StateHandler &stateHandler) = 0;
 	virtual void handleExtraEvents(sf::Window &window, StateHandler &stateHandler) = 0;
 	virtual void updateModel(sf::Window &window, StateHandler &stateHandler) = 0;
-	virtual void draw(sf::RenderTarget &target) const = 0;
+	virtual void draw(sf::RenderTarget &target) = 0;
 
 	bool isRespondable() { return m_respondable; }
 

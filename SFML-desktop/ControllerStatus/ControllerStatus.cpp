@@ -24,11 +24,6 @@ void ControllerStatus::init(sf::Window & window, StateHandler & stateHandler)
 			stateHandler.Pop();
 		});
 
-	m_mouseHandler.onButtonPressed(sf::Mouse::Left, [&](MouseButtonEvent e)
-		{
-			e.pos;
-		});
-
 	m_font.loadFromFile("data/fonts/Georgia.ttf");
 
 	XY_axis.setFont(m_font);
@@ -90,7 +85,7 @@ void ControllerStatus::handleExtraEvents(sf::Window & window, StateHandler & sta
 	R = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 }
 
-void ControllerStatus::draw(sf::RenderTarget & target) const
+void ControllerStatus::draw(sf::RenderTarget & target)
 {
 	target.draw(XY_axis);
 	target.draw(ZR_axis);

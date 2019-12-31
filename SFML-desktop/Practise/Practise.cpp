@@ -137,7 +137,7 @@ void Practise::handleExtraEvents(sf::Window & window, StateHandler & stateHandle
 	}
 }
 
-void Practise::draw(sf::RenderTarget & target) const
+void Practise::draw(sf::RenderTarget & target)
 {
 	for (int i = 0; i < m_players.size(); i++)
 	{

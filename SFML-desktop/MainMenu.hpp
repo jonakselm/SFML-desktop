@@ -12,7 +12,7 @@ public:
 	void init(sf::Window &window, StateHandler &stateHandler);
 	void updateModel(sf::Window &window, StateHandler &stateHandler) override;
 	void handleExtraEvents(sf::Window &window, StateHandler &stateHandler) override;
-	void draw(sf::RenderTarget &target) const override;
+	void draw(sf::RenderTarget &target) override;
 
 private:
 	sf::Font m_font;

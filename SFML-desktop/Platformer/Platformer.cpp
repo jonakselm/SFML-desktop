@@ -154,7 +154,7 @@ void Platformer::handleExtraEvents(sf::Window & window, StateHandler & stateHand
 	}
 }
 
-void Platformer::draw(sf::RenderTarget &target) const
+void Platformer::draw(sf::RenderTarget &target)
 {
 	m_renderTexture.clear(sf::Color::Black);
 	m_platformHandler.draw(m_renderTexture);

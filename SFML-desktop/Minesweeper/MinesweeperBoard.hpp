@@ -4,14 +4,25 @@
 class MSBoard
 {
 public:
-	MSBoard(unsigned int xDim, unsigned int yDim);
+	MSBoard(sf::Vector2i dim, int nBombs);
 
-	MSCell &getCell(unsigned int x, unsigned int y);
+	MSCell &getCell(int gridX, int gridY);
 
+	void onLeftClick(int coordX, int coordY);
+	void onRightClick(int coordX, int coordY);
+	void flip(int gridX, int gridY);
+	void flag(int gridX, int gridY);
+
+	void initialize(int gridStartX, int gridStartY);
 	void draw(sf::RenderTarget &target);
+	int getSurroundingBombs(int gridX, int gridY);
 
 private:
-	unsigned int m_xDim, m_yDim;
+	int m_xDim, m_yDim;
 	std::vector<MSCell> m_board;
 	sf::Texture m_texture;
+	const int m_nBombs;
+	bool m_initialized = false;
+
+	const float m_cellDim = 64, m_textureDim = 32;
 };
