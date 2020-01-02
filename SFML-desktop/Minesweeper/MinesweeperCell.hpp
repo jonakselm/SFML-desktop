@@ -5,12 +5,14 @@ enum class CellState
 	Hidden,
 	Flagged,
 	Flipped,
+	WrongFlag
 };
 
 enum class BombState
 {
 	Empty,
-	Bomb
+	Bomb,
+	Detonated
 };
 
 // auto rect = getTextureRect()
@@ -22,9 +24,13 @@ inline sf::IntRect getTextureRect(CellState cellState, BombState bombState, int 
 		return sf::IntRect(0, 0, 32, 32);
 	else if (cellState == CellState::Flagged)
 		return sf::IntRect(32, 0, 32, 32);
+	else if (cellState == CellState::WrongFlag)
+		return sf::IntRect(64, 32, 32, 32);
 	else if (cellState == CellState::Flipped)
 	{
 		if (bombState == BombState::Bomb)
+			return sf::IntRect(32, 32, 32, 32);
+		else if (bombState == BombState::Detonated)
 			return sf::IntRect(0, 32, 32, 32);
 		else if (bombState == BombState::Empty)
 		{
