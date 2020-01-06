@@ -32,5 +32,5 @@ private:
 
 	const int m_nBombs;
 	bool m_initialized = false, m_gameOver = false, m_gameWon = false;
-	const float m_cellDim = 64, m_textureDim = 32;
+	const float m_cellDim = 40;
 };

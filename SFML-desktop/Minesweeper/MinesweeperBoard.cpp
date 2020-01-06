@@ -4,7 +4,7 @@
 MSBoard::MSBoard(sf::Vector2i dim, int nBombs) :
 	m_board(dim.x * dim.y), m_xDim(dim.x), m_yDim(dim.y), m_nBombs(nBombs)
 {
-	m_texture.loadFromFile("data/images/minesweeperTilemap.png");
+	m_texture.loadFromFile("data/images/mineSpritemap.png");
 
 	for (int gridX = 0; gridX < m_xDim; ++gridX)
 	{
@@ -208,7 +208,7 @@ void MSBoard::draw(sf::RenderTarget &target)
 			int surroundingBombs = getSurroundingBombs(gridX, gridY);
 			auto textureRect = getTextureRect(cell.cellState, cell.bombState, surroundingBombs);
 			cell.cellShape.setTextureRect(textureRect);
-			cell.cellShape.setScale(m_cellDim / m_textureDim, m_cellDim / m_textureDim);
+			cell.cellShape.setScale(m_cellDim / cell.textureDim, m_cellDim / cell.textureDim);
 			target.draw(cell.cellShape);
 		}
 	}
