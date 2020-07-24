@@ -49,7 +49,7 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 		});
 	m_buttonHandler.addButton("Minesweeper", [&]
 		{
-			stateHandler.Push<Minesweeper>();
+			stateHandler.Push<Minesweeper>(sf::Vector2i(10, 10), 10);
 		});
 }
 
