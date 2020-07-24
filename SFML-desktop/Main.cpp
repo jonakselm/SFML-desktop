@@ -255,9 +255,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case ID_GAMEWINDOW_BIGSCREEN:
 		case GameWindow:
 		{
+			RECT windowRect = { 0 };
+			windowRect.right = 990;
+			windowRect.bottom = 900;
+
+			AdjustWindowRect(&windowRect, WS_CAPTION, TRUE);
+
+			int width = windowRect.right - windowRect.left;
+			int height = windowRect.bottom - windowRect.top;
+
 			HWND hGameWnd = CreateWindowExW(NULL, subClass, L"Game Selection", WS_SYSMENU | WS_MINIMIZEBOX,
-				CW_USEDEFAULT, 0, 990, 900, hWnd, NULL, hInst, NULL);
+				CW_USEDEFAULT, 0, width, height, hWnd, NULL, hInst, NULL);
 			assert(hGameWnd != 0);
+
+			RECT rect;
+			GetWindowRect(hGameWnd, &windowRect);
+			GetClientRect(hGameWnd, &rect);
 
 			ShowWindow(hGameWnd, SW_SHOWDEFAULT);
 			
