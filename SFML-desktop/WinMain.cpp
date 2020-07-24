@@ -24,6 +24,13 @@ void updateWindow(HWND &hWnd)
 {
 	RECT clientRect;
 	GetClientRect(hWnd, &clientRect);
+	InvalidateRect(hWnd, &clientRect, FALSE);
+}
+
+void eraseBackground(HWND &hWnd)
+{
+	RECT clientRect;
+	GetClientRect(hWnd, &clientRect);
 	InvalidateRect(hWnd, &clientRect, TRUE);
 }
 
@@ -66,11 +73,14 @@ int APIENTRY wWinMain(
 	sf::RenderWindow wnd0(hView0);
 	sf::RenderWindow wnd1(hView1);
 
-	sf::CircleShape circle0(15.f);
+	sf::CircleShape circle0(100.f);
 	circle0.setFillColor(sf::Color::Magenta);
 
 	sf::CircleShape circle1(15.f);
 	circle1.setFillColor(sf::Color::Blue);
+
+	circle0.setOutlineThickness(40);
+	circle0.setOutlineColor(sf::Color(0, 255, 0));
 
 	sf::Vector2f screenSize(300, 400);
 
@@ -100,7 +110,7 @@ int APIENTRY wWinMain(
 				circle0.move(0, -1);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
-				circle0.getPosition().y < (screenSize.y - 30))
+				circle0.getPosition().y < (screenSize.y - circle0.getRadius() * 2))
 				circle0.move(0, 1);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) &&
@@ -328,7 +338,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case ID_FILE_BACKGROUNDTODESKTOP:
 		case backgroundButton:
 			changeBackground = !changeBackground;
-			updateWindow(hWnd);
+			if (changeBackground)
+				updateWindow(hWnd);
+			else if (!changeBackground)
+				eraseBackground(hWnd);
 			break;
 		case ID_FILE_EXIT:
 			DestroyWindow(hWnd);
@@ -359,8 +372,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		switch (keyId)
 		{
 		case ' ':
-				changeBackground = !changeBackground;
-				updateWindow(hWnd, rect);
+			changeBackground = !changeBackground;
+			if (changeBackground)
+				updateWindow(hWnd);
+			else if (!changeBackground)
+				eraseBackground(hWnd);
 			break;
 		case 'E':
 		case VK_ESCAPE:
