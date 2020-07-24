@@ -119,9 +119,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -193,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Practise\Practise.cpp">
       <Filter>Practise</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
