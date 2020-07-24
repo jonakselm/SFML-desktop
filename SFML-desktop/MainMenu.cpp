@@ -7,6 +7,7 @@
 #include "Snake/SnakeInit.hpp"
 #include "Platformer/Platformer.hpp"
 #include "Minesweeper/Minesweeper.hpp"
+#include "BrickBreaker/BrickBreaker.hpp"
 
 MainMenu::MainMenu()
 {
@@ -50,6 +51,10 @@ void MainMenu::init(sf::Window &window, StateHandler &stateHandler)
 	m_buttonHandler.addButton("Minesweeper", [&]
 		{
 			stateHandler.Push<Minesweeper>(sf::Vector2i(10, 10), 10);
+		});
+	m_buttonHandler.addButton("Brick Breaker", [&]
+		{
+			stateHandler.Push<BrickBreaker>();
 		});
 }
 

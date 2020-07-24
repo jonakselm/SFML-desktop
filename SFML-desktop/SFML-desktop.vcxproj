@@ -196,6 +196,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
+    <ClInclude Include="BrickBreaker\Ball.hpp" />
+    <ClInclude Include="BrickBreaker\BallPad.hpp" />
+    <ClInclude Include="BrickBreaker\Brick.hpp" />
+    <ClInclude Include="BrickBreaker\BrickBreaker.hpp" />
+    <ClInclude Include="BrickBreaker\BrickGrid.hpp" />
     <ClInclude Include="Snake\Apple.h" />
     <ClInclude Include="Snake\SnakeBoard.h" />
     <ClInclude Include="Button.hpp" />
@@ -227,6 +232,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="BrickBreaker\Ball.cpp" />
+    <ClCompile Include="BrickBreaker\BallPad.cpp" />
+    <ClCompile Include="BrickBreaker\BrickBreaker.cpp" />
+    <ClCompile Include="BrickBreaker\BrickGrid.cpp" />
     <ClCompile Include="Snake\Apple.cpp" />
     <ClCompile Include="Snake\SnakeBoard.cpp" />
     <ClCompile Include="Button.cpp" />

@@ -28,6 +28,9 @@
     <Filter Include="Minesweeper">
       <UniqueIdentifier>{84c897c8-9720-4736-852f-fcc64f461477}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Brick Breaker">
+      <UniqueIdentifier>{543c506f-6501-4d62-9d52-7f58f62b08b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -117,6 +120,21 @@
     <ClInclude Include="Practise\Practise.hpp">
       <Filter>Practise</Filter>
     </ClInclude>
+    <ClInclude Include="BrickBreaker\BrickBreaker.hpp">
+      <Filter>Brick Breaker</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker\Brick.hpp">
+      <Filter>Brick Breaker</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker\Ball.hpp">
+      <Filter>Brick Breaker</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker\BallPad.hpp">
+      <Filter>Brick Breaker</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker\BrickGrid.hpp">
+      <Filter>Brick Breaker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -190,6 +208,18 @@
     </ClCompile>
     <ClCompile Include="Practise\Practise.cpp">
       <Filter>Practise</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker\BrickBreaker.cpp">
+      <Filter>Brick Breaker</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker\Ball.cpp">
+      <Filter>Brick Breaker</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker\BallPad.cpp">
+      <Filter>Brick Breaker</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker\BrickGrid.cpp">
+      <Filter>Brick Breaker</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp">
       <Filter>Source Files</Filter>
